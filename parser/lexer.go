@@ -14,23 +14,19 @@ func (l *Lexer) Lex(lval *yySymType) int {
 	token := int(l.Scan())
 	s := l.TokenText()
 
-	fmt.Printf("token: %s\n", s)
+	fmt.Printf("token text: %s\n", s)
+
+	if s == "{" {
+		token = LB
+	} else if s == "global_defs" {
+		token = GLOBALDEFS
+	}
 
 	if token == scanner.Ident {
-		if s == "global_defs" {
-			token = GLOBALDEFS
-		} else if s == "{" {
-			token = LB
-		} else {
-			token = STRING
-		}
+		token = STRING
 	}
 	if token == scanner.String {
-		if s == "{" {
-			token = LB
-		} else {
-			token = STRING
-		}
+		token = STRING
 	}
 	if token == scanner.Int {
 		token = NUM
