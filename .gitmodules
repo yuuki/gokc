@@ -1,0 +1,3 @@
+[submodule "keepalived"]
+	path = keepalived
+	url = git@github.com:acassen/keepalived
