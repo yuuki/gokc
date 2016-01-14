@@ -4,6 +4,8 @@ import (
 	"flag"
 	"fmt"
 	"os"
+
+	"github.com/yuuki1/gokc/parser"
 )
 
 func main() {
@@ -16,5 +18,13 @@ func main() {
 		os.Exit(1)
 	}
 
-	fmt.Println(filepath)
+	file, err := os.Open(filepath)
+	if err != nil {
+		fmt.Printf("%s\n", err)
+		os.Exit(1)
+	}
+
+	fmt.Printf("--> Parsing %s...\n", filepath)
+
+	parser.Parse(file)
 }
