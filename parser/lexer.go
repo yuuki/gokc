@@ -18,8 +18,12 @@ func (l *Lexer) Lex(lval *yySymType) int {
 
 	if s == "{" {
 		token = LB
+	} else if s == "}" {
+		token = RB
 	} else if s == "global_defs" {
 		token = GLOBALDEFS
+	} else if s == "notification_email" {
+		token = NOTIFICATION_EMAIL
 	}
 
 	if token == scanner.Ident {
