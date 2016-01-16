@@ -63,6 +63,8 @@ func (l *Lexer) Lex(lval *yySymType) int {
 		token = VRRP_INSTANCE
 	} else if s == "interface" {
 		token = INTERFACE
+	} else if s == "virtual_router_id" {
+		token = VIRTUAL_ROUTER_ID
 	}
 
 	// Is Integer?
