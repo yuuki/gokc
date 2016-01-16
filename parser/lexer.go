@@ -59,9 +59,6 @@ func (l *Lexer) Lex(lval *yySymType) int {
 	if token == scanner.Ident {
 		token = STRING
 	}
-	if token == scanner.Int {
-		token = NUM
-	}
 	return token
 }
 
