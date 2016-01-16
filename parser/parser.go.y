@@ -18,7 +18,7 @@ type Checker interface{}
 %token           GLOBALDEFS
 %token           NOTIFICATION_EMAIL NOTIFICATION_EMAIL_FROM SMTP_SERVER SMTP_CONNECT_TIMEOUT ROUTER_ID
 %token           VRRP_INSTANCE
-%token           INTERFACE VIRTUAL_ROUTER_ID NOPREEMPT PRIORITY ADVERT_INT
+%token           INTERFACE VIRTUAL_ROUTER_ID NOPREEMPT PRIORITY ADVERT_INT VIRTUAL_IPADDRESS
 
 %%
 configuration:  main_statements configuration | main_statements { }
@@ -51,6 +51,12 @@ vrrp_instance_statement: { }
 | NOPREEMPT
 | PRIORITY POSITIVE_INT { }
 | ADVERT_INT POSITIVE_INT { }
+| VIRTUAL_IPADDRESS LB vips RB
+
+vips: vip vips | vip { }
+
+vip: { }
+| IPADDR { }
 
 mail_statements:  mail_statement mail_statements |  mail_statement { }
 

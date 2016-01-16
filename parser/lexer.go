@@ -26,6 +26,7 @@ var SYMBOL_TABLES = map[string]int{
 	"nopreempt": NOPREEMPT,
 	"priority": PRIORITY,
 	"advert_int": ADVERT_INT,
+	"virtual_ipaddress": VIRTUAL_IPADDRESS,
 }
 
 type Lexer struct {
