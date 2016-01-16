@@ -11,6 +11,20 @@ import (
 	"unicode"
 )
 
+var SYMBOL_TABLES = map[string]int{
+	"{": LB,
+	"}": RB,
+	"global_defs": GLOBALDEFS,
+	"notification_email":NOTIFICATION_EMAIL,
+	"notification_email_from": NOTIFICATION_EMAIL_FROM,
+	"smtp_server": SMTP_SERVER,
+	"smtp_connect_timeout": SMTP_CONNECT_TIMEOUT,
+	"router_id": ROUTER_ID,
+	"vrrp_instance": VRRP_INSTANCE,
+	"interface": INTERFACE,
+	"virtual_router_id": VIRTUAL_ROUTER_ID,
+}
+
 type Lexer struct {
 	scanner.Scanner
 	result Checker
@@ -43,28 +57,8 @@ func (l *Lexer) Lex(lval *yySymType) int {
 		token = EMAIL
 	}
 
-	if s == "{" {
-		token = LB
-	} else if s == "}" {
-		token = RB
-	} else if s == "global_defs" {
-		token = GLOBALDEFS
-	} else if s == "notification_email" {
-		token = NOTIFICATION_EMAIL
-	} else if s == "notification_email_from" {
-		token = NOTIFICATION_EMAIL_FROM
-	} else if s == "smtp_server" {
-		token = SMTP_SERVER
-	} else if s == "smtp_connect_timeout" {
-		token = SMTP_CONNECT_TIMEOUT
-	} else if s == "router_id" {
-		token = ROUTER_ID
-	} else if s == "vrrp_instance" {
-		token = VRRP_INSTANCE
-	} else if s == "interface" {
-		token = INTERFACE
-	} else if s == "virtual_router_id" {
-		token = VIRTUAL_ROUTER_ID
+	if _, ok := SYMBOL_TABLES[s]; ok {
+		token = SYMBOL_TABLES[s]
 	}
 
 	// Is Integer?
