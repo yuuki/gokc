@@ -13,10 +13,10 @@ type Checker interface{}
 };
 
 %token <integer> NUM
-%token <symbol>	 STRING EMAIL
+%token <symbol>	 STRING EMAIL IPADDR
 %token           LB RB
 %token           GLOBALDEFS
-%token           NOTIFICATION_EMAIL NOTIFICATION_EMAIL_FROM
+%token           NOTIFICATION_EMAIL NOTIFICATION_EMAIL_FROM SMTP_SERVER
 
 %%
 configuration:  main_statements configuration | main_statements { }
@@ -31,7 +31,9 @@ global_statements:	global_statement global_statements | global_statement
 global_statement:
 | NOTIFICATION_EMAIL LB mail_statements RB  { }
 | NOTIFICATION_EMAIL STRING  { }
-| NOTIFICATION_EMAIL_FROM EMAIL {  }
+| NOTIFICATION_EMAIL_FROM EMAIL { }
+| SMTP_SERVER IPADDR  { }
+| SMTP_SERVER STRING  { }
 
 mail_statements:  mail_statement mail_statements |  mail_statement { }
 
