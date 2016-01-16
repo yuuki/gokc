@@ -57,6 +57,8 @@ func (l *Lexer) Lex(lval *yySymType) int {
 		token = SMTP_SERVER
 	} else if s == "smtp_connect_timeout" {
 		token = SMTP_CONNECT_TIMEOUT
+	} else if s == "router_id" {
+		token = ROUTER_ID
 	}
 
 	// Is Integer?

@@ -13,10 +13,10 @@ type Checker interface{}
 };
 
 %token <integer> NUMBER POSITIVE_INT
-%token <symbol>	 STRING EMAIL IPADDR
+%token <symbol>	 ID STRING EMAIL IPADDR
 %token           LB RB
 %token           GLOBALDEFS
-%token           NOTIFICATION_EMAIL NOTIFICATION_EMAIL_FROM SMTP_SERVER SMTP_CONNECT_TIMEOUT
+%token           NOTIFICATION_EMAIL NOTIFICATION_EMAIL_FROM SMTP_SERVER SMTP_CONNECT_TIMEOUT ROUTER_ID
 
 %%
 configuration:  main_statements configuration | main_statements { }
@@ -35,10 +35,12 @@ global_statement:
 | SMTP_SERVER IPADDR  { }
 | SMTP_SERVER STRING  { }
 | SMTP_CONNECT_TIMEOUT POSITIVE_INT { }
+| ROUTER_ID STRING { }
 
 mail_statements:  mail_statement mail_statements |  mail_statement { }
 
 mail_statement:	 STRING	{ }
+
 %%
 
 func Parse(r io.Reader) Checker {
