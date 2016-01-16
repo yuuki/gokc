@@ -6,6 +6,7 @@ import (
 	"log"
 	"net"
 	"net/mail"
+	"strconv"
 	"text/scanner"
 	"unicode"
 )
@@ -54,6 +55,16 @@ func (l *Lexer) Lex(lval *yySymType) int {
 		token = NOTIFICATION_EMAIL_FROM
 	} else if s == "smtp_server" {
 		token = SMTP_SERVER
+	} else if s == "smtp_connect_timeout" {
+		token = SMTP_CONNECT_TIMEOUT
+	}
+
+	// Is Integer?
+	if val, err := strconv.Atoi(s); err == nil {
+		token = NUMBER
+		if val >= 0 {
+			return POSITIVE_INT
+		}
 	}
 
 	if token == scanner.Ident {

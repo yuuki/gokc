@@ -12,11 +12,11 @@ type Checker interface{}
   symbol    string
 };
 
-%token <integer> NUM
+%token <integer> NUMBER POSITIVE_INT
 %token <symbol>	 STRING EMAIL IPADDR
 %token           LB RB
 %token           GLOBALDEFS
-%token           NOTIFICATION_EMAIL NOTIFICATION_EMAIL_FROM SMTP_SERVER
+%token           NOTIFICATION_EMAIL NOTIFICATION_EMAIL_FROM SMTP_SERVER SMTP_CONNECT_TIMEOUT
 
 %%
 configuration:  main_statements configuration | main_statements { }
@@ -34,6 +34,7 @@ global_statement:
 | NOTIFICATION_EMAIL_FROM EMAIL { }
 | SMTP_SERVER IPADDR  { }
 | SMTP_SERVER STRING  { }
+| SMTP_CONNECT_TIMEOUT POSITIVE_INT { }
 
 mail_statements:  mail_statement mail_statements |  mail_statement { }
 
