@@ -24,6 +24,7 @@ var SYMBOL_TABLES = map[string]int{
 	"interface": INTERFACE,
 	"virtual_router_id": VIRTUAL_ROUTER_ID,
 	"nopreempt": NOPREEMPT,
+	"priority": PRIORITY,
 }
 
 type Lexer struct {
