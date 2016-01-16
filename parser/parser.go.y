@@ -18,7 +18,7 @@ type Checker interface{}
 %token           GLOBALDEFS
 %token           NOTIFICATION_EMAIL NOTIFICATION_EMAIL_FROM SMTP_SERVER SMTP_CONNECT_TIMEOUT ROUTER_ID
 %token           VRRP_INSTANCE
-%token           INTERFACE VIRTUAL_ROUTER_ID
+%token           INTERFACE VIRTUAL_ROUTER_ID NOPREEMPT
 
 %%
 configuration:  main_statements configuration | main_statements { }
@@ -48,6 +48,7 @@ vrrp_instance_statement: { }
 | INTERFACE STRING { }
 | VIRTUAL_ROUTER_ID STRING { }
 | VIRTUAL_ROUTER_ID POSITIVE_INT { }
+| NOPREEMPT
 
 mail_statements:  mail_statement mail_statements |  mail_statement { }
 

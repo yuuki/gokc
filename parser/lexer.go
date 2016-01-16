@@ -23,6 +23,7 @@ var SYMBOL_TABLES = map[string]int{
 	"vrrp_instance": VRRP_INSTANCE,
 	"interface": INTERFACE,
 	"virtual_router_id": VIRTUAL_ROUTER_ID,
+	"nopreempt": NOPREEMPT,
 }
 
 type Lexer struct {
