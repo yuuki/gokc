@@ -4,6 +4,8 @@ import (
     "io"
 )
 
+const MAX_PORT_NUM int = 65535
+
 type Checker interface{}
 %}
 
@@ -19,6 +21,7 @@ type Checker interface{}
 %token           NOTIFICATION_EMAIL NOTIFICATION_EMAIL_FROM SMTP_SERVER SMTP_CONNECT_TIMEOUT ROUTER_ID
 %token           VRRP_INSTANCE
 %token           INTERFACE VIRTUAL_ROUTER_ID NOPREEMPT PRIORITY ADVERT_INT VIRTUAL_IPADDRESS
+%token           VIRTUAL_SERVER
 
 %%
 configuration:  main_statements configuration | main_statements { }
@@ -26,6 +29,7 @@ configuration:  main_statements configuration | main_statements { }
 main_statements:  { }
 | global { }
 | vrrp_instance_block { }
+| virtual_server_block { }
 
 global:	GLOBALDEFS LB global_statements RB
 
@@ -53,6 +57,16 @@ vrrp_instance_statement: { }
 | ADVERT_INT POSITIVE_INT { }
 | VIRTUAL_IPADDRESS LB vips RB
 
+virtual_server_block: VIRTUAL_SERVER iporfw LB virtual_server_statements RB
+
+virtual_server_statements: virtual_server_statement virtual_server_statements | virtual_server_statement
+
+virtual_server_statement: {}
+
+iporfw: { }
+| IPADDR { }
+| IPADDR POSITIVE_INT { }
+
 vips: vip vips | vip { }
 
 vip: { }
@@ -69,3 +83,4 @@ func Parse(r io.Reader) Checker {
     yyParse(l)
     return l.result
 }
+

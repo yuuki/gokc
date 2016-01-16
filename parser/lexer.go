@@ -14,12 +14,14 @@ import (
 var SYMBOL_TABLES = map[string]int{
 	"{": LB,
 	"}": RB,
+
 	"global_defs": GLOBALDEFS,
 	"notification_email":NOTIFICATION_EMAIL,
 	"notification_email_from": NOTIFICATION_EMAIL_FROM,
 	"smtp_server": SMTP_SERVER,
 	"smtp_connect_timeout": SMTP_CONNECT_TIMEOUT,
 	"router_id": ROUTER_ID,
+
 	"vrrp_instance": VRRP_INSTANCE,
 	"interface": INTERFACE,
 	"virtual_router_id": VIRTUAL_ROUTER_ID,
@@ -27,6 +29,8 @@ var SYMBOL_TABLES = map[string]int{
 	"priority": PRIORITY,
 	"advert_int": ADVERT_INT,
 	"virtual_ipaddress": VIRTUAL_IPADDRESS,
+
+	"virtual_server": VIRTUAL_SERVER,
 }
 
 type Lexer struct {
