@@ -164,19 +164,18 @@ protocol: { }
 
 vips: vip vips | vip { }
 
-vip: { }
-| IPADDR { }
-| IP_CIDR { }
-| IPADDR LABEL STRING { }
-| IP_CIDR LABEL STRING { }
-| IPADDR DEV STRING { }
-| IP_CIDR DEV STRING { }
-| IPADDR BRD vip { }
-| IP_CIDR BRD vip { }
+vip: ipaddr_literal { }
+| LABEL STRING { }
+| DEV STRING { }
+| BRD IPADDR { }
 
 mail_statements: mail_statement mail_statements |  mail_statement { }
 
 mail_statement:	any_literal	{ }
+
+ipaddr_literal: { }
+| IPADDR
+| IP_CIDR
 
 any_literal: { }
 | NUMBER
