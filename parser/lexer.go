@@ -32,6 +32,19 @@ var SYMBOL_TABLES = map[string]int{
 
 	"virtual_server": VIRTUAL_SERVER,
 	"delay_loop": DELAY_LOOP,
+	"lb_algo": LB_ALGO,
+	"lb_kind": LB_KIND,
+	"lvs_sched": LVS_SCHED,
+	"lvs_method": LVS_METHOD,
+	"rr": RR,
+	"wrr": WRR,
+	"lc": LC,
+	"wlc": WLC,
+	"lblc": LBLC,
+	"sh": SH,
+	"dh": DH,
+	"NAT": NAT,
+	"TUN": TUN,
 }
 
 type Lexer struct {

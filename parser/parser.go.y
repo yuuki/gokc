@@ -22,7 +22,7 @@ type Checker interface{}
 %token           VRRP_INSTANCE
 %token           INTERFACE VIRTUAL_ROUTER_ID NOPREEMPT PRIORITY ADVERT_INT VIRTUAL_IPADDRESS
 %token           VIRTUAL_SERVER
-%token           DELAY_LOOP
+%token           DELAY_LOOP LB_ALGO LB_KIND LVS_SCHED LVS_METHOD RR WRR LC WLC LBLC SH DH NAT DR TUN
 
 %%
 configuration:  main_statements configuration | main_statements { }
@@ -64,10 +64,28 @@ virtual_server_statements: virtual_server_statement virtual_server_statements | 
 
 virtual_server_statement: { }
 | DELAY_LOOP POSITIVE_INT { }
+| LB_ALGO lb_algo { }
+| LB_KIND lb_kind { }
+| LVS_SCHED lb_algo { }
+| LVS_METHOD lb_kind { }
 
 iporfw: { }
 | IPADDR { }
 | IPADDR POSITIVE_INT { }
+
+lb_algo: { }
+| RR   { }
+| WRR  { }
+| LC   { }
+| WLC  { }
+| LBLC { }
+| SH   { }
+| DH   { }
+
+lb_kind: { }
+| NAT	{ }	
+| DR  { }
+| TUN	{ }
 
 vips: vip vips | vip { }
 
