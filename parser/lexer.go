@@ -43,6 +43,10 @@ var SYMBOL_TABLES = map[string]int{
 	"label": LABEL,
 
 	"vrrp_script": VRRP_SCRIPT,
+	"script": SCRIPT,
+	"interval": INTERVAL,
+	"fall": FALL,
+	"rise": RISE,
 
 	"virtual_server": VIRTUAL_SERVER,
 	"delay_loop": DELAY_LOOP,
@@ -90,7 +94,7 @@ func NewLexer(src io.Reader) *Lexer {
 }
 
 func isIdentRune(ch rune, i int) bool {
-	return ch == '_' || ch == '.' || ch == '/' || ch == ':' || ch == '@' || unicode.IsLetter(ch) || unicode.IsDigit(ch)
+	return ch == '_' || ch == '.' || ch == '/' || ch == ':' || ch == '-' || ch == '@' || unicode.IsLetter(ch) || unicode.IsDigit(ch)
 }
 
 func (l *Lexer) scanNextToken() (int, string) {
@@ -127,7 +131,7 @@ func (l *Lexer) Lex(lval *yySymType) int {
 		token = HEX32
 	}
 
-	if ok, _ := regexp.MatchString("/([[:alnum:]./-_])*", s); ok {
+	if ok, _ := regexp.MatchString("/^([[:alnum:]./-_])*", s); ok {
 		token = PATHSTR
 	}
 
@@ -145,9 +149,10 @@ func (l *Lexer) Lex(lval *yySymType) int {
 		if val >= 0 {
 			return POSITIVE_INT
 		}
+		return NUMBER
 	}
 
-	if token == scanner.Ident {
+	if token == scanner.Ident || token == scanner.String {
 		token = STRING
 	}
 	return token

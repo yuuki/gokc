@@ -22,6 +22,7 @@ type Checker interface{}
 %token           VRRP_INSTANCE
 %token           INTERFACE VIRTUAL_ROUTER_ID NOPREEMPT PRIORITY ADVERT_INT VIRTUAL_IPADDRESS STATE MASTER BACKUP GARP_MASTER_DELAY SMTP_ALERT AUTHENTICATION AUTH_TYPE AUTH_PASS PASS AH LABEL
 %token           VRRP_SCRIPT
+%token           SCRIPT INTERVAL FALL RISE
 %token           VIRTUAL_SERVER
 %token           DELAY_LOOP LB_ALGO LB_KIND LVS_SCHED LVS_METHOD RR WRR LC WLC LBLC SH DH NAT DR TUN PERSISTENCE_TIMEOUT PROTOCOL TCP UDP SORRY_SERVER REAL_SERVER FWMARK WEIGHT HTTP_GET URL PATH DIGEST STATUS_CODE CONNECT_TIMEOUT NB_GET_RETRY DELAY_BEFORE_RETRY
 
@@ -72,11 +73,16 @@ authentication_statement: { }
 | AUTH_TYPE AH { }
 | AUTH_PASS any_literal { }
 
-vrrp_script_block: VRRP_SCRIPT STRING RB vrrp_script_statements LB
+vrrp_script_block: VRRP_SCRIPT STRING LB vrrp_script_statements RB
 
 vrrp_script_statements: vrrp_script_statement vrrp_script_statements | vrrp_script_statement
 
 vrrp_script_statement: { }
+| SCRIPT STRING { }
+| INTERVAL POSITIVE_INT { }
+| WEIGHT NUMBER { }
+| FALL POSITIVE_INT { }
+| RISE POSITIVE_INT { }
 
 virtual_server_block: VIRTUAL_SERVER iporfw LB virtual_server_statements RB
 
@@ -153,6 +159,7 @@ mail_statements:  mail_statement mail_statements |  mail_statement { }
 mail_statement:	 STRING	{ }
 
 any_literal: { }
+| NUMBER
 | POSITIVE_INT
 | STRING
 | EMAIL
