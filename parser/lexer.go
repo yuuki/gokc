@@ -60,6 +60,7 @@ var SYMBOL_TABLES = map[string]int{
 	"status_code": STATUS_CODE,
 	"connect_timeout": CONNECT_TIMEOUT,
 	"nb_get_retry": NB_GET_RETRY,
+	"delay_before_retry": DELAY_BEFORE_RETRY,
 }
 
 type Lexer struct {
