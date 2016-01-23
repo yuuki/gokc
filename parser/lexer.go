@@ -40,6 +40,7 @@ var SYMBOL_TABLES = map[string]int{
 	"auth_pass": AUTH_PASS,
 	"PASS": PASS,
 	"AH": AH,
+	"label": LABEL,
 
 	"virtual_server": VIRTUAL_SERVER,
 	"delay_loop": DELAY_LOOP,
@@ -87,7 +88,7 @@ func NewLexer(src io.Reader) *Lexer {
 }
 
 func isIdentRune(ch rune, i int) bool {
-	return ch == '_' || ch == '.' || ch == '/' || ch == '@' || unicode.IsLetter(ch) || unicode.IsDigit(ch)
+	return ch == '_' || ch == '.' || ch == '/' || ch == ':' || ch == '@' || unicode.IsLetter(ch) || unicode.IsDigit(ch)
 }
 
 func (l *Lexer) scanNextToken() (int, string) {
