@@ -25,6 +25,7 @@ var SYMBOL_TABLES = map[string]int{
 
 	"vrrp_instance": VRRP_INSTANCE,
 	"interface": INTERFACE,
+	"lvs_sync_daemon_interface": LVS_SYNC_DAEMON_INTERFACE,
 	"virtual_router_id": VIRTUAL_ROUTER_ID,
 	"nopreempt": NOPREEMPT,
 	"priority": PRIORITY,
@@ -138,6 +139,14 @@ func (l *Lexer) skipComments() {
 func (l *Lexer) Lex(lval *yySymType) int {
 	token, s := l.scanNextToken()
 
+	if token == scanner.Ident || token == scanner.String {
+		token = STRING
+	}
+
+	if _, err := strconv.Atoi(s); err == nil {
+		token = NUMBER
+	}
+
 	if net.ParseIP(s) != nil {
 		token = IPADDR
 	}
@@ -162,13 +171,6 @@ func (l *Lexer) Lex(lval *yySymType) int {
 		token = SYMBOL_TABLES[s]
 	}
 
-	if _, err := strconv.Atoi(s); err == nil {
-		token = NUMBER
-	}
-
-	if token == scanner.Ident || token == scanner.String {
-		token = STRING
-	}
 	return token
 }
 
