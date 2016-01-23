@@ -127,6 +127,10 @@ func (l *Lexer) Lex(lval *yySymType) int {
 		token = IPADDR
 	}
 
+	if _, _, err := net.ParseCIDR(s); err == nil {
+		token = IP_CIDR
+	}
+
 	if ok, _ := regexp.MatchString("[[:xdigit:]]{32}", s); ok {
 		token = HEX32
 	}

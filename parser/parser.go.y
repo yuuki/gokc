@@ -15,7 +15,7 @@ type Checker interface{}
 };
 
 %token <integer> NUMBER POSITIVE_INT
-%token <symbol>	 ID STRING EMAIL IPADDR HEX32 PATHSTR
+%token <symbol>	 ID STRING EMAIL IPADDR IP_CIDR HEX32 PATHSTR
 %token           LB RB
 %token           GLOBALDEFS
 %token           NOTIFICATION_EMAIL NOTIFICATION_EMAIL_FROM SMTP_SERVER SMTP_CONNECT_TIMEOUT ROUTER_ID
@@ -152,7 +152,9 @@ vips: vip vips | vip { }
 
 vip: { }
 | IPADDR { }
+| IP_CIDR { }
 | IPADDR LABEL STRING { }
+| IP_CIDR LABEL STRING { }
 
 mail_statements:  mail_statement mail_statements |  mail_statement { }
 
@@ -165,6 +167,7 @@ any_literal: { }
 | EMAIL
 | HEX32
 | IPADDR
+| IP_CIDR
 
 %%
 
