@@ -1,12 +1,11 @@
 %{
 package parser
 import (
+    "fmt"
     "io"
 )
 
 const MAX_PORT_NUM int = 65535
-
-type Checker interface{}
 %}
 
 %union {
@@ -192,9 +191,26 @@ any_literal: { }
 
 %%
 
-func Parse(r io.Reader) Checker {
+type Parser struct {
+    lexer *Lexer
+}
+
+func NewParser(r io.Reader) *Parser {
     l := NewLexer(r)
-    yyParse(l)
-    return l.result
+    return &Parser{lexer: l}
+}
+
+func (p *Parser) Parse() error {
+    yyErrorVerbose = true
+
+    if ret := yyParse(p.lexer); ret != 0 {
+        return fmt.Errorf("syntax error")
+    }
+
+    return nil
+}
+
+func (p *Parser) Errors() []LexError {
+    return p.lexer.errors
 }
 

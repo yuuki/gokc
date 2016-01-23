@@ -1,7 +1,6 @@
 package parser
 
 import (
-	"fmt"
 	"io"
 	"net"
 	"net/mail"
@@ -92,7 +91,13 @@ var SYMBOL_TABLES = map[string]int{
 
 type Lexer struct {
 	scanner.Scanner
-	result Checker
+	errors []LexError
+}
+
+type LexError struct {
+	Message string
+	Line int
+	Column int
 }
 
 func NewLexer(src io.Reader) *Lexer {
@@ -168,7 +173,7 @@ func (l *Lexer) Lex(lval *yySymType) int {
 }
 
 func (l *Lexer) Error(e string) {
-	fmt.Printf("Error Line %d, Pos %d\n", l.Line, l.Column)
-	panic(e)
+	lexerr := LexError{Line: l.Line, Column: l.Column, Message: e}
+	l.errors = append(l.errors, lexerr)
 }
 

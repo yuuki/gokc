@@ -5,6 +5,7 @@ import (
 	"fmt"
 	"os"
 	"strconv"
+	"strings"
 
 	"github.com/yuuki1/gokc/log"
 	"github.com/yuuki1/gokc/parser"
@@ -48,9 +49,16 @@ func main() {
 		os.Exit(1)
 	}
 
-	fmt.Printf("gokc: --> Parsing %s ...\n", filepath)
+	log.Infof("gokc: --> Parsing %s ...\n", filepath)
 
-	parser.Parse(file)
+	p := parser.NewParser(file)
+	if err := p.Parse(); err != nil {
+		var msgs []string
+		for _, e := range p.Errors() {
+			msgs = append(msgs, fmt.Sprintf("gokc: %s, line %d, pos %d", e.Message, e.Line, e.Column))
+		}
+		log.Errorf("%s", strings.Join(msgs, "\n"))
+	}
 
-	fmt.Println("gokc: the configuration file %s syntax is ok", filepath)
+	log.Infof("gokc: the configuration file %s syntax is ok", filepath)
 }
