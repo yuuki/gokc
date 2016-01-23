@@ -58,6 +58,7 @@ var SYMBOL_TABLES = map[string]int{
 	"path": PATH,
 	"digest": DIGEST,
 	"status_code": STATUS_CODE,
+	"connect_timeout": CONNECT_TIMEOUT,
 }
 
 type Lexer struct {
