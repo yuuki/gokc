@@ -60,8 +60,7 @@ func (l *Lexer) Lex(lval *yySymType) int {
 		token = IPADDR
 	}
 
-	_, err := mail.ParseAddress(s)
-	if err == nil {
+	if _, err := mail.ParseAddress(s); err == nil {
 		token = EMAIL
 	}
 
