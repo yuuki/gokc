@@ -22,7 +22,7 @@ type Checker interface{}
 %token           VRRP_INSTANCE
 %token           INTERFACE VIRTUAL_ROUTER_ID NOPREEMPT PRIORITY ADVERT_INT VIRTUAL_IPADDRESS
 %token           VIRTUAL_SERVER
-%token           DELAY_LOOP LB_ALGO LB_KIND LVS_SCHED LVS_METHOD RR WRR LC WLC LBLC SH DH NAT DR TUN PERSISTENCE_TIMEOUT PROTOCOL TCP UDP
+%token           DELAY_LOOP LB_ALGO LB_KIND LVS_SCHED LVS_METHOD RR WRR LC WLC LBLC SH DH NAT DR TUN PERSISTENCE_TIMEOUT PROTOCOL TCP UDP SORRY_SERVER
 
 %%
 configuration:  main_statements configuration | main_statements { }
@@ -70,6 +70,7 @@ virtual_server_statement: { }
 | LVS_METHOD lb_kind { }
 | PERSISTENCE_TIMEOUT POSITIVE_INT { }
 | PROTOCOL protocol { }
+| SORRY_SERVER IPADDR POSITIVE_INT { }
 
 iporfw: { }
 | IPADDR { }

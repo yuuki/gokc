@@ -49,6 +49,7 @@ var SYMBOL_TABLES = map[string]int{
 	"protocol": PROTOCOL,
 	"TCP": TCP,
 	"UDP": UDP,
+	"sorry_server": SORRY_SERVER,
 }
 
 type Lexer struct {
