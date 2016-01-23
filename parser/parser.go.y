@@ -20,7 +20,7 @@ type Checker interface{}
 %token           GLOBALDEFS
 %token           NOTIFICATION_EMAIL NOTIFICATION_EMAIL_FROM SMTP_SERVER SMTP_CONNECT_TIMEOUT ROUTER_ID
 %token           VRRP_INSTANCE
-%token           INTERFACE VIRTUAL_ROUTER_ID NOPREEMPT PRIORITY ADVERT_INT VIRTUAL_IPADDRESS STATE MASTER BACKUP GARP_MASTER_DELAY SMTP_ALERT
+%token           INTERFACE VIRTUAL_ROUTER_ID NOPREEMPT PRIORITY ADVERT_INT VIRTUAL_IPADDRESS STATE MASTER BACKUP GARP_MASTER_DELAY SMTP_ALERT AUTHENTICATION AUTH_TYPE AUTH_PASS PASS AH
 %token           VIRTUAL_SERVER
 %token           DELAY_LOOP LB_ALGO LB_KIND LVS_SCHED LVS_METHOD RR WRR LC WLC LBLC SH DH NAT DR TUN PERSISTENCE_TIMEOUT PROTOCOL TCP UDP SORRY_SERVER REAL_SERVER FWMARK WEIGHT HTTP_GET URL PATH DIGEST STATUS_CODE CONNECT_TIMEOUT NB_GET_RETRY DELAY_BEFORE_RETRY
 
@@ -61,6 +61,14 @@ vrrp_instance_statement: { }
 | STATE BACKUP { }
 | GARP_MASTER_DELAY POSITIVE_INT { }
 | SMTP_ALERT { }
+| AUTHENTICATION LB authentication_statements RB { }
+
+authentication_statements: authentication_statement authentication_statements | authentication_statement
+
+authentication_statement: { }
+| AUTH_TYPE PASS { }
+| AUTH_TYPE AH { }
+| AUTH_PASS any_literal { }
 
 virtual_server_block: VIRTUAL_SERVER iporfw LB virtual_server_statements RB
 
@@ -134,6 +142,13 @@ vip: { }
 mail_statements:  mail_statement mail_statements |  mail_statement { }
 
 mail_statement:	 STRING	{ }
+
+any_literal: { }
+| POSITIVE_INT
+| STRING
+| EMAIL
+| HEX32
+| IPADDR
 
 %%
 
