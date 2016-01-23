@@ -17,7 +17,8 @@ const MAX_PORT_NUM int = 65535
 %token <symbol>	 ID STRING EMAIL IPADDR IP_CIDR HEX32 PATHSTR
 %token           LB RB
 %token           GLOBALDEFS
-%token           NOTIFICATION_EMAIL NOTIFICATION_EMAIL_FROM SMTP_SERVER SMTP_CONNECT_TIMEOUT ROUTER_ID
+%token           NOTIFICATION_EMAIL NOTIFICATION_EMAIL_FROM SMTP_SERVER SMTP_CONNECT_TIMEOUT ROUTER_ID LVS_ID
+%token           VRRP_SYNC_GROUP GROUP
 %token           VRRP_INSTANCE
 %token           INTERFACE LVS_SYNC_DAEMON_INTERFACE VIRTUAL_ROUTER_ID NOPREEMPT PRIORITY ADVERT_INT VIRTUAL_IPADDRESS STATE MASTER BACKUP GARP_MASTER_DELAY SMTP_ALERT AUTHENTICATION AUTH_TYPE AUTH_PASS PASS AH LABEL DEV BRD TRACK_INTERFACE TRACK_SCRIPT NOTIFY_MASTER NOTIFY_BACKUP NOTIFY_FAULT NOTIFY_STOP NOTIFY
 %token           VRRP_SCRIPT
@@ -30,6 +31,7 @@ configuration:  main_statements configuration | main_statements { }
 
 main_statements:  { }
 | global { }
+| vrrp_sync_group_block { }
 | vrrp_instance_block { }
 | vrrp_script_block { }
 | virtual_server_block { }
@@ -46,6 +48,22 @@ global_statement:
 | SMTP_SERVER STRING  { }
 | SMTP_CONNECT_TIMEOUT NUMBER { }
 | ROUTER_ID STRING { }
+| LVS_ID STRING { }
+
+vrrp_sync_group_block: VRRP_SYNC_GROUP STRING LB vrrp_sync_group_statements RB
+
+vrrp_sync_group_statements: vrrp_sync_group_statement vrrp_sync_group_statements | vrrp_sync_group_statement
+
+vrrp_sync_group_statement: { }
+| STRING { }
+| GROUP LB vrrp_group_ids RB { }
+| NOTIFY_MASTER	STRING { }
+| NOTIFY_BACKUP	STRING { }
+| NOTIFY_FAULT	STRING { }
+
+vrrp_group_ids: vrrp_group_id vrrp_group_ids | vrrp_group_id { }
+
+vrrp_group_id: STRING
 
 vrrp_instance_block: VRRP_INSTANCE STRING LB vrrp_instance_statements RB
 

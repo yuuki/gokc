@@ -22,6 +22,10 @@ var SYMBOL_TABLES = map[string]int{
 	"smtp_server": SMTP_SERVER,
 	"smtp_connect_timeout": SMTP_CONNECT_TIMEOUT,
 	"router_id": ROUTER_ID,
+	"lvs_id": LVS_ID,
+
+	"vrrp_sync_group": VRRP_SYNC_GROUP,
+	"group": GROUP,
 
 	"vrrp_instance": VRRP_INSTANCE,
 	"interface": INTERFACE,
