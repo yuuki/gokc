@@ -3,13 +3,14 @@ package parser
 import (
 	"fmt"
 	"io"
-	"log"
 	"net"
 	"net/mail"
 	"regexp"
 	"strconv"
 	"text/scanner"
 	"unicode"
+
+	"github.com/yuuki1/gokc/log"
 )
 
 var SYMBOL_TABLES = map[string]int{
@@ -117,7 +118,7 @@ func (l *Lexer) scanNextToken() (int, string) {
 		s = l.TokenText()
 	}
 
-	log.Printf("token text: %s\n", s)
+	log.Debugf("token text: %s\n", s)
 
 	return token, s
 }
