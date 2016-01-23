@@ -52,6 +52,7 @@ var SYMBOL_TABLES = map[string]int{
 	"sorry_server": SORRY_SERVER,
 	"real_server": REAL_SERVER,
 	"weight": WEIGHT,
+	"HTTP_GET": HTTP_GET,
 }
 
 type Lexer struct {
