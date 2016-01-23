@@ -14,7 +14,7 @@ type Checker interface{}
   symbol    string
 };
 
-%token <integer> NUMBER POSITIVE_INT
+%token <integer> NUMBER
 %token <symbol>	 ID STRING EMAIL IPADDR IP_CIDR HEX32 PATHSTR
 %token           LB RB
 %token           GLOBALDEFS
@@ -45,7 +45,7 @@ global_statement:
 | NOTIFICATION_EMAIL_FROM EMAIL { }
 | SMTP_SERVER IPADDR  { }
 | SMTP_SERVER STRING  { }
-| SMTP_CONNECT_TIMEOUT POSITIVE_INT { }
+| SMTP_CONNECT_TIMEOUT NUMBER { }
 | ROUTER_ID STRING { }
 
 vrrp_instance_block: VRRP_INSTANCE STRING LB vrrp_instance_statements RB
@@ -55,14 +55,14 @@ vrrp_instance_statements: vrrp_instance_statement vrrp_instance_statements | vrr
 vrrp_instance_statement: { }
 | INTERFACE STRING { }
 | VIRTUAL_ROUTER_ID STRING { }
-| VIRTUAL_ROUTER_ID POSITIVE_INT { }
+| VIRTUAL_ROUTER_ID NUMBER { }
 | NOPREEMPT
-| PRIORITY POSITIVE_INT { }
-| ADVERT_INT POSITIVE_INT { }
+| PRIORITY NUMBER { }
+| ADVERT_INT NUMBER { }
 | VIRTUAL_IPADDRESS LB vips RB
 | STATE MASTER { }
 | STATE BACKUP { }
-| GARP_MASTER_DELAY POSITIVE_INT { }
+| GARP_MASTER_DELAY NUMBER { }
 | SMTP_ALERT { }
 | AUTHENTICATION LB authentication_statements RB { }
 | TRACK_INTERFACE STRING { }
@@ -78,7 +78,7 @@ authentication_statement: { }
 interfaces: interface interfaces | interface
 
 interface: STRING
-| WEIGHT POSITIVE_INT { }
+| WEIGHT NUMBER { }
 
 vrrp_script_block: VRRP_SCRIPT STRING LB vrrp_script_statements RB
 
@@ -86,40 +86,40 @@ vrrp_script_statements: vrrp_script_statement vrrp_script_statements | vrrp_scri
 
 vrrp_script_statement: { }
 | SCRIPT STRING { }
-| INTERVAL POSITIVE_INT { }
+| INTERVAL NUMBER { }
 | WEIGHT NUMBER { }
-| FALL POSITIVE_INT { }
-| RISE POSITIVE_INT { }
+| FALL NUMBER { }
+| RISE NUMBER { }
 
 virtual_server_block: VIRTUAL_SERVER iporfw LB virtual_server_statements RB
 
 virtual_server_statements: virtual_server_statement virtual_server_statements | virtual_server_statement
 
 virtual_server_statement: { }
-| DELAY_LOOP POSITIVE_INT { }
+| DELAY_LOOP NUMBER { }
 | LB_ALGO lb_algo { }
 | LB_KIND lb_kind { }
 | LVS_SCHED lb_algo { }
 | LVS_METHOD lb_kind { }
-| PERSISTENCE_TIMEOUT POSITIVE_INT { }
+| PERSISTENCE_TIMEOUT NUMBER { }
 | PROTOCOL protocol { }
-| SORRY_SERVER IPADDR POSITIVE_INT { }
+| SORRY_SERVER IPADDR NUMBER { }
 | REAL_SERVER IPADDR ipport real_server_statements RB
-| REAL_SERVER IPADDR POSITIVE_INT LB real_server_statements RB
+| REAL_SERVER IPADDR NUMBER LB real_server_statements RB
 
 real_server_statements: real_server_statement real_server_statements | real_server_statement { }
 
 real_server_statement: { }
-| WEIGHT POSITIVE_INT { }
+| WEIGHT NUMBER { }
 | HTTP_GET LB http_get_statements RB { }
 
 http_get_statements: http_get_statement http_get_statements | http_get_statement { }
 
 http_get_statement: { }
 | URL LB url_statements RB { }
-| CONNECT_TIMEOUT POSITIVE_INT { }
-| NB_GET_RETRY POSITIVE_INT { }
-| DELAY_BEFORE_RETRY POSITIVE_INT { }
+| CONNECT_TIMEOUT NUMBER { }
+| NB_GET_RETRY NUMBER { }
+| DELAY_BEFORE_RETRY NUMBER { }
 
 url_statements: url_statement url_statements | url_statement { }
 
@@ -127,15 +127,15 @@ url_statement: { }
 | PATH STRING { }
 | PATH PATHSTR { }
 | DIGEST HEX32 { }
-| STATUS_CODE POSITIVE_INT { }
+| STATUS_CODE NUMBER { }
 
 ipport: { }
 | IPADDR { }
-| IPADDR POSITIVE_INT { }
+| IPADDR NUMBER { }
 
 iporfw: { }
 | ipport { }
-| FWMARK POSITIVE_INT { }
+| FWMARK NUMBER { }
 
 lb_algo: { }
 | RR   { }
@@ -169,7 +169,6 @@ mail_statement:	 STRING	{ }
 
 any_literal: { }
 | NUMBER
-| POSITIVE_INT
 | STRING
 | EMAIL
 | HEX32

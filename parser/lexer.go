@@ -148,13 +148,8 @@ func (l *Lexer) Lex(lval *yySymType) int {
 		token = SYMBOL_TABLES[s]
 	}
 
-	// Is Integer?
-	if val, err := strconv.Atoi(s); err == nil {
+	if _, err := strconv.Atoi(s); err == nil {
 		token = NUMBER
-		if val >= 0 {
-			return POSITIVE_INT
-		}
-		return NUMBER
 	}
 
 	if token == scanner.Ident || token == scanner.String {
