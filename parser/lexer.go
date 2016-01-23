@@ -114,7 +114,7 @@ func NewLexer(src io.Reader) *Lexer {
 }
 
 func isIdentRune(ch rune, i int) bool {
-	return ch == '_' || ch == '.' || ch == '/' || ch == ':' || ch == '-' || ch == '@' || unicode.IsLetter(ch) || unicode.IsDigit(ch)
+	return ch == '_' || ch == '.' || ch == '/' || ch == ':' || ch == '-' || ch == '+' || ch == '@' || unicode.IsLetter(ch) || unicode.IsDigit(ch)
 }
 
 func (l *Lexer) scanNextToken() (int, string) {
