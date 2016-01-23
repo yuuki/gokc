@@ -20,7 +20,7 @@ type Checker interface{}
 %token           GLOBALDEFS
 %token           NOTIFICATION_EMAIL NOTIFICATION_EMAIL_FROM SMTP_SERVER SMTP_CONNECT_TIMEOUT ROUTER_ID
 %token           VRRP_INSTANCE
-%token           INTERFACE VIRTUAL_ROUTER_ID NOPREEMPT PRIORITY ADVERT_INT VIRTUAL_IPADDRESS STATE MASTER BACKUP GARP_MASTER_DELAY SMTP_ALERT AUTHENTICATION AUTH_TYPE AUTH_PASS PASS AH LABEL TRACK_INTERFACE
+%token           INTERFACE VIRTUAL_ROUTER_ID NOPREEMPT PRIORITY ADVERT_INT VIRTUAL_IPADDRESS STATE MASTER BACKUP GARP_MASTER_DELAY SMTP_ALERT AUTHENTICATION AUTH_TYPE AUTH_PASS PASS AH LABEL TRACK_INTERFACE TRACK_SCRIPT
 %token           VRRP_SCRIPT
 %token           SCRIPT INTERVAL FALL RISE
 %token           VIRTUAL_SERVER
@@ -67,6 +67,7 @@ vrrp_instance_statement: { }
 | AUTHENTICATION LB authentication_statements RB { }
 | TRACK_INTERFACE STRING { }
 | TRACK_INTERFACE LB interfaces RB { }
+| TRACK_SCRIPT LB track_script_statements RB { }
 
 authentication_statements: authentication_statement authentication_statements | authentication_statement
 
@@ -79,6 +80,12 @@ interfaces: interface interfaces | interface
 
 interface: STRING
 | WEIGHT NUMBER { }
+
+track_script_statements: track_script_statement track_script_statements | track_script_statement
+
+track_script_statement: { }
+| STRING { }
+| STRING WEIGHT NUMBER { }
 
 vrrp_script_block: VRRP_SCRIPT STRING LB vrrp_script_statements RB
 
