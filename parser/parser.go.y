@@ -21,6 +21,7 @@ type Checker interface{}
 %token           NOTIFICATION_EMAIL NOTIFICATION_EMAIL_FROM SMTP_SERVER SMTP_CONNECT_TIMEOUT ROUTER_ID
 %token           VRRP_INSTANCE
 %token           INTERFACE VIRTUAL_ROUTER_ID NOPREEMPT PRIORITY ADVERT_INT VIRTUAL_IPADDRESS STATE MASTER BACKUP GARP_MASTER_DELAY SMTP_ALERT AUTHENTICATION AUTH_TYPE AUTH_PASS PASS AH LABEL
+%token           VRRP_SCRIPT
 %token           VIRTUAL_SERVER
 %token           DELAY_LOOP LB_ALGO LB_KIND LVS_SCHED LVS_METHOD RR WRR LC WLC LBLC SH DH NAT DR TUN PERSISTENCE_TIMEOUT PROTOCOL TCP UDP SORRY_SERVER REAL_SERVER FWMARK WEIGHT HTTP_GET URL PATH DIGEST STATUS_CODE CONNECT_TIMEOUT NB_GET_RETRY DELAY_BEFORE_RETRY
 
@@ -30,6 +31,7 @@ configuration:  main_statements configuration | main_statements { }
 main_statements:  { }
 | global { }
 | vrrp_instance_block { }
+| vrrp_script_block { }
 | virtual_server_block { }
 
 global:	GLOBALDEFS LB global_statements RB
@@ -69,6 +71,12 @@ authentication_statement: { }
 | AUTH_TYPE PASS { }
 | AUTH_TYPE AH { }
 | AUTH_PASS any_literal { }
+
+vrrp_script_block: VRRP_SCRIPT STRING RB vrrp_script_statements LB
+
+vrrp_script_statements: vrrp_script_statement vrrp_script_statements | vrrp_script_statement
+
+vrrp_script_statement: { }
 
 virtual_server_block: VIRTUAL_SERVER iporfw LB virtual_server_statements RB
 
