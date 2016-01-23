@@ -41,6 +41,7 @@ var SYMBOL_TABLES = map[string]int{
 	"PASS": PASS,
 	"AH": AH,
 	"label": LABEL,
+	"dev": DEV,
 	"track_interface": TRACK_INTERFACE,
 	"track_script": TRACK_SCRIPT,
 
