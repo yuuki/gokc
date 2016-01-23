@@ -15,14 +15,14 @@ type Checker interface{}
 };
 
 %token <integer> NUMBER POSITIVE_INT
-%token <symbol>	 ID STRING EMAIL IPADDR
+%token <symbol>	 ID STRING EMAIL IPADDR FWMARK
 %token           LB RB
 %token           GLOBALDEFS
 %token           NOTIFICATION_EMAIL NOTIFICATION_EMAIL_FROM SMTP_SERVER SMTP_CONNECT_TIMEOUT ROUTER_ID
 %token           VRRP_INSTANCE
 %token           INTERFACE VIRTUAL_ROUTER_ID NOPREEMPT PRIORITY ADVERT_INT VIRTUAL_IPADDRESS
 %token           VIRTUAL_SERVER
-%token           DELAY_LOOP LB_ALGO LB_KIND LVS_SCHED LVS_METHOD RR WRR LC WLC LBLC SH DH NAT DR TUN PERSISTENCE_TIMEOUT PROTOCOL TCP UDP SORRY_SERVER
+%token           DELAY_LOOP LB_ALGO LB_KIND LVS_SCHED LVS_METHOD RR WRR LC WLC LBLC SH DH NAT DR TUN PERSISTENCE_TIMEOUT PROTOCOL TCP UDP SORRY_SERVER REAL_SERVER
 
 %%
 configuration:  main_statements configuration | main_statements { }
@@ -71,10 +71,20 @@ virtual_server_statement: { }
 | PERSISTENCE_TIMEOUT POSITIVE_INT { }
 | PROTOCOL protocol { }
 | SORRY_SERVER IPADDR POSITIVE_INT { }
+| REAL_SERVER IPADDR ipport real_server_statements RB
+| REAL_SERVER IPADDR POSITIVE_INT LB real_server_statements RB
 
-iporfw: { }
+real_server_statements: real_server_statement real_server_statements | real_server_statement { }
+
+real_server_statement: {}
+
+ipport: { }
 | IPADDR { }
 | IPADDR POSITIVE_INT { }
+
+iporfw: { }
+| ipport { }
+| FWMARK POSITIVE_INT { }
 
 lb_algo: { }
 | RR   { }

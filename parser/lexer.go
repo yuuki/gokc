@@ -50,6 +50,7 @@ var SYMBOL_TABLES = map[string]int{
 	"TCP": TCP,
 	"UDP": UDP,
 	"sorry_server": SORRY_SERVER,
+	"real_server": REAL_SERVER,
 }
 
 type Lexer struct {
