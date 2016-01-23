@@ -15,14 +15,14 @@ type Checker interface{}
 };
 
 %token <integer> NUMBER POSITIVE_INT
-%token <symbol>	 ID STRING EMAIL IPADDR FWMARK
+%token <symbol>	 ID STRING EMAIL IPADDR HEX32 PATHSTR
 %token           LB RB
 %token           GLOBALDEFS
 %token           NOTIFICATION_EMAIL NOTIFICATION_EMAIL_FROM SMTP_SERVER SMTP_CONNECT_TIMEOUT ROUTER_ID
 %token           VRRP_INSTANCE
 %token           INTERFACE VIRTUAL_ROUTER_ID NOPREEMPT PRIORITY ADVERT_INT VIRTUAL_IPADDRESS
 %token           VIRTUAL_SERVER
-%token           DELAY_LOOP LB_ALGO LB_KIND LVS_SCHED LVS_METHOD RR WRR LC WLC LBLC SH DH NAT DR TUN PERSISTENCE_TIMEOUT PROTOCOL TCP UDP SORRY_SERVER REAL_SERVER WEIGHT HTTP_GET
+%token           DELAY_LOOP LB_ALGO LB_KIND LVS_SCHED LVS_METHOD RR WRR LC WLC LBLC SH DH NAT DR TUN PERSISTENCE_TIMEOUT PROTOCOL TCP UDP SORRY_SERVER REAL_SERVER FWMARK WEIGHT HTTP_GET URL PATH DIGEST STATUS_CODE
 
 %%
 configuration:  main_statements configuration | main_statements { }
@@ -83,6 +83,15 @@ real_server_statement: { }
 http_get_statements: http_get_statement http_get_statements | http_get_statement { }
 
 http_get_statement: { }
+| URL LB url_statements RB { }
+
+url_statements: url_statement url_statements | url_statement { }
+
+url_statement: { }
+| PATH STRING { }
+| PATH PATHSTR { }
+| DIGEST HEX32 { }
+| STATUS_CODE POSITIVE_INT { }
 
 ipport: { }
 | IPADDR { }

@@ -6,6 +6,7 @@ import (
 	"log"
 	"net"
 	"net/mail"
+	"regexp"
 	"strconv"
 	"text/scanner"
 	"unicode"
@@ -53,6 +54,10 @@ var SYMBOL_TABLES = map[string]int{
 	"real_server": REAL_SERVER,
 	"weight": WEIGHT,
 	"HTTP_GET": HTTP_GET,
+	"url": URL,
+	"path": PATH,
+	"digest": DIGEST,
+	"status_code": STATUS_CODE,
 }
 
 type Lexer struct {
@@ -69,7 +74,7 @@ func NewLexer(src io.Reader) *Lexer {
 }
 
 func isIdentRune(ch rune, i int) bool {
-	return ch == '_' || ch == '.' || ch == '@' || unicode.IsLetter(ch) || unicode.IsDigit(ch)
+	return ch == '_' || ch == '.' || ch == '/' || ch == '@' || unicode.IsLetter(ch) || unicode.IsDigit(ch)
 }
 
 func (l *Lexer) Lex(lval *yySymType) int {
@@ -80,6 +85,14 @@ func (l *Lexer) Lex(lval *yySymType) int {
 
 	if net.ParseIP(s) != nil {
 		token = IPADDR
+	}
+
+	if ok, _ := regexp.MatchString("[[:xdigit:]]{32}", s); ok {
+		token = HEX32
+	}
+
+	if ok, _ := regexp.MatchString("/([[:alnum:]./-_])*", s); ok {
+		token = PATHSTR
 	}
 
 	if _, err := mail.ParseAddress(s); err == nil {
