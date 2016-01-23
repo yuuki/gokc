@@ -94,6 +94,13 @@ func (l *Lexer) scanNextToken() (int, string) {
 	token := int(l.Scan())
 	s := l.TokenText()
 
+	for s == "!" || s == "#" {
+		l.skipComments()
+
+		token = int(l.Scan())
+		s = l.TokenText()
+	}
+
 	log.Printf("token text: %s\n", s)
 
 	return token, s
@@ -108,11 +115,6 @@ func (l *Lexer) skipComments() {
 
 func (l *Lexer) Lex(lval *yySymType) int {
 	token, s := l.scanNextToken()
-
-	if s == "!" || s == "#" {
-		l.skipComments()
-		token, s = l.scanNextToken()
-	}
 
 	if net.ParseIP(s) != nil {
 		token = IPADDR
