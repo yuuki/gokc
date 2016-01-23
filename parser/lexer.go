@@ -46,6 +46,9 @@ var SYMBOL_TABLES = map[string]int{
 	"NAT": NAT,
 	"TUN": TUN,
 	"persistence_timeout": PERSISTENCE_TIMEOUT,
+	"protocol": PROTOCOL,
+	"TCP": TCP,
+	"UDP": UDP,
 }
 
 type Lexer struct {
