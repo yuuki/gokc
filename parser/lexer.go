@@ -16,7 +16,7 @@ var SYMBOL_TABLES = map[string]int{
 	"}": RB,
 
 	"global_defs": GLOBALDEFS,
-	"notification_email":NOTIFICATION_EMAIL,
+	"notification_email": NOTIFICATION_EMAIL,
 	"notification_email_from": NOTIFICATION_EMAIL_FROM,
 	"smtp_server": SMTP_SERVER,
 	"smtp_connect_timeout": SMTP_CONNECT_TIMEOUT,
@@ -31,6 +31,7 @@ var SYMBOL_TABLES = map[string]int{
 	"virtual_ipaddress": VIRTUAL_IPADDRESS,
 
 	"virtual_server": VIRTUAL_SERVER,
+	"delay_loop": DELAY_LOOP,
 }
 
 type Lexer struct {

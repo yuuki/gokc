@@ -22,6 +22,7 @@ type Checker interface{}
 %token           VRRP_INSTANCE
 %token           INTERFACE VIRTUAL_ROUTER_ID NOPREEMPT PRIORITY ADVERT_INT VIRTUAL_IPADDRESS
 %token           VIRTUAL_SERVER
+%token           DELAY_LOOP
 
 %%
 configuration:  main_statements configuration | main_statements { }
@@ -61,7 +62,8 @@ virtual_server_block: VIRTUAL_SERVER iporfw LB virtual_server_statements RB
 
 virtual_server_statements: virtual_server_statement virtual_server_statements | virtual_server_statement
 
-virtual_server_statement: {}
+virtual_server_statement: { }
+| DELAY_LOOP POSITIVE_INT { }
 
 iporfw: { }
 | IPADDR { }
