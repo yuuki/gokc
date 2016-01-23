@@ -80,11 +80,29 @@ func isIdentRune(ch rune, i int) bool {
 	return ch == '_' || ch == '.' || ch == '/' || ch == '@' || unicode.IsLetter(ch) || unicode.IsDigit(ch)
 }
 
-func (l *Lexer) Lex(lval *yySymType) int {
+func (l *Lexer) scanNextToken() (int, string) {
 	token := int(l.Scan())
 	s := l.TokenText()
 
 	log.Printf("token text: %s\n", s)
+
+	return token, s
+}
+
+func (l *Lexer) skipComments() {
+	ch := l.Next()
+	for ch != '\n' && ch >= 0 {
+		ch = l.Next()
+	}
+}
+
+func (l *Lexer) Lex(lval *yySymType) int {
+	token, s := l.scanNextToken()
+
+	if s == "!" || s == "#" {
+		l.skipComments()
+		token, s = l.scanNextToken()
+	}
 
 	if net.ParseIP(s) != nil {
 		token = IPADDR
