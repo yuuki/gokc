@@ -92,6 +92,8 @@ var SYMBOL_TABLES = map[string]int{
 	"connect_timeout": CONNECT_TIMEOUT,
 	"nb_get_retry": NB_GET_RETRY,
 	"delay_before_retry": DELAY_BEFORE_RETRY,
+
+	"include": INCLUDE,
 }
 
 type Lexer struct {
@@ -114,7 +116,7 @@ func NewLexer(src io.Reader) *Lexer {
 }
 
 func isIdentRune(ch rune, i int) bool {
-	return ch == '_' || ch == '.' || ch == '/' || ch == ':' || ch == '-' || ch == '+' || ch == '@' || unicode.IsLetter(ch) || unicode.IsDigit(ch)
+	return ch == '_' || ch == '.' || ch == '/' || ch == ':' || ch == '-' || ch == '+' || ch == '*' || ch == '@' || unicode.IsLetter(ch) || unicode.IsDigit(ch)
 }
 
 func (l *Lexer) scanNextToken() (int, string) {

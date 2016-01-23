@@ -25,6 +25,7 @@ const MAX_PORT_NUM int = 65535
 %token           SCRIPT INTERVAL FALL RISE
 %token           VIRTUAL_SERVER
 %token           DELAY_LOOP LB_ALGO LB_KIND LVS_SCHED LVS_METHOD RR WRR LC WLC LBLC SH DH NAT DR TUN PERSISTENCE_TIMEOUT PROTOCOL TCP UDP SORRY_SERVER REAL_SERVER FWMARK WEIGHT HTTP_GET URL PATH DIGEST STATUS_CODE CONNECT_TIMEOUT NB_GET_RETRY DELAY_BEFORE_RETRY
+%token           INCLUDE
 
 %%
 configuration:  main_statements configuration | main_statements { }
@@ -35,6 +36,7 @@ main_statements:  { }
 | vrrp_instance_block { }
 | vrrp_script_block { }
 | virtual_server_block { }
+| INCLUDE STRING { }
 
 global:	GLOBALDEFS LB global_statements RB
 
