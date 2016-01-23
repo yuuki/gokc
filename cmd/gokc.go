@@ -51,8 +51,6 @@ func main() {
 		os.Exit(1)
 	}
 
-	log.Infof("gokc: --> Parsing %s ...\n", filepath)
-
 	p := parser.NewParser(file)
 	if err := p.Parse(); err != nil {
 		var msgs []string
