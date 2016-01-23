@@ -170,9 +170,9 @@ vip: { }
 | IPADDR LABEL STRING { }
 | IP_CIDR LABEL STRING { }
 
-mail_statements:  mail_statement mail_statements |  mail_statement { }
+mail_statements: mail_statement mail_statements |  mail_statement { }
 
-mail_statement:	 STRING	{ }
+mail_statement:	any_literal	{ }
 
 any_literal: { }
 | NUMBER
