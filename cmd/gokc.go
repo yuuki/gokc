@@ -7,6 +7,8 @@ import (
 	"strconv"
 	"strings"
 
+	"github.com/mitchellh/colorstring"
+
 	"github.com/yuuki1/gokc/log"
 	"github.com/yuuki1/gokc/parser"
 )
@@ -55,7 +57,8 @@ func main() {
 	if err := p.Parse(); err != nil {
 		var msgs []string
 		for _, e := range p.Errors() {
-			msgs = append(msgs, fmt.Sprintf("gokc: %s, line %d, pos %d", e.Message, e.Line, e.Column))
+			msg := colorstring.Color(fmt.Sprintf("[white]%s:%d:%d: [red]%s[reset]", filepath, e.Line, e.Column, e.Message))
+			msgs = append(msgs, msg)
 		}
 		log.Errorf("%s", strings.Join(msgs, "\n"))
 	}
