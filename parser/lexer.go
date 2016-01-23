@@ -34,6 +34,7 @@ var SYMBOL_TABLES = map[string]int{
 	"MASTER": MASTER,
 	"BACKUP": BACKUP,
 	"garp_master_delay": GARP_MASTER_DELAY,
+	"smtp_alert": SMTP_ALERT,
 
 	"virtual_server": VIRTUAL_SERVER,
 	"delay_loop": DELAY_LOOP,
