@@ -45,6 +45,11 @@ var SYMBOL_TABLES = map[string]int{
 	"brd": BRD,
 	"track_interface": TRACK_INTERFACE,
 	"track_script": TRACK_SCRIPT,
+	"notify_master": NOTIFY_MASTER,
+	"notify_backup": NOTIFY_BACKUP,
+	"notify_fault": NOTIFY_FAULT,
+	"notify_stop": NOTIFY_STOP,
+	"notify": NOTIFY,
 
 	"vrrp_script": VRRP_SCRIPT,
 	"script": SCRIPT,
