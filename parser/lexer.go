@@ -178,10 +178,11 @@ func (l *Lexer) scanInclude(filename string) error {
 		if err != nil {
 			return err
 		}
-		defer f.Close()
 
 		l.scannerInit(f, path)
 		l.run()
+
+		f.Close()
 	}
 
 	return nil
