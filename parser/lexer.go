@@ -1,8 +1,8 @@
 package parser
 
 import (
-	"path/filepath"
 	"io"
+	"path/filepath"
 	"net"
 	"net/mail"
 	"os"
@@ -98,6 +98,7 @@ var SYMBOL_TABLES = map[string]int{
 
 type Lexer struct {
 	scanner.Scanner
+	filename string
 	emitter chan int
 	errors []LexError
 }
@@ -108,9 +109,9 @@ type LexError struct {
 	Column int
 }
 
-func NewLexer(src io.Reader) *Lexer {
+func NewLexer(src io.Reader, filename string) *Lexer {
 	var lex Lexer
-	lex.scannerInit(src)
+	lex.scannerInit(src, filename)
 	lex.emitter = make(chan int)
 	return &lex
 }
@@ -119,10 +120,11 @@ func isIdentRune(ch rune, i int) bool {
 	return ch == '_' || ch == '.' || ch == '/' || ch == ':' || ch == '-' || ch == '+' || ch == '*' || ch == '@' || unicode.IsLetter(ch) || unicode.IsDigit(ch)
 }
 
-func (l *Lexer) scannerInit(src io.Reader) {
+func (l *Lexer) scannerInit(src io.Reader, filename string) {
 	l.Init(src)
 	l.Mode &^= scanner.ScanInts | scanner.ScanFloats | scanner.ScanChars | scanner.ScanRawStrings | scanner.ScanComments | scanner.SkipComments
 	l.IsIdentRune = isIdentRune
+	l.filename = filename
 }
 
 func (l *Lexer) scanNextToken() (int, string) {
@@ -154,23 +156,23 @@ func (l *Lexer) scanInclude(filename string) error {
 		return err
 	}
 
+	baseDir := filepath.Dir(l.filename)
+	os.Chdir(baseDir)
+	defer os.Chdir(curDir)
+
 	paths, err := filepath.Glob(filename)
 	if err != nil {
 		return err
 	}
 
 	for _, path := range paths {
-		baseDir := filepath.Base(path)
-		os.Chdir(baseDir)
-		defer os.Chdir(curDir)
-
 		f, err := os.Open(path)
 		if err != nil {
 			return err
 		}
 		defer f.Close()
 
-		l.scannerInit(f)
+		l.scannerInit(f, path)
 		l.run()
 	}
 

@@ -49,7 +49,7 @@ func main() {
 		log.Error(err)
 	}
 
-	p := parser.NewParser(file)
+	p := parser.NewParser(file, filepath)
 	if err := p.Parse(); err != nil {
 		var msgs []string
 		for _, e := range p.Errors() {

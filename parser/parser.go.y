@@ -214,8 +214,8 @@ type Parser struct {
     lexer *Lexer
 }
 
-func NewParser(r io.Reader) *Parser {
-    l := NewLexer(r)
+func NewParser(src io.Reader, filename string) *Parser {
+    l := NewLexer(src, filename)
     return &Parser{lexer: l}
 }
 
