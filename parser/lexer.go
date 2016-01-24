@@ -1,9 +1,11 @@
 package parser
 
 import (
+	"path/filepath"
 	"io"
 	"net"
 	"net/mail"
+	"os"
 	"regexp"
 	"strconv"
 	"text/scanner"
@@ -108,15 +110,19 @@ type LexError struct {
 
 func NewLexer(src io.Reader) *Lexer {
 	var lex Lexer
-	lex.Init(src)
-	lex.Mode &^= scanner.ScanInts | scanner.ScanFloats | scanner.ScanChars | scanner.ScanRawStrings | scanner.ScanComments | scanner.SkipComments
-	lex.IsIdentRune = isIdentRune
+	lex.scannerInit(src)
 	lex.emitter = make(chan int)
 	return &lex
 }
 
 func isIdentRune(ch rune, i int) bool {
 	return ch == '_' || ch == '.' || ch == '/' || ch == ':' || ch == '-' || ch == '+' || ch == '*' || ch == '@' || unicode.IsLetter(ch) || unicode.IsDigit(ch)
+}
+
+func (l *Lexer) scannerInit(src io.Reader) {
+	l.Init(src)
+	l.Mode &^= scanner.ScanInts | scanner.ScanFloats | scanner.ScanChars | scanner.ScanRawStrings | scanner.ScanComments | scanner.SkipComments
+	l.IsIdentRune = isIdentRune
 }
 
 func (l *Lexer) scanNextToken() (int, string) {
@@ -142,19 +148,63 @@ func (l *Lexer) skipComments() {
 	}
 }
 
+func (l *Lexer) scanInclude(filename string) error {
+	curDir, err := filepath.Abs(".")
+	if err != nil {
+		return err
+	}
+
+	paths, err := filepath.Glob(filename)
+	if err != nil {
+		return err
+	}
+
+	for _, path := range paths {
+		baseDir := filepath.Base(path)
+		os.Chdir(baseDir)
+		defer os.Chdir(curDir)
+
+		f, err := os.Open(path)
+		if err != nil {
+			return err
+		}
+		defer f.Close()
+
+		l.scannerInit(f)
+		l.run()
+	}
+
+	return nil
+}
+
 func (l *Lexer) Lex(lval *yySymType) int {
 	return <-l.emitter
 }
 
 func (l *Lexer) run() {
+	var startInclude bool
+
 	for {
 		token, s := l.scanNextToken()
 
 		// True end
-		if token == scanner.EOF {
+		// Ignore include file's EOF
+		if token == scanner.EOF && startInclude == false {
 			l.emitter <- token
 			close(l.emitter)
 			break
+		}
+
+		if s == "include" {
+			startInclude = true
+			token, s = l.scanNextToken()
+
+			if err := l.scanInclude(s); err != nil {
+				l.Error(err.Error())
+			}
+
+			token, s = l.scanNextToken()
+			startInclude = false
 		}
 
 		if token == scanner.Ident || token == scanner.String {
