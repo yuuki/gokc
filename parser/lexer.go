@@ -210,6 +210,7 @@ func (l *Lexer) mainRun() {
 	// XXX
 	l.emitter <- scanner.EOF
 	l.emitter <- scanner.EOF
+	close(l.emitter)
 }
 
 func (l *Lexer) run() {
