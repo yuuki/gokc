@@ -1,9 +1,5 @@
 %{
 package parser
-import (
-    "fmt"
-    "io"
-)
 
 const MAX_PORT_NUM int = 65535
 %}
@@ -209,28 +205,3 @@ any_literal: { }
 | IP_CIDR
 
 %%
-
-type Parser struct {
-    lexer *Lexer
-}
-
-func NewParser(src io.Reader, filename string) *Parser {
-    l := NewLexer(src, filename)
-    return &Parser{lexer: l}
-}
-
-func (p *Parser) Parse() error {
-    yyErrorVerbose = true
-
-    go p.lexer.run()
-
-    if ret := yyParse(p.lexer); ret != 0 {
-        return fmt.Errorf("syntax error")
-    }
-
-    return nil
-}
-
-func (p *Parser) Errors() []LexError {
-    return p.lexer.errors
-}

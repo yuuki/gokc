@@ -5,7 +5,6 @@ import (
 	"fmt"
 	"os"
 	"strconv"
-	"strings"
 
 	"github.com/mitchellh/colorstring"
 
@@ -49,14 +48,13 @@ func main() {
 		log.Error(err)
 	}
 
-	p := parser.NewParser(file, filepath)
-	if err := p.Parse(); err != nil {
-		var msgs []string
-		for _, e := range p.Errors() {
+	if err := parser.Parse(file, filepath); err != nil {
+		if e, ok := err.(*parser.Error); ok {
 			msg := colorstring.Color(fmt.Sprintf("[white]%s:%d:%d: [red]%s[reset]", e.Filename, e.Line, e.Column, e.Message))
-			msgs = append(msgs, msg)
+			log.Error(msg)
+		} else {
+			log.Error(err)
 		}
-		log.Errorf("%s", strings.Join(msgs, "\n"))
 	}
 
 	log.Infof("gokc: the configuration file %s syntax is ok", filepath)

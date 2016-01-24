@@ -100,14 +100,18 @@ type Lexer struct {
 	scanner.Scanner
 	filename string
 	emitter chan int
-	errors []LexError
+	e *Error
 }
 
-type LexError struct {
+type Error struct {
 	Message string
 	Filename string
 	Line int
 	Column int
+}
+
+func (e *Error) Error() string {
+	return e.Message
 }
 
 func NewLexer(src io.Reader, filename string) *Lexer {
@@ -247,8 +251,17 @@ func (l *Lexer) run() {
 	}
 }
 
-func (l *Lexer) Error(e string) {
-	lexerr := LexError{Filename: l.filename, Line: l.Line, Column: l.Column, Message: e}
-	l.errors = append(l.errors, lexerr)
+func (l *Lexer) Error(msg string) {
+	l.e = &Error{Filename: l.filename, Line: l.Line, Column: l.Column, Message: msg}
+}
+
+func Parse(src io.Reader, filename string) error {
+	yyErrorVerbose = true
+	l := NewLexer(src, filename)
+	go l.run()
+	if ret := yyParse(l); ret != 0 {
+		return l.e
+	}
+	return nil
 }
 
