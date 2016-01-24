@@ -86,6 +86,7 @@ var SYMBOL_TABLES = map[string]int{
 	"sorry_server": SORRY_SERVER,
 	"real_server": REAL_SERVER,
 	"weight": WEIGHT,
+	"inhibit_on_failure": INHIBIT_ON_FAILURE,
 	"HTTP_GET": HTTP_GET,
 	"url": URL,
 	"path": PATH,
