@@ -32,6 +32,7 @@ main_statements:  { }
 | vrrp_script_block { }
 | virtual_server_block { }
 | virtual_server_group_block { }
+| virtual_server_with_group_block { }
 
 global:	GLOBALDEFS LB global_statements RB
 
@@ -134,6 +135,8 @@ virtual_server_group_statement: { }
 | FWMARK NUMBER { }
 
 virtual_server_block: VIRTUAL_SERVER iporfw LB virtual_server_statements RB
+
+virtual_server_with_group_block: VIRTUAL_SERVER GROUP STRING LB virtual_server_statements RB
 
 virtual_server_statements: virtual_server_statement virtual_server_statements | virtual_server_statement
 
