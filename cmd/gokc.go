@@ -41,8 +41,7 @@ func main() {
 	flag.Parse()
 
 	if filepath == "" {
-		fmt.Println("filepath required")
-		os.Exit(1)
+		log.Error("filepath required")
 	}
 
 	if _, err := os.Stat(filepath); err != nil {
@@ -51,8 +50,7 @@ func main() {
 
 	file, err := os.Open(filepath)
 	if err != nil {
-		fmt.Printf("%s\n", err)
-		os.Exit(1)
+		log.Error(err)
 	}
 
 	p := parser.NewParser(file)
