@@ -99,10 +99,14 @@ var SYMBOL_TABLES = map[string]int{
 }
 
 type Lexer struct {
-	scanner.Scanner
-	filename string
+	ctx *Context
 	emitter chan int
 	e *Error
+}
+
+type Context struct {
+	scanner scanner.Scanner
+	filename string
 }
 
 type Error struct {
@@ -118,31 +122,32 @@ func (e *Error) Error() string {
 
 func NewLexer(src io.Reader, filename string) *Lexer {
 	var lex Lexer
-	lex.scannerInit(src, filename)
+	lex.ctx = NewContext(src, filename)
 	lex.emitter = make(chan int)
 	return &lex
+}
+
+func NewContext(src io.Reader, filename string) *Context {
+	c := &Context{filename: filename}
+	c.scanner.Init(src)
+	c.scanner.Mode &^= scanner.ScanInts | scanner.ScanFloats | scanner.ScanChars | scanner.ScanRawStrings | scanner.ScanComments | scanner.SkipComments
+	c.scanner.IsIdentRune = isIdentRune
+	return c
 }
 
 func isIdentRune(ch rune, i int) bool {
 	return ch == '_' || ch == '.' || ch == '/' || ch == ':' || ch == '-' || ch == '+' || ch == '*' || ch == '@' || unicode.IsLetter(ch) || unicode.IsDigit(ch)
 }
 
-func (l *Lexer) scannerInit(src io.Reader, filename string) {
-	l.Init(src)
-	l.Mode &^= scanner.ScanInts | scanner.ScanFloats | scanner.ScanChars | scanner.ScanRawStrings | scanner.ScanComments | scanner.SkipComments
-	l.IsIdentRune = isIdentRune
-	l.filename = filename
-}
-
-func (l *Lexer) scanNextToken() (int, string) {
-	token := int(l.Scan())
-	s := l.TokenText()
+func (c *Context) scanNextToken() (int, string) {
+	token := int(c.scanner.Scan())
+	s := c.scanner.TokenText()
 
 	for s == "!" || s == "#" {
-		l.skipComments()
+		c.skipComments()
 
-		token = int(l.Scan())
-		s = l.TokenText()
+		token = int(c.scanner.Scan())
+		s = c.scanner.TokenText()
 	}
 
 	log.Debugf("token text: %s\n", s)
@@ -150,10 +155,10 @@ func (l *Lexer) scanNextToken() (int, string) {
 	return token, s
 }
 
-func (l *Lexer) skipComments() {
-	ch := l.Next()
+func (c *Context) skipComments() {
+	ch := c.scanner.Next()
 	for ch != '\n' && ch >= 0 {
-		ch = l.Next()
+		ch = c.scanner.Next()
 	}
 }
 
@@ -163,9 +168,11 @@ func (l *Lexer) scanInclude(filename string) error {
 		return err
 	}
 
-	baseDir := filepath.Dir(l.filename)
+	baseDir := filepath.Dir(l.ctx.filename)
 	os.Chdir(baseDir)
 	defer os.Chdir(curDir)
+
+	prevctx := l.ctx
 
 	paths, err := filepath.Glob(filename)
 	if err != nil {
@@ -179,11 +186,13 @@ func (l *Lexer) scanInclude(filename string) error {
 			return err
 		}
 
-		l.scannerInit(f, path)
+		l.ctx = NewContext(f, path)
 		l.run()
 
 		f.Close()
 	}
+
+	l.ctx = prevctx
 
 	return nil
 }
@@ -194,7 +203,7 @@ func (l *Lexer) Lex(lval *yySymType) int {
 
 func (l *Lexer) run() {
 	for {
-		token, s := l.scanNextToken()
+		token, s := l.ctx.scanNextToken()
 
 		if token == scanner.EOF {
 			l.emitter <- token
@@ -202,13 +211,13 @@ func (l *Lexer) run() {
 		}
 
 		if s == "include" {
-			token, s = l.scanNextToken()
+			token, s = l.ctx.scanNextToken()
 
 			if err := l.scanInclude(s); err != nil {
 				l.Error(err.Error())
 			}
 
-			token, s = l.scanNextToken()
+			token, s = l.ctx.scanNextToken()
 		}
 
 		if token == scanner.Ident || token == scanner.String {
@@ -248,7 +257,12 @@ func (l *Lexer) run() {
 }
 
 func (l *Lexer) Error(msg string) {
-	l.e = &Error{Filename: l.filename, Line: l.Line, Column: l.Column, Message: msg}
+	l.e = &Error{
+		Filename: l.ctx.filename,
+		Line: l.ctx.scanner.Line,
+		Column: l.ctx.scanner.Column,
+		Message: msg,
+	}
 }
 
 func Parse(src io.Reader, filename string) error {
