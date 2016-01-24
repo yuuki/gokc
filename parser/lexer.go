@@ -155,7 +155,7 @@ func NewContext(src io.Reader, filename string) *Context {
 }
 
 func isIdentRune(ch rune, i int) bool {
-	return ch == '_' || ch == '.' || ch == '/' || ch == ':' || ch == '-' || ch == '+' || ch == '*' || ch == '@' || unicode.IsLetter(ch) || unicode.IsDigit(ch)
+	return ch == '_' || ch == '.' || ch == '/' || ch == ':' || ch == '-' || ch == '+' || ch == '*' || ch == '?' || ch == '=' || ch == '&' || ch == '@' || unicode.IsLetter(ch) || unicode.IsDigit(ch)
 }
 
 func (c *Context) scanNextToken() (int, string) {
