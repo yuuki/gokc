@@ -1,7 +1,5 @@
 %{
 package parser
-
-const MAX_PORT_NUM int = 65535
 %}
 
 %union {

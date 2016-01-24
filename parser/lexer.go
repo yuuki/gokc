@@ -174,17 +174,16 @@ func (l *Lexer) scanInclude(filename string) error {
 	os.Chdir(baseDir)
 	defer os.Chdir(curDir)
 
-	prevctx := l.ctx
-	defer func() { l.ctx = prevctx }()
-
 	paths, err := filepath.Glob(filename)
 	if err != nil {
 		return err
 	}
 
+	prevctx := l.ctx
+	defer func() { l.ctx = prevctx }()
+
 	for _, p := range paths {
 		path := filepath.Join(baseDir, p)
-		log.Debug(path)
 
 		f, err := os.Open(path)
 		if err != nil {
@@ -208,11 +207,6 @@ func (l *Lexer) run() {
 	for {
 		token, s := l.ctx.scanNextToken()
 
-		if token == scanner.EOF {
-			l.emitter <- token
-			break
-		}
-
 		if s == "include" {
 			token, s = l.ctx.scanNextToken()
 
@@ -221,6 +215,10 @@ func (l *Lexer) run() {
 			}
 
 			token, s = l.ctx.scanNextToken()
+		}
+
+		if token == scanner.EOF {
+			break
 		}
 
 		if token == scanner.Ident || token == scanner.String {
