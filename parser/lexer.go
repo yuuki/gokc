@@ -38,6 +38,7 @@ var SYMBOL_TABLES = map[string]int{
 	"priority": PRIORITY,
 	"advert_int": ADVERT_INT,
 	"virtual_ipaddress": VIRTUAL_IPADDRESS,
+	"virtual_ipaddress_excluded": VIRTUAL_IPADDRESS_EXCLUDED,
 	"state": STATE,
 	"MASTER": MASTER,
 	"BACKUP": BACKUP,
