@@ -20,7 +20,7 @@ const MAX_PORT_NUM int = 65535
 %token           VRRP_SCRIPT
 %token           SCRIPT INTERVAL FALL RISE
 %token           VIRTUAL_SERVER
-%token           DELAY_LOOP LB_ALGO LB_KIND LVS_SCHED LVS_METHOD RR WRR LC WLC LBLC SH DH NAT DR TUN PERSISTENCE_TIMEOUT PROTOCOL TCP UDP SORRY_SERVER REAL_SERVER FWMARK WEIGHT INHIBIT_ON_FAILURE HTTP_GET URL PATH DIGEST STATUS_CODE CONNECT_TIMEOUT NB_GET_RETRY DELAY_BEFORE_RETRY VIRTUALHOST
+%token           DELAY_LOOP LB_ALGO LB_KIND LVS_SCHED LVS_METHOD RR WRR LC WLC LBLC SH DH NAT DR TUN PERSISTENCE_TIMEOUT PROTOCOL TCP UDP SORRY_SERVER REAL_SERVER FWMARK WEIGHT INHIBIT_ON_FAILURE TCP_CHECK HTTP_GET URL PATH DIGEST STATUS_CODE CONNECT_TIMEOUT CONNECT_PORT NB_GET_RETRY DELAY_BEFORE_RETRY VIRTUALHOST
 
 %%
 configuration:  main_statements configuration | main_statements { }
@@ -139,7 +139,14 @@ real_server_statements: real_server_statement real_server_statements | real_serv
 real_server_statement: { }
 | WEIGHT NUMBER { }
 | INHIBIT_ON_FAILURE { }
+| TCP_CHECK LB tcp_check_statements RB { }
 | HTTP_GET LB http_get_statements RB { }
+
+tcp_check_statements: tcp_check_statement tcp_check_statements | tcp_check_statement { }
+
+tcp_check_statement: { }
+| CONNECT_PORT NUMBER { }
+| CONNECT_TIMEOUT NUMBER { }
 
 http_get_statements: http_get_statement http_get_statements | http_get_statement { }
 
