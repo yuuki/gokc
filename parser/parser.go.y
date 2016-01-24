@@ -18,7 +18,8 @@ package parser
 %token           VRRP_SCRIPT
 %token           SCRIPT INTERVAL FALL RISE
 %token           VIRTUAL_SERVER
-%token           DELAY_LOOP LB_ALGO LB_KIND LVS_SCHED LVS_METHOD RR WRR LC WLC LBLC SH DH NAT DR TUN PERSISTENCE_TIMEOUT PROTOCOL TCP UDP SORRY_SERVER REAL_SERVER FWMARK WEIGHT INHIBIT_ON_FAILURE TCP_CHECK HTTP_GET MISC_CHECK URL PATH DIGEST STATUS_CODE CONNECT_TIMEOUT CONNECT_PORT MISC_PATH MISC_TIMEOUT WARMUP MISC_DYNAMIC NB_GET_RETRY DELAY_BEFORE_RETRY VIRTUALHOST
+%token           DELAY_LOOP LB_ALGO LB_KIND LVS_SCHED LVS_METHOD RR WRR LC WLC LBLC SH DH NAT DR TUN PERSISTENCE_TIMEOUT PROTOCOL TCP UDP SORRY_SERVER REAL_SERVER FWMARK WEIGHT INHIBIT_ON_FAILURE TCP_CHECK HTTP_GET SMTP_CHECK MISC_CHECK URL PATH DIGEST STATUS_CODE CONNECT_TIMEOUT CONNECT_PORT CONNECT_IP BINDTO BIND_PORT HOST RETRY HELO_NAME MISC_PATH MISC_TIMEOUT WARMUP MISC_DYNAMIC NB_GET_RETRY DELAY_BEFORE_RETRY VIRTUALHOST
+
 
 %%
 configuration:  main_statements configuration | main_statements { }
@@ -145,6 +146,7 @@ real_server_statement: { }
 | INHIBIT_ON_FAILURE { }
 | TCP_CHECK LB tcp_check_statements RB { }
 | HTTP_GET LB http_get_statements RB { }
+| SMTP_CHECK LB smtp_check_statements RB { }
 | MISC_CHECK LB misc_check_statements RB { }
 
 tcp_check_statements: tcp_check_statement tcp_check_statements | tcp_check_statement { }
@@ -168,6 +170,26 @@ url_statement: { }
 | PATH PATHSTR { }
 | DIGEST HEX32 { }
 | STATUS_CODE NUMBER { }
+
+smtp_check_statements: smtp_check_statement smtp_check_statements | smtp_check_statement { }
+
+smtp_check_statement: { }
+| host_statement { }
+| HOST LB host_statements RB
+| WARMUP NUMBER
+| RETRY NUMBER
+| DELAY_BEFORE_RETRY NUMBER
+| HELO_NAME STRING
+
+host_statements: host_statement host_statements | host_statement { }
+
+host_statement: { }
+| CONNECT_IP IPADDR { }
+| CONNECT_PORT NUMBER { }
+| BINDTO IPADDR { }
+| BIND_PORT NUMBER { }
+| CONNECT_TIMEOUT NUMBER { }
+| FWMARK NUMBER { }
 
 misc_check_statements: misc_check_statement misc_check_statements | misc_check_statement { }
 
