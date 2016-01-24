@@ -1,6 +1,7 @@
 package parser
 
 import (
+	"fmt"
 	"io"
 	"path/filepath"
 	"net"
@@ -180,6 +181,10 @@ func (l *Lexer) scanInclude(filename string) error {
 		return err
 	}
 
+	if len(paths) < 1 {
+		return fmt.Errorf("%s: No such file or directory", filename)
+	}
+
 	prevctx := l.ctx
 	defer func() { l.ctx = prevctx }()
 
@@ -283,6 +288,6 @@ func Parse(src io.Reader, filename string) error {
 	if ret := yyParse(l); ret != 0 {
 		return l.e
 	}
-	return nil
+	return l.e
 }
 
