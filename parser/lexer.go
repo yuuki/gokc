@@ -92,12 +92,11 @@ var SYMBOL_TABLES = map[string]int{
 	"connect_timeout": CONNECT_TIMEOUT,
 	"nb_get_retry": NB_GET_RETRY,
 	"delay_before_retry": DELAY_BEFORE_RETRY,
-
-	"include": INCLUDE,
 }
 
 type Lexer struct {
 	scanner.Scanner
+	emitter chan int
 	errors []LexError
 }
 
@@ -112,6 +111,7 @@ func NewLexer(src io.Reader) *Lexer {
 	lex.Init(src)
 	lex.Mode &^= scanner.ScanInts | scanner.ScanFloats | scanner.ScanChars | scanner.ScanRawStrings | scanner.ScanComments | scanner.SkipComments
 	lex.IsIdentRune = isIdentRune
+	lex.emitter = make(chan int)
 	return &lex
 }
 
@@ -143,41 +143,54 @@ func (l *Lexer) skipComments() {
 }
 
 func (l *Lexer) Lex(lval *yySymType) int {
-	token, s := l.scanNextToken()
+	return <-l.emitter
+}
 
-	if token == scanner.Ident || token == scanner.String {
-		token = STRING
+func (l *Lexer) run() {
+	for {
+		token, s := l.scanNextToken()
+
+		// True end
+		if token == scanner.EOF {
+			l.emitter <- token
+			close(l.emitter)
+			break
+		}
+
+		if token == scanner.Ident || token == scanner.String {
+			token = STRING
+		}
+
+		if _, err := strconv.Atoi(s); err == nil {
+			token = NUMBER
+		}
+
+		if net.ParseIP(s) != nil {
+			token = IPADDR
+		}
+
+		if _, _, err := net.ParseCIDR(s); err == nil {
+			token = IP_CIDR
+		}
+
+		if ok, _ := regexp.MatchString("[[:xdigit:]]{32}", s); ok {
+			token = HEX32
+		}
+
+		if ok, _ := regexp.MatchString("/^([[:alnum:]./-_])*", s); ok {
+			token = PATHSTR
+		}
+
+		if _, err := mail.ParseAddress(s); err == nil {
+			token = EMAIL
+		}
+
+		if _, ok := SYMBOL_TABLES[s]; ok {
+			token = SYMBOL_TABLES[s]
+		}
+
+		l.emitter <- token
 	}
-
-	if _, err := strconv.Atoi(s); err == nil {
-		token = NUMBER
-	}
-
-	if net.ParseIP(s) != nil {
-		token = IPADDR
-	}
-
-	if _, _, err := net.ParseCIDR(s); err == nil {
-		token = IP_CIDR
-	}
-
-	if ok, _ := regexp.MatchString("[[:xdigit:]]{32}", s); ok {
-		token = HEX32
-	}
-
-	if ok, _ := regexp.MatchString("/^([[:alnum:]./-_])*", s); ok {
-		token = PATHSTR
-	}
-
-	if _, err := mail.ParseAddress(s); err == nil {
-		token = EMAIL
-	}
-
-	if _, ok := SYMBOL_TABLES[s]; ok {
-		token = SYMBOL_TABLES[s]
-	}
-
-	return token
 }
 
 func (l *Lexer) Error(e string) {
