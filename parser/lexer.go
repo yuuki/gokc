@@ -167,7 +167,7 @@ func (c *Context) skipComments() {
 	}
 }
 
-func (l *Lexer) scanInclude(filename string) error {
+func (l *Lexer) scanInclude(rawfilename string) error {
 	curDir, err := filepath.Abs(".")
 	if err != nil {
 		return err
@@ -177,27 +177,27 @@ func (l *Lexer) scanInclude(filename string) error {
 	os.Chdir(baseDir)
 	defer os.Chdir(curDir)
 
-	paths, err := filepath.Glob(filename)
+	rawpaths, err := filepath.Glob(rawfilename)
 	if err != nil {
 		return err
 	}
 
-	if len(paths) < 1 {
-		return fmt.Errorf("%s: No such file or directory", filename)
+	if len(rawpaths) < 1 {
+		return fmt.Errorf("%s: No such file or directory", rawfilename)
 	}
 
 	prevctx := l.ctx
 	defer func() { l.ctx = prevctx }()
 
-	for _, p := range paths {
-		log.Debugf("--> including: %s\n", filepath.Join(baseDir, p))
+	for _, rawpath := range rawpaths {
+		log.Debugf("--> including: %s\n", filepath.Join(baseDir, rawpath))
 
-		f, err := os.Open(p)
+		f, err := os.Open(rawpath)
 		if err != nil {
 			return err
 		}
 
-		l.ctx = NewContext(f, p)
+		l.ctx = NewContext(f, rawpath)
 		l.run()
 
 		f.Close()
