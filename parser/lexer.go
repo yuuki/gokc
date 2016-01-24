@@ -193,7 +193,7 @@ func (l *Lexer) scanInclude(rawfilename string) error {
 
 	for _, rawpath := range rawpaths {
 		relpath := filepath.Join(baseDir, rawpath)
-		log.Debugf("--> including: %s\n", relpath)
+		log.Debugf("--> Parsing ... %s\n", relpath)
 
 		f, err := os.Open(rawpath)
 		if err != nil {
