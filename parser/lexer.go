@@ -173,6 +173,7 @@ func (l *Lexer) scanInclude(filename string) error {
 	defer os.Chdir(curDir)
 
 	prevctx := l.ctx
+	defer func() { l.ctx = prevctx }()
 
 	paths, err := filepath.Glob(filename)
 	if err != nil {
@@ -191,8 +192,6 @@ func (l *Lexer) scanInclude(filename string) error {
 
 		f.Close()
 	}
-
-	l.ctx = prevctx
 
 	return nil
 }
