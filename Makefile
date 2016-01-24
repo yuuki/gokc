@@ -9,6 +9,7 @@ build: yacc
 	go build -o $(BIN) ./cmd
 
 test: build
+	find ./testdata -typef | xargs -I{} ./$(BIN) -f {}
 	find ./keepalived/doc/samples/ -type f | xargs -I{} ./$(BIN) -f {}
 
 deps:
