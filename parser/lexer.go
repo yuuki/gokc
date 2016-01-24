@@ -106,7 +106,7 @@ var SYMBOL_TABLES = map[string]int{
 type Lexer struct {
 	ctx *Context
 	emitter chan int
-	e *Error
+	e error
 }
 
 type Context struct {
