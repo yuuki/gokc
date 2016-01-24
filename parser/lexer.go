@@ -32,6 +32,9 @@ var SYMBOL_TABLES = map[string]int{
 
 	"vrrp_instance": VRRP_INSTANCE,
 	"interface": INTERFACE,
+	"mcast_src_ip": MCAST_SRC_IP,
+	"unicast_src_ip": UNICAST_SRC_IP,
+	"unicast_peer": UNICAST_PEER,
 	"lvs_sync_daemon_interface": LVS_SYNC_DAEMON_INTERFACE,
 	"virtual_router_id": VIRTUAL_ROUTER_ID,
 	"nopreempt": NOPREEMPT,
