@@ -78,6 +78,7 @@ var SYMBOL_TABLES = map[string]int{
 	"sh": SH,
 	"dh": DH,
 	"NAT": NAT,
+	"DR": DR,
 	"TUN": TUN,
 	"persistence_timeout": PERSISTENCE_TIMEOUT,
 	"protocol": PROTOCOL,
