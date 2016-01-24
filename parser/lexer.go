@@ -192,14 +192,15 @@ func (l *Lexer) scanInclude(rawfilename string) error {
 	defer func() { l.ctx = prevctx }()
 
 	for _, rawpath := range rawpaths {
-		log.Debugf("--> including: %s\n", filepath.Join(baseDir, rawpath))
+		relpath := filepath.Join(baseDir, rawpath)
+		log.Debugf("--> including: %s\n", relpath)
 
 		f, err := os.Open(rawpath)
 		if err != nil {
 			return err
 		}
 
-		l.ctx = NewContext(f, rawpath)
+		l.ctx = NewContext(f, relpath)
 		l.run()
 
 		f.Close()
