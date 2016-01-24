@@ -45,6 +45,10 @@ func main() {
 		os.Exit(1)
 	}
 
+	if _, err := os.Stat(filepath); err != nil {
+		log.Error(err)
+	}
+
 	file, err := os.Open(filepath)
 	if err != nil {
 		fmt.Printf("%s\n", err)
