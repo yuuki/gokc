@@ -53,7 +53,7 @@ func main() {
 	if err := p.Parse(); err != nil {
 		var msgs []string
 		for _, e := range p.Errors() {
-			msg := colorstring.Color(fmt.Sprintf("[white]%s:%d:%d: [red]%s[reset]", filepath, e.Line, e.Column, e.Message))
+			msg := colorstring.Color(fmt.Sprintf("[white]%s:%d:%d: [red]%s[reset]", e.Filename, e.Line, e.Column, e.Message))
 			msgs = append(msgs, msg)
 		}
 		log.Errorf("%s", strings.Join(msgs, "\n"))

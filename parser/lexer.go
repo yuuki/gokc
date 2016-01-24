@@ -105,6 +105,7 @@ type Lexer struct {
 
 type LexError struct {
 	Message string
+	Filename string
 	Line int
 	Column int
 }
@@ -165,7 +166,8 @@ func (l *Lexer) scanInclude(filename string) error {
 		return err
 	}
 
-	for _, path := range paths {
+	for _, p := range paths {
+		path := filepath.Join(baseDir, p)
 		f, err := os.Open(path)
 		if err != nil {
 			return err
@@ -246,7 +248,7 @@ func (l *Lexer) run() {
 }
 
 func (l *Lexer) Error(e string) {
-	lexerr := LexError{Line: l.Line, Column: l.Column, Message: e}
+	lexerr := LexError{Filename: l.filename, Line: l.Line, Column: l.Column, Message: e}
 	l.errors = append(l.errors, lexerr)
 }
 
