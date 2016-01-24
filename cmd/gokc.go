@@ -44,10 +44,6 @@ func main() {
 		log.Error("filepath required")
 	}
 
-	if _, err := os.Stat(filepath); err != nil {
-		log.Error(err)
-	}
-
 	file, err := os.Open(filepath)
 	if err != nil {
 		log.Error(err)
