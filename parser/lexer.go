@@ -192,21 +192,15 @@ func (l *Lexer) Lex(lval *yySymType) int {
 }
 
 func (l *Lexer) run() {
-	var startInclude bool
-
 	for {
 		token, s := l.scanNextToken()
 
-		// True end
-		// Ignore include file's EOF
-		if token == scanner.EOF && startInclude == false {
+		if token == scanner.EOF {
 			l.emitter <- token
-			close(l.emitter)
 			break
 		}
 
 		if s == "include" {
-			startInclude = true
 			token, s = l.scanNextToken()
 
 			if err := l.scanInclude(s); err != nil {
@@ -214,7 +208,6 @@ func (l *Lexer) run() {
 			}
 
 			token, s = l.scanNextToken()
-			startInclude = false
 		}
 
 		if token == scanner.Ident || token == scanner.String {
@@ -261,6 +254,7 @@ func Parse(src io.Reader, filename string) error {
 	yyErrorVerbose = true
 	l := NewLexer(src, filename)
 	go l.run()
+	defer close(l.emitter)
 	if ret := yyParse(l); ret != 0 {
 		return l.e
 	}
