@@ -47,6 +47,7 @@ func main() {
 	if err != nil {
 		log.Error(err)
 	}
+	defer file.Close()
 
 	if err := parser.Parse(file, filepath); err != nil {
 		if e, ok := err.(*parser.Error); ok {
