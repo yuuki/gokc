@@ -190,15 +190,14 @@ func (l *Lexer) scanInclude(filename string) error {
 	defer func() { l.ctx = prevctx }()
 
 	for _, p := range paths {
-		path := filepath.Join(baseDir, p)
-		log.Debug(path)
+		log.Debugf("--> including: %s\n", filepath.Join(baseDir, p))
 
-		f, err := os.Open(path)
+		f, err := os.Open(p)
 		if err != nil {
 			return err
 		}
 
-		l.ctx = NewContext(f, path)
+		l.ctx = NewContext(f, p)
 		l.run()
 
 		f.Close()
