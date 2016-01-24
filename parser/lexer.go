@@ -94,6 +94,7 @@ var SYMBOL_TABLES = map[string]int{
 	"connect_timeout": CONNECT_TIMEOUT,
 	"nb_get_retry": NB_GET_RETRY,
 	"delay_before_retry": DELAY_BEFORE_RETRY,
+	"virtualhost": VIRTUALHOST,
 }
 
 type Lexer struct {
