@@ -101,6 +101,7 @@ var SYMBOL_TABLES = map[string]int{
 type Lexer struct {
 	ctx *Context
 	emitter chan int
+	closer chan struct{}
 	e *Error
 }
 
@@ -124,6 +125,7 @@ func NewLexer(src io.Reader, filename string) *Lexer {
 	var lex Lexer
 	lex.ctx = NewContext(src, filename)
 	lex.emitter = make(chan int)
+	lex.closer = make(chan struct{})
 	return &lex
 }
 
@@ -182,6 +184,7 @@ func (l *Lexer) scanInclude(filename string) error {
 
 	for _, p := range paths {
 		path := filepath.Join(baseDir, p)
+		log.Debug(path)
 		f, err := os.Open(path)
 		if err != nil {
 			return err
@@ -268,7 +271,6 @@ func Parse(src io.Reader, filename string) error {
 	yyErrorVerbose = true
 	l := NewLexer(src, filename)
 	go l.run()
-	defer close(l.emitter)
 	if ret := yyParse(l); ret != 0 {
 		return l.e
 	}
