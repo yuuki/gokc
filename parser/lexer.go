@@ -185,6 +185,7 @@ func (l *Lexer) scanInclude(filename string) error {
 
 	for _, p := range paths {
 		path := filepath.Join(baseDir, p)
+		log.Debug(path)
 
 		f, err := os.Open(path)
 		if err != nil {
@@ -202,6 +203,13 @@ func (l *Lexer) scanInclude(filename string) error {
 
 func (l *Lexer) Lex(lval *yySymType) int {
 	return <-l.emitter
+}
+
+func (l *Lexer) mainRun() {
+	l.run()
+	// XXX
+	l.emitter <- scanner.EOF
+	l.emitter <- scanner.EOF
 }
 
 func (l *Lexer) run() {
@@ -270,7 +278,7 @@ func (l *Lexer) Error(msg string) {
 func Parse(src io.Reader, filename string) error {
 	yyErrorVerbose = true
 	l := NewLexer(src, filename)
-	go l.run()
+	go l.mainRun()
 	if ret := yyParse(l); ret != 0 {
 		return l.e
 	}
