@@ -18,7 +18,7 @@ package parser
 %token           VRRP_SCRIPT
 %token           SCRIPT INTERVAL FALL RISE
 %token           VIRTUAL_SERVER
-%token           DELAY_LOOP LB_ALGO LB_KIND LVS_SCHED LVS_METHOD RR WRR LC WLC LBLC SH DH NAT DR TUN PERSISTENCE_TIMEOUT PROTOCOL TCP UDP SORRY_SERVER REAL_SERVER FWMARK WEIGHT INHIBIT_ON_FAILURE TCP_CHECK HTTP_GET URL PATH DIGEST STATUS_CODE CONNECT_TIMEOUT CONNECT_PORT NB_GET_RETRY DELAY_BEFORE_RETRY VIRTUALHOST
+%token           DELAY_LOOP LB_ALGO LB_KIND LVS_SCHED LVS_METHOD RR WRR LC WLC LBLC SH DH NAT DR TUN PERSISTENCE_TIMEOUT PROTOCOL TCP UDP SORRY_SERVER REAL_SERVER FWMARK WEIGHT INHIBIT_ON_FAILURE TCP_CHECK HTTP_GET MISC_CHECK URL PATH DIGEST STATUS_CODE CONNECT_TIMEOUT CONNECT_PORT MISC_PATH MISC_TIMEOUT WARMUP MISC_DYNAMIC NB_GET_RETRY DELAY_BEFORE_RETRY VIRTUALHOST
 
 %%
 configuration:  main_statements configuration | main_statements { }
@@ -145,6 +145,7 @@ real_server_statement: { }
 | INHIBIT_ON_FAILURE { }
 | TCP_CHECK LB tcp_check_statements RB { }
 | HTTP_GET LB http_get_statements RB { }
+| MISC_CHECK LB misc_check_statements RB { }
 
 tcp_check_statements: tcp_check_statement tcp_check_statements | tcp_check_statement { }
 
@@ -167,6 +168,15 @@ url_statement: { }
 | PATH PATHSTR { }
 | DIGEST HEX32 { }
 | STATUS_CODE NUMBER { }
+
+misc_check_statements: misc_check_statement misc_check_statements | misc_check_statement { }
+
+misc_check_statement: { }
+| MISC_PATH STRING { }
+| MISC_PATH PATHSTR { }
+| MISC_TIMEOUT NUMBER { }
+| WARMUP NUMBER { }
+| MISC_DYNAMIC { }
 
 ipport: { }
 | IPADDR { }
