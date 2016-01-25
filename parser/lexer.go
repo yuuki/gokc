@@ -288,11 +288,11 @@ func (l *Lexer) run() {
 			}
 		}
 
-		if ok, _ := regexp.MatchString("[[:xdigit:]]{32}", s); ok {
+		if ok, _ := regexp.MatchString(`^[[:xdigit:]]{32}$`, s); ok {
 			token = HEX32
 		}
 
-		if ok, _ := regexp.MatchString("/^([[:alnum:]./-_])*", s); ok {
+		if ok, _ := regexp.MatchString(`/^([[:alnum:]./-_])*`, s); ok {
 			token = PATHSTR
 		}
 
