@@ -32,8 +32,6 @@ main_statements:  { }
 | vrrp_script_block { }
 | virtual_server_block { }
 | virtual_server_group_block { }
-| virtual_server_with_fwmark_block { }
-| virtual_server_with_group_block { }
 
 global:	GLOBALDEFS LB global_statements RB
 
@@ -154,13 +152,14 @@ virtual_server_group_statement: { }
 | IPADDR_RANGE NUMBER { }
 | FWMARK NUMBER { }
 
-virtual_server_block: VIRTUAL_SERVER iporfw LB virtual_server_statements RB
-
-virtual_server_with_fwmark_block: VIRTUAL_SERVER FWMARK NUMBER LB virtual_server_statements RB
-
-virtual_server_with_group_block: VIRTUAL_SERVER GROUP STRING LB virtual_server_statements RB
+virtual_server_block: VIRTUAL_SERVER virtual_server_arg LB virtual_server_statements RB
 
 virtual_server_statements: virtual_server_statement virtual_server_statements | virtual_server_statement
+
+virtual_server_arg:
+| ipport
+| FWMARK NUMBER { }
+| GROUP STRING { }
 
 virtual_server_statement: { }
 | DELAY_LOOP NUMBER { }
@@ -171,7 +170,7 @@ virtual_server_statement: { }
 | PERSISTENCE_TIMEOUT NUMBER { }
 | PROTOCOL protocol { }
 | SORRY_SERVER IPADDR NUMBER { }
-| REAL_SERVER IPADDR ipport real_server_statements RB
+| REAL_SERVER IPADDR ipport LB real_server_statements RB
 | REAL_SERVER IPADDR NUMBER LB real_server_statements RB
 | VIRTUALHOST STRING { }
 
@@ -238,14 +237,6 @@ misc_check_statement: { }
 | WARMUP NUMBER { }
 | MISC_DYNAMIC { }
 
-ipport: { }
-| IPADDR { }
-| IPADDR NUMBER { }
-
-iporfw: { }
-| ipport { }
-| FWMARK NUMBER { }
-
 lb_algo: { }
 | RR   { }
 | WRR  { }
@@ -284,6 +275,10 @@ mail_statement:	any_literal	{ }
 ipaddr_literal: { }
 | IPADDR
 | IP_CIDR
+
+ipport: { }
+| IPADDR
+| IPADDR NUMBER
 
 any_literal: { }
 | NUMBER
