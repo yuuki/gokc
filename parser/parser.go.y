@@ -12,6 +12,7 @@ package parser
 %token           LB RB
 %token           GLOBALDEFS
 %token           NOTIFICATION_EMAIL NOTIFICATION_EMAIL_FROM SMTP_SERVER SMTP_CONNECT_TIMEOUT ROUTER_ID LVS_ID
+%token           STATIC_IPADDRESS
 %token           STATIC_ROUTES
 %token           STATIC_RULES
 %token           VRRP_SYNC_GROUP GROUP
@@ -29,6 +30,7 @@ configuration:  main_statements configuration | main_statements { }
 
 main_statements:  { }
 | global { }
+| static_ipaddress_block { }
 | static_routes_block { }
 | static_rules_block { }
 | vrrp_sync_group_block { }
@@ -50,6 +52,8 @@ global_statement:
 | SMTP_CONNECT_TIMEOUT NUMBER { }
 | ROUTER_ID STRING { }
 | LVS_ID STRING { }
+
+static_ipaddress_block: STATIC_IPADDRESS LB address_options RB
 
 static_routes_block: STATIC_ROUTES LB static_routes_statements RB
 
@@ -277,6 +281,15 @@ vip_ex: ipaddr_literal { }
 mail_statements: mail_statement mail_statements |  mail_statement { }
 
 mail_statement:	any_literal	{ }
+
+address_options: address_option address_options | address_option
+
+address_option: { }
+| IPADDR
+| IP_CIDR
+| BRD IPADDR
+| DEV STRING
+| SCOPE scope_val
 
 route_options: route_option route_options | route_option
 
