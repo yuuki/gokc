@@ -12,6 +12,7 @@ package parser
 %token           LB RB
 %token           GLOBALDEFS
 %token           NOTIFICATION_EMAIL NOTIFICATION_EMAIL_FROM SMTP_SERVER SMTP_CONNECT_TIMEOUT ROUTER_ID LVS_ID
+%token           STATIC_ROUTES
 %token           VRRP_SYNC_GROUP GROUP
 %token           VRRP_INSTANCE
 %token           INTERFACE MCAST_SRC_IP UNICAST_SRC_IP UNICAST_PEER LVS_SYNC_DAEMON_INTERFACE VIRTUAL_ROUTER_ID NOPREEMPT PRIORITY ADVERT_INT VIRTUAL_IPADDRESS VIRTUAL_IPADDRESS_EXCLUDED VIRTUAL_ROUTES STATE MASTER BACKUP GARP_MASTER_DELAY SMTP_ALERT AUTHENTICATION AUTH_TYPE AUTH_PASS PASS AH LABEL DEV BRD SRC TO VIA GW OR TABLE METRIC TRACK_INTERFACE TRACK_SCRIPT NOTIFY_MASTER NOTIFY_BACKUP NOTIFY_FAULT NOTIFY_STOP NOTIFY BLACKHOLE
@@ -27,6 +28,7 @@ configuration:  main_statements configuration | main_statements { }
 
 main_statements:  { }
 | global { }
+| static_routes_block { }
 | vrrp_sync_group_block { }
 | vrrp_instance_block { }
 | vrrp_script_block { }
@@ -46,6 +48,26 @@ global_statement:
 | SMTP_CONNECT_TIMEOUT NUMBER { }
 | ROUTER_ID STRING { }
 | LVS_ID STRING { }
+
+static_routes_block: STATIC_ROUTES LB static_routes_statements RB
+
+static_routes_statements: static_routes_statement static_routes_statements | static_routes_statement
+
+static_routes_statement:
+| SRC IPADDR
+| TO IPADDR
+| TO IP_CIDR
+| IPADDR
+| IP_CIDR
+| VIA IPADDR
+| GW IPADDR
+| OR IPADDR
+| DEV STRING
+| LABEL STRING
+| TABLE STRING
+| METRIC NUMBER
+| BLACKHOLE IPADDR
+| BLACKHOLE IP_CIDR
 
 vrrp_sync_group_block: VRRP_SYNC_GROUP STRING LB vrrp_sync_group_statements RB
 

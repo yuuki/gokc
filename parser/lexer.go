@@ -27,6 +27,8 @@ var SYMBOL_TABLES = map[string]int{
 	"router_id": ROUTER_ID,
 	"lvs_id": LVS_ID,
 
+	"static_routes": STATIC_ROUTES,
+
 	"vrrp_sync_group": VRRP_SYNC_GROUP,
 	"group": GROUP,
 
