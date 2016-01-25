@@ -36,8 +36,15 @@ func init() {
 
 func main() {
 	var filepath string
+	var isVersion bool
 	flag.StringVar(&filepath, "f", "", "keepalived.conf file path")
+	flag.BoolVar(&isVersion, "v", false, "print the version")
 	flag.Parse()
+
+	if isVersion {
+		log.Infof("gokc version %s", Version)
+		os.Exit(0)
+	}
 
 	if filepath == "" {
 		log.Error("filepath required")
