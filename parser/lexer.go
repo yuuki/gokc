@@ -104,6 +104,7 @@ var SYMBOL_TABLES = map[string]int{
 	"inhibit_on_failure": INHIBIT_ON_FAILURE,
 	"TCP_CHECK": TCP_CHECK,
 	"HTTP_GET": HTTP_GET,
+	"SSL_GET": SSL_GET,
 	"SMTP_CHECK": SMTP_CHECK,
 	"MISC_CHECK": MISC_CHECK,
 	"url": URL,
