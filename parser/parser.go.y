@@ -53,23 +53,7 @@ static_routes_block: STATIC_ROUTES LB static_routes_statements RB
 
 static_routes_statements: static_routes_statement static_routes_statements | static_routes_statement
 
-static_routes_statement:
-| SRC IPADDR
-| TO IPADDR
-| TO IP_CIDR
-| IPADDR
-| IP_CIDR
-| VIA IPADDR
-| GW IPADDR
-| OR IPADDR
-| DEV STRING
-| SCOPE scope_val
-| LABEL STRING
-| TABLE NUMBER
-| TABLE STRING
-| METRIC NUMBER
-| BLACKHOLE IPADDR
-| BLACKHOLE IP_CIDR
+static_routes_statement: route_option route_options | route_option
 
 vrrp_sync_group_block: VRRP_SYNC_GROUP STRING LB vrrp_sync_group_statements RB
 
@@ -149,25 +133,9 @@ vrrp_script_statement: { }
 | FALL NUMBER { }
 | RISE NUMBER { }
 
-virtual_routes_statements: virtual_routes_statement virtual_routes_statements | virtual_routes_statement 
+virtual_routes_statements: virtual_server_statement virtual_server_statements | virtual_server_statement 
 
-virtual_routes_statement: { }
-| SRC IPADDR
-| TO IPADDR
-| TO IP_CIDR
-| IPADDR
-| IP_CIDR
-| VIA IPADDR
-| GW IPADDR
-| OR IPADDR
-| DEV STRING
-| LABEL STRING
-| TABLE NUMBER
-| TABLE STRING
-| METRIC NUMBER
-| SCOPE scope_val
-| BLACKHOLE IPADDR
-| BLACKHOLE IP_CIDR
+virtual_server_statement: route_option route_options | route_option
 
 virtual_server_group_block: VIRTUAL_SERVER_GROUP STRING LB virtual_server_group_statements RB
 
@@ -303,6 +271,26 @@ vip_ex: ipaddr_literal { }
 mail_statements: mail_statement mail_statements |  mail_statement { }
 
 mail_statement:	any_literal	{ }
+
+route_options: route_option route_options | route_option
+
+route_option: { }
+| SRC IPADDR
+| TO IPADDR
+| TO IP_CIDR
+| IPADDR
+| IP_CIDR
+| VIA IPADDR
+| GW IPADDR
+| OR IPADDR
+| DEV STRING
+| LABEL STRING
+| TABLE NUMBER
+| TABLE STRING
+| METRIC NUMBER
+| SCOPE scope_val
+| BLACKHOLE IPADDR
+| BLACKHOLE IP_CIDR
 
 scope_val: { }
 | SITE
