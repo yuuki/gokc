@@ -2,10 +2,10 @@ package parser
 
 import (
 	"io"
-	"path/filepath"
 	"net"
 	"net/mail"
 	"os"
+	"path/filepath"
 	"regexp"
 	"strconv"
 	"strings"
@@ -19,150 +19,150 @@ var SYMBOL_TABLES = map[string]int{
 	"{": LB,
 	"}": RB,
 
-	"global_defs": GLOBALDEFS,
-	"notification_email": NOTIFICATION_EMAIL,
+	"global_defs":             GLOBALDEFS,
+	"notification_email":      NOTIFICATION_EMAIL,
 	"notification_email_from": NOTIFICATION_EMAIL_FROM,
-	"smtp_server": SMTP_SERVER,
-	"smtp_connect_timeout": SMTP_CONNECT_TIMEOUT,
-	"router_id": ROUTER_ID,
-	"lvs_id": LVS_ID,
+	"smtp_server":             SMTP_SERVER,
+	"smtp_connect_timeout":    SMTP_CONNECT_TIMEOUT,
+	"router_id":               ROUTER_ID,
+	"lvs_id":                  LVS_ID,
 
 	"static_ipaddress": STATIC_IPADDRESS,
-	"static_routes": STATIC_ROUTES,
-	"static_rules": STATIC_RULES,
+	"static_routes":    STATIC_ROUTES,
+	"static_rules":     STATIC_RULES,
 
 	"vrrp_sync_group": VRRP_SYNC_GROUP,
-	"group": GROUP,
+	"group":           GROUP,
 
-	"vrrp_instance": VRRP_INSTANCE,
-	"interface": INTERFACE,
-	"mcast_src_ip": MCAST_SRC_IP,
-	"unicast_src_ip": UNICAST_SRC_IP,
-	"unicast_peer": UNICAST_PEER,
-	"lvs_sync_daemon_interface": LVS_SYNC_DAEMON_INTERFACE,
-	"virtual_router_id": VIRTUAL_ROUTER_ID,
-	"nopreempt": NOPREEMPT,
-	"priority": PRIORITY,
-	"advert_int": ADVERT_INT,
-	"virtual_ipaddress": VIRTUAL_IPADDRESS,
+	"vrrp_instance":              VRRP_INSTANCE,
+	"interface":                  INTERFACE,
+	"mcast_src_ip":               MCAST_SRC_IP,
+	"unicast_src_ip":             UNICAST_SRC_IP,
+	"unicast_peer":               UNICAST_PEER,
+	"lvs_sync_daemon_interface":  LVS_SYNC_DAEMON_INTERFACE,
+	"virtual_router_id":          VIRTUAL_ROUTER_ID,
+	"nopreempt":                  NOPREEMPT,
+	"priority":                   PRIORITY,
+	"advert_int":                 ADVERT_INT,
+	"virtual_ipaddress":          VIRTUAL_IPADDRESS,
 	"virtual_ipaddress_excluded": VIRTUAL_IPADDRESS_EXCLUDED,
-	"virtual_routes": VIRTUAL_ROUTES,
-	"state": STATE,
-	"MASTER": MASTER,
-	"BACKUP": BACKUP,
-	"garp_master_delay": GARP_MASTER_DELAY,
-	"smtp_alert": SMTP_ALERT,
-	"authentication": AUTHENTICATION,
-	"auth_type": AUTH_TYPE,
-	"auth_pass": AUTH_PASS,
-	"PASS": PASS,
-	"AH": AH,
-	"label": LABEL,
-	"dev": DEV,
-	"scope": SCOPE,
-	"site": SITE,
-	"link": LINK,
-	"host": HOST,
-	"nowhere": NOWHERE,
-	"global": GLOBAL,
-	"brd": BRD,
-	"src": SRC,
-	"from": FROM,
-	"to": TO,
-	"via": VIA,
-	"gw": GW,
-	"or": OR,
-	"table": TABLE,
-	"metric": METRIC,
-	"blackhole": BLACKHOLE,
-	"track_interface": TRACK_INTERFACE,
-	"track_script": TRACK_SCRIPT,
-	"notify_master": NOTIFY_MASTER,
-	"notify_backup": NOTIFY_BACKUP,
-	"notify_fault": NOTIFY_FAULT,
-	"notify_stop": NOTIFY_STOP,
-	"notify": NOTIFY,
+	"virtual_routes":             VIRTUAL_ROUTES,
+	"state":                      STATE,
+	"MASTER":                     MASTER,
+	"BACKUP":                     BACKUP,
+	"garp_master_delay":          GARP_MASTER_DELAY,
+	"smtp_alert":                 SMTP_ALERT,
+	"authentication":             AUTHENTICATION,
+	"auth_type":                  AUTH_TYPE,
+	"auth_pass":                  AUTH_PASS,
+	"PASS":                       PASS,
+	"AH":                         AH,
+	"label":                      LABEL,
+	"dev":                        DEV,
+	"scope":                      SCOPE,
+	"site":                       SITE,
+	"link":                       LINK,
+	"host":                       HOST,
+	"nowhere":                    NOWHERE,
+	"global":                     GLOBAL,
+	"brd":                        BRD,
+	"src":                        SRC,
+	"from":                       FROM,
+	"to":                         TO,
+	"via":                        VIA,
+	"gw":                         GW,
+	"or":                         OR,
+	"table":                      TABLE,
+	"metric":                     METRIC,
+	"blackhole":                  BLACKHOLE,
+	"track_interface":            TRACK_INTERFACE,
+	"track_script":               TRACK_SCRIPT,
+	"notify_master":              NOTIFY_MASTER,
+	"notify_backup":              NOTIFY_BACKUP,
+	"notify_fault":               NOTIFY_FAULT,
+	"notify_stop":                NOTIFY_STOP,
+	"notify":                     NOTIFY,
 
 	"vrrp_script": VRRP_SCRIPT,
-	"script": SCRIPT,
-	"interval": INTERVAL,
-	"fall": FALL,
-	"rise": RISE,
+	"script":      SCRIPT,
+	"interval":    INTERVAL,
+	"fall":        FALL,
+	"rise":        RISE,
 
 	"virtual_server_group": VIRTUAL_SERVER_GROUP,
-	"fwmark": FWMARK,
+	"fwmark":               FWMARK,
 
 	"virtual_server": VIRTUAL_SERVER,
-	"delay_loop": DELAY_LOOP,
-	"lb_algo": LB_ALGO,
-	"lb_kind": LB_KIND,
-	"lvs_sched": LVS_SCHED,
-	"lvs_method": LVS_METHOD,
-	"rr": RR,
-	"wrr": WRR,
-	"lc": LC,
-	"wlc": WLC,
-	"lblc": LBLC,
-	"sh": SH,
-	"dh": DH,
-	"NAT": NAT,
-	"DR": DR,
-	"TUN": TUN,
+	"delay_loop":     DELAY_LOOP,
+	"lb_algo":        LB_ALGO,
+	"lb_kind":        LB_KIND,
+	"lvs_sched":      LVS_SCHED,
+	"lvs_method":     LVS_METHOD,
+	"rr":             RR,
+	"wrr":            WRR,
+	"lc":             LC,
+	"wlc":            WLC,
+	"lblc":           LBLC,
+	"sh":             SH,
+	"dh":             DH,
+	"NAT":            NAT,
+	"DR":             DR,
+	"TUN":            TUN,
 	"persistence_timeout": PERSISTENCE_TIMEOUT,
-	"protocol": PROTOCOL,
-	"TCP": TCP,
-	"UDP": UDP,
-	"sorry_server": SORRY_SERVER,
-	"real_server": REAL_SERVER,
-	"weight": WEIGHT,
-	"inhibit_on_failure": INHIBIT_ON_FAILURE,
-	"TCP_CHECK": TCP_CHECK,
-	"HTTP_GET": HTTP_GET,
-	"SSL_GET": SSL_GET,
-	"SMTP_CHECK": SMTP_CHECK,
-	"MISC_CHECK": MISC_CHECK,
-	"url": URL,
-	"path": PATH,
-	"digest": DIGEST,
-	"status_code": STATUS_CODE,
-	"connect_timeout": CONNECT_TIMEOUT,
-	"connect_port": CONNECT_PORT,
-	"connect_ip": CONNECT_IP,
-	"bindto": BINDTO,
-	"bind_port": BIND_PORT,
-	"retry": RETRY,
-	"helo_name": HELO_NAME,
-	"delay_before_retry": DELAY_BEFORE_RETRY,
-	"misc_path": MISC_PATH,
-	"misc_timeout": MISC_TIMEOUT,
-	"warmup": WARMUP,
-	"misc_dynamic": MISC_DYNAMIC,
-	"nb_get_retry": NB_GET_RETRY,
-	"virtualhost": VIRTUALHOST,
-	"alpha": ALPHA,
-	"omega": OMEGA,
-	"quorum": QUORUM,
-	"hysteresis": HYSTERESIS,
-	"quorum_up": QUORUM_UP,
-	"quorum_down": QUORUM_DOWN,
+	"protocol":            PROTOCOL,
+	"TCP":                 TCP,
+	"UDP":                 UDP,
+	"sorry_server":        SORRY_SERVER,
+	"real_server":         REAL_SERVER,
+	"weight":              WEIGHT,
+	"inhibit_on_failure":  INHIBIT_ON_FAILURE,
+	"TCP_CHECK":           TCP_CHECK,
+	"HTTP_GET":            HTTP_GET,
+	"SSL_GET":             SSL_GET,
+	"SMTP_CHECK":          SMTP_CHECK,
+	"MISC_CHECK":          MISC_CHECK,
+	"url":                 URL,
+	"path":                PATH,
+	"digest":              DIGEST,
+	"status_code":         STATUS_CODE,
+	"connect_timeout":     CONNECT_TIMEOUT,
+	"connect_port":        CONNECT_PORT,
+	"connect_ip":          CONNECT_IP,
+	"bindto":              BINDTO,
+	"bind_port":           BIND_PORT,
+	"retry":               RETRY,
+	"helo_name":           HELO_NAME,
+	"delay_before_retry":  DELAY_BEFORE_RETRY,
+	"misc_path":           MISC_PATH,
+	"misc_timeout":        MISC_TIMEOUT,
+	"warmup":              WARMUP,
+	"misc_dynamic":        MISC_DYNAMIC,
+	"nb_get_retry":        NB_GET_RETRY,
+	"virtualhost":         VIRTUALHOST,
+	"alpha":               ALPHA,
+	"omega":               OMEGA,
+	"quorum":              QUORUM,
+	"hysteresis":          HYSTERESIS,
+	"quorum_up":           QUORUM_UP,
+	"quorum_down":         QUORUM_DOWN,
 }
 
 type Lexer struct {
-	ctx *Context
+	ctx     *Context
 	emitter chan int
-	e error
+	e       error
 }
 
 type Context struct {
-	scanner scanner.Scanner
+	scanner  scanner.Scanner
 	filename string
 }
 
 type Error struct {
-	Message string
+	Message  string
 	Filename string
-	Line int
-	Column int
+	Line     int
+	Column   int
 }
 
 func (e *Error) Error() string {
@@ -300,7 +300,7 @@ func (l *Lexer) run() {
 		// IPADDR_RANGE(XXX.YYY.ZZZ.WWW-VVV)
 		if ss := strings.Split(s, "-"); len(ss) == 2 {
 			if net.ParseIP(ss[0]) != nil {
-				if ok, _ :=  regexp.MatchString(`^[\d]{1,3}$`, ss[1]); ok {
+				if ok, _ := regexp.MatchString(`^[\d]{1,3}$`, ss[1]); ok {
 					token = IPADDR_RANGE
 				}
 			}
@@ -329,9 +329,9 @@ func (l *Lexer) run() {
 func (l *Lexer) Error(msg string) {
 	l.e = &Error{
 		Filename: l.ctx.filename,
-		Line: l.ctx.scanner.Line,
-		Column: l.ctx.scanner.Column,
-		Message: msg,
+		Line:     l.ctx.scanner.Line,
+		Column:   l.ctx.scanner.Column,
+		Message:  msg,
 	}
 }
 
@@ -344,4 +344,3 @@ func Parse(src io.Reader, filename string) error {
 	}
 	return l.e
 }
-
