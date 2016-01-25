@@ -128,6 +128,12 @@ var SYMBOL_TABLES = map[string]int{
 	"misc_dynamic": MISC_DYNAMIC,
 	"nb_get_retry": NB_GET_RETRY,
 	"virtualhost": VIRTUALHOST,
+	"alpha": ALPHA,
+	"omega": OMEGA,
+	"quorum": QUORUM,
+	"hysteresis": HYSTERESIS,
+	"quorum_up": QUORUM_UP,
+	"quorum_down": QUORUM_DOWN,
 }
 
 type Lexer struct {
