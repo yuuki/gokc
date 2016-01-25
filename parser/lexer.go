@@ -78,6 +78,7 @@ var SYMBOL_TABLES = map[string]int{
 	"rise": RISE,
 
 	"virtual_server_group": VIRTUAL_SERVER_GROUP,
+	"fwmark": FWMARK,
 
 	"virtual_server": VIRTUAL_SERVER,
 	"delay_loop": DELAY_LOOP,
