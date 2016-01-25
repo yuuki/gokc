@@ -28,6 +28,7 @@ var SYMBOL_TABLES = map[string]int{
 	"lvs_id": LVS_ID,
 
 	"static_routes": STATIC_ROUTES,
+	"static_rules": STATIC_RULES,
 
 	"vrrp_sync_group": VRRP_SYNC_GROUP,
 	"group": GROUP,
@@ -65,6 +66,7 @@ var SYMBOL_TABLES = map[string]int{
 	"global": GLOBAL,
 	"brd": BRD,
 	"src": SRC,
+	"from": FROM,
 	"to": TO,
 	"via": VIA,
 	"gw": GW,
