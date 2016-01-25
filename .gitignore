@@ -26,3 +26,5 @@ _testmain.go
 /gokc
 /parser/*.output
 /parser/parser.go
+
+/snapshot
