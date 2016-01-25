@@ -8,7 +8,7 @@ package parser
 };
 
 %token <integer> NUMBER
-%token <symbol>	 ID STRING EMAIL IPADDR IP_CIDR HEX32 PATHSTR
+%token <symbol>	 ID STRING EMAIL IPADDR IP_CIDR IPADDR_RANGE HEX32 PATHSTR
 %token           LB RB
 %token           GLOBALDEFS
 %token           NOTIFICATION_EMAIL NOTIFICATION_EMAIL_FROM SMTP_SERVER SMTP_CONNECT_TIMEOUT ROUTER_ID LVS_ID
@@ -150,7 +150,7 @@ virtual_server_group_statements: virtual_server_group_statement virtual_server_g
 
 virtual_server_group_statement: { }
 | IPADDR NUMBER { }
-| IP_CIDR NUMBER { }
+| IPADDR_RANGE NUMBER { }
 | FWMARK NUMBER { }
 
 virtual_server_block: VIRTUAL_SERVER iporfw LB virtual_server_statements RB

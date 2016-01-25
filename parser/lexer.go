@@ -8,6 +8,7 @@ import (
 	"os"
 	"regexp"
 	"strconv"
+	"strings"
 	"text/scanner"
 	"unicode"
 
@@ -276,6 +277,15 @@ func (l *Lexer) run() {
 
 		if _, _, err := net.ParseCIDR(s); err == nil {
 			token = IP_CIDR
+		}
+
+		// IPADDR_RANGE(XXX.YYY.ZZZ.WWW-VVV)
+		if ss := strings.Split(s, "-"); len(ss) == 2 {
+			if net.ParseIP(ss[0]) != nil {
+				if ok, _ :=  regexp.MatchString(`^[\d]{1,3}$`, ss[1]); ok {
+					token = IPADDR_RANGE
+				}
+			}
 		}
 
 		if ok, _ := regexp.MatchString("[[:xdigit:]]{32}", s); ok {
