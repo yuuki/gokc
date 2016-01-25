@@ -71,6 +71,7 @@ var SYMBOL_TABLES = map[string]int{
 	"or": OR,
 	"table": TABLE,
 	"metric": METRIC,
+	"blackhole": BLACKHOLE,
 	"track_interface": TRACK_INTERFACE,
 	"track_script": TRACK_SCRIPT,
 	"notify_master": NOTIFY_MASTER,

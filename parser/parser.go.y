@@ -65,6 +65,7 @@ static_routes_statement:
 | DEV STRING
 | SCOPE scope_val
 | LABEL STRING
+| TABLE NUMBER
 | TABLE STRING
 | METRIC NUMBER
 | BLACKHOLE IPADDR
@@ -161,6 +162,7 @@ virtual_routes_statement: { }
 | OR IPADDR
 | DEV STRING
 | LABEL STRING
+| TABLE NUMBER
 | TABLE STRING
 | METRIC NUMBER
 | SCOPE scope_val
