@@ -55,11 +55,7 @@ global_statement:
 
 static_ipaddress_block: STATIC_IPADDRESS LB address_options RB
 
-static_routes_block: STATIC_ROUTES LB static_routes_statements RB
-
-static_routes_statements: static_routes_statement static_routes_statements | static_routes_statement
-
-static_routes_statement: route_option route_options | route_option
+static_routes_block: STATIC_ROUTES LB route_options RB
 
 static_rules_block: STATIC_RULES LB rule_options RB
 
