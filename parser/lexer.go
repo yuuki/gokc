@@ -42,6 +42,10 @@ var SYMBOL_TABLES = map[string]int{
 	"group":           GROUP,
 
 	"vrrp_instance":              VRRP_INSTANCE,
+	"use_vmac":		      USE_VMAC,
+	"version":		      VERSION,
+	"vmac_xmit_base":	      VMAC_XMIT_BASE,
+	"native_ipv6":		      NATIVE_IPV6,
 	"interface":                  INTERFACE,
 	"mcast_src_ip":               MCAST_SRC_IP,
 	"unicast_src_ip":             UNICAST_SRC_IP,
@@ -84,6 +88,7 @@ var SYMBOL_TABLES = map[string]int{
 	"blackhole":                  BLACKHOLE,
 	"track_interface":            TRACK_INTERFACE,
 	"track_script":               TRACK_SCRIPT,
+	"dont_track_primary":         DONT_TRACK_PRIMARY,
 	"notify_master":              NOTIFY_MASTER,
 	"notify_backup":              NOTIFY_BACKUP,
 	"notify_fault":               NOTIFY_FAULT,
