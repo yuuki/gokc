@@ -32,6 +32,7 @@ var SYMBOL_TABLES = map[string]int{
 	"vrrp_garp_master_repeat":  VRRP_GARP_MASTER_REPEAT,
 	"vrrp_garp_master_refresh":  VRRP_GARP_MASTER_REFRESH,
 	"vrrp_garp_master_refresh_repeat":  VRRP_GARP_MASTER_REFRESH_REPEAT,
+	"vrrp_version": VRRP_VERSION,
 
 	"static_ipaddress": STATIC_IPADDRESS,
 	"static_routes":    STATIC_ROUTES,
