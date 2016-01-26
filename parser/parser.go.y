@@ -8,10 +8,10 @@ package parser
 };
 
 %token <integer> NUMBER
-%token <symbol>	 ID STRING EMAIL IPADDR IP_CIDR IPADDR_RANGE HEX32 PATHSTR
+%token <symbol>	 ID STRING EMAIL IPV4 IPV6 IP_CIDR IPADDR_RANGE HEX32 PATHSTR
 %token           LB RB
 %token           GLOBALDEFS
-%token           NOTIFICATION_EMAIL NOTIFICATION_EMAIL_FROM SMTP_SERVER SMTP_CONNECT_TIMEOUT ROUTER_ID LVS_ID
+%token           NOTIFICATION_EMAIL NOTIFICATION_EMAIL_FROM SMTP_SERVER SMTP_CONNECT_TIMEOUT ROUTER_ID LVS_ID VRRP_MCAST_GROUP4 VRRP_MCAST_GROUP6
 %token           STATIC_IPADDRESS
 %token           STATIC_ROUTES
 %token           STATIC_RULES
@@ -47,11 +47,13 @@ global_statement:
 | NOTIFICATION_EMAIL LB mail_statements RB  { }
 | NOTIFICATION_EMAIL STRING  { }
 | NOTIFICATION_EMAIL_FROM EMAIL { }
-| SMTP_SERVER IPADDR  { }
+| SMTP_SERVER ip46  { }
 | SMTP_SERVER STRING  { }
 | SMTP_CONNECT_TIMEOUT NUMBER { }
 | ROUTER_ID STRING { }
 | LVS_ID STRING { }
+| VRRP_MCAST_GROUP4 IPV4 { }
+| VRRP_MCAST_GROUP6 IPV6 { }
 
 static_ipaddress_block: STATIC_IPADDRESS LB address_options RB
 
@@ -82,8 +84,8 @@ vrrp_instance_statements: vrrp_instance_statement vrrp_instance_statements | vrr
 
 vrrp_instance_statement: { }
 | INTERFACE STRING { }
-| MCAST_SRC_IP IPADDR { }
-| UNICAST_SRC_IP IPADDR { }
+| MCAST_SRC_IP ip46 { }
+| UNICAST_SRC_IP ip46 { }
 | UNICAST_PEER LB ipaddr_list RB { }
 | LVS_SYNC_DAEMON_INTERFACE STRING { }
 | VIRTUAL_ROUTER_ID STRING { }
@@ -120,7 +122,7 @@ interfaces: interface interfaces | interface
 interface: STRING
 | WEIGHT NUMBER { }
 
-ipaddr_list: IPADDR ipaddr_list | IPADDR
+ipaddr_list: ip46 ipaddr_list | ip46
 
 track_script_statements: track_script_statement track_script_statements | track_script_statement
 
@@ -148,7 +150,7 @@ virtual_server_group_block: VIRTUAL_SERVER_GROUP STRING LB virtual_server_group_
 virtual_server_group_statements: virtual_server_group_statement virtual_server_group_statements | virtual_server_group_statement
 
 virtual_server_group_statement: { }
-| IPADDR NUMBER { }
+| ip46 NUMBER { }
 | IPADDR_RANGE NUMBER { }
 | FWMARK NUMBER { }
 
@@ -169,9 +171,9 @@ virtual_server_statement: { }
 | LVS_METHOD lb_kind { }
 | PERSISTENCE_TIMEOUT NUMBER { }
 | PROTOCOL protocol { }
-| SORRY_SERVER IPADDR NUMBER { }
-| REAL_SERVER IPADDR ipport LB real_server_statements RB
-| REAL_SERVER IPADDR NUMBER LB real_server_statements RB
+| SORRY_SERVER ip46 NUMBER { }
+| REAL_SERVER ip46 ipport LB real_server_statements RB
+| REAL_SERVER ip46 NUMBER LB real_server_statements RB
 | VIRTUALHOST STRING { }
 | ALPHA
 | OMEGA
@@ -227,9 +229,9 @@ smtp_check_statement: { }
 host_statements: host_statement host_statements | host_statement { }
 
 host_statement: { }
-| CONNECT_IP IPADDR { }
+| CONNECT_IP ip46 { }
 | CONNECT_PORT NUMBER { }
-| BINDTO IPADDR { }
+| BINDTO ip46 { }
 | BIND_PORT NUMBER { }
 | CONNECT_TIMEOUT NUMBER { }
 | FWMARK NUMBER { }
@@ -268,11 +270,11 @@ vips_ex: vip_ex vips_ex | vip_ex { }
 vip: ipaddr_literal { }
 | LABEL STRING { }
 | DEV STRING { }
-| BRD IPADDR { }
+| BRD ip46 { }
 
 vip_ex: ipaddr_literal { }
 | DEV STRING { }
-| BRD IPADDR { }
+| BRD ip46 { }
 
 mail_statements: mail_statement mail_statements |  mail_statement { }
 
@@ -281,35 +283,35 @@ mail_statement:	any_literal	{ }
 address_options: address_option address_options | address_option
 
 address_option: { }
-| IPADDR
+| ip46
 | IP_CIDR
-| BRD IPADDR
+| BRD ip46
 | DEV STRING
 | SCOPE scope_val
 
 route_options: route_option route_options | route_option
 
 route_option: { }
-| SRC IPADDR
-| TO IPADDR
+| SRC ip46
+| TO ip46
 | TO IP_CIDR
-| IPADDR
+| ip46
 | IP_CIDR
-| VIA IPADDR
-| GW IPADDR
-| OR IPADDR
+| VIA ip46
+| GW ip46
+| OR ip46
 | DEV STRING
 | LABEL STRING
 | TABLE NUMBER
 | TABLE STRING
 | METRIC NUMBER
 | SCOPE scope_val
-| BLACKHOLE IPADDR
+| BLACKHOLE ip46
 | BLACKHOLE IP_CIDR
 
 rule_option: { }
-| FROM IPADDR TABLE NUMBER
-| TO IPADDR TABLE NUMBER
+| FROM ip46 TABLE NUMBER
+| TO ip46 TABLE NUMBER
 | FROM IP_CIDR TABLE NUMBER
 | TO IP_CIDR TABLE NUMBER
 
@@ -321,19 +323,23 @@ scope_val: { }
 | GLOBAL
 
 ipaddr_literal: { }
-| IPADDR
+| ip46
 | IP_CIDR
 
+ip46: { }
+| IPV4
+| IPV6
+
 ipport: { }
-| IPADDR
-| IPADDR NUMBER
+| ip46
+| ip46 NUMBER
 
 any_literal: { }
 | NUMBER
 | STRING
 | EMAIL
 | HEX32
-| IPADDR
+| ip46
 | IP_CIDR
 
 %%

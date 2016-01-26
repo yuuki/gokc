@@ -26,6 +26,8 @@ var SYMBOL_TABLES = map[string]int{
 	"smtp_connect_timeout":    SMTP_CONNECT_TIMEOUT,
 	"router_id":               ROUTER_ID,
 	"lvs_id":                  LVS_ID,
+	"vrrp_mcast_group4":       VRRP_MCAST_GROUP4,
+	"vrrp_mcast_group6":       VRRP_MCAST_GROUP6,
 
 	"static_ipaddress": STATIC_IPADDRESS,
 	"static_routes":    STATIC_ROUTES,
@@ -289,8 +291,14 @@ func (l *Lexer) run() {
 			token = NUMBER
 		}
 
-		if net.ParseIP(s) != nil {
-			token = IPADDR
+		if ip := net.ParseIP(s); ip != nil {
+			if ip.To4() != nil {
+				token = IPV4
+			} else if ip.To16() != nil {
+				token = IPV6
+			} else {
+				log.Infof("warning: %s may be IP address?", s)
+			}
 		}
 
 		if _, _, err := net.ParseCIDR(s); err == nil {
