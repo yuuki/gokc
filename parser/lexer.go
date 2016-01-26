@@ -93,6 +93,7 @@ var SYMBOL_TABLES = map[string]int{
 	"vrrp_script": VRRP_SCRIPT,
 	"script":      SCRIPT,
 	"interval":    INTERVAL,
+	"timeout":     TIMEOUT,
 	"fall":        FALL,
 	"rise":        RISE,
 
