@@ -28,6 +28,10 @@ var SYMBOL_TABLES = map[string]int{
 	"lvs_id":                  LVS_ID,
 	"vrrp_mcast_group4":       VRRP_MCAST_GROUP4,
 	"vrrp_mcast_group6":       VRRP_MCAST_GROUP6,
+	"vrrp_garp_master_delay":  VRRP_GARP_MASTER_DELAY,
+	"vrrp_garp_master_repeat":  VRRP_GARP_MASTER_REPEAT,
+	"vrrp_garp_master_refresh":  VRRP_GARP_MASTER_REFRESH,
+	"vrrp_garp_master_refresh_repeat":  VRRP_GARP_MASTER_REFRESH_REPEAT,
 
 	"static_ipaddress": STATIC_IPADDRESS,
 	"static_routes":    STATIC_ROUTES,
