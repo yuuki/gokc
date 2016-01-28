@@ -221,6 +221,7 @@ http_get_statement: { }
 | CONNECT_PORT NUMBER { }
 | NB_GET_RETRY NUMBER { }
 | DELAY_BEFORE_RETRY NUMBER { }
+| WARMUP NUMBER { }
 
 url_statements: url_statement url_statements | url_statement { }
 
