@@ -209,6 +209,9 @@ tcp_check_statements: tcp_check_statement tcp_check_statements | tcp_check_state
 tcp_check_statement: { }
 | CONNECT_PORT NUMBER { }
 | CONNECT_TIMEOUT NUMBER { }
+| RETRY NUMBER { }
+| WARMUP NUMBER { }
+| DELAY_BEFORE_RETRY NUMBER { }
 
 http_get_statements: http_get_statement http_get_statements | http_get_statement { }
 
