@@ -5,6 +5,7 @@ import (
 )
 
 var IsDebug = false
+var IsVerbose = false
 
 func init() {
 	log.SetFlags(0)
@@ -19,6 +20,18 @@ func Debug(v ...interface{}) {
 func Debugf(format string, v ...interface{}) {
 	if IsDebug == true {
 		log.Printf(format, v...)
+	}
+}
+
+func Verbose(v ...interface{}) {
+	if IsVerbose == true {
+		log.Println(v...)
+	}
+}
+
+func Verbosef(format string, v ...interface{}) {
+	if IsVerbose == true {
+		log.Printf(format, v)
 	}
 }
 

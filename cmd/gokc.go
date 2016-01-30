@@ -39,6 +39,7 @@ func main() {
 	var isVersion bool
 	flag.StringVar(&filepath, "f", "/etc/keepalived/keepalived.conf", "keepalived.conf file path")
 	flag.BoolVar(&isVersion, "v", false, "print the version")
+	flag.BoolVar(&log.IsVerbose, "V", false, "verbose log mode")
 	flag.Parse()
 
 	if isVersion {
