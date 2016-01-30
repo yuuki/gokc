@@ -7,10 +7,10 @@ if [ -z "$1" ]; then
     exit 1
 fi
 
-new_version=$(gobump "$1" -w -v | jq -r '.[]')
+new_version=$(gobump "$1" -w -v cmd | jq -r '.[]')
 
 git add ./*.go
 git commit -m "Bump version $new_version"
 git push origin master
 make cross
-ghr --username yuuki1 --replace --draft "Release v$new_version" snapshot/
+ghr --username yuuki1 --replace --draft "v$new_version" snapshot/
