@@ -8,6 +8,9 @@ yacc: deps
 build: yacc
 	go build -o $(BIN) ./cmd
 
+buildlinux: yacc
+	GOOS=linux GOARCH=amd64 make build
+
 test: build
 	find ./testdata -type f | xargs -I{} ./$(BIN) -f {}
 	find ./keepalived/doc/samples/keepalived.conf.* -type f | xargs -I{} ./$(BIN) -f {}
