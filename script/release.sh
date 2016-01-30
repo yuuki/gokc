@@ -9,6 +9,7 @@ fi
 
 new_version=$(gobump "$1" -w -v | jq -r '.[]')
 
+git add ./*.go
 git commit -m "Bump version $new_version"
 git push origin master
 make cross
