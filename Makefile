@@ -21,6 +21,15 @@ cross: deps
 	cp -p $(PWD)/snapshot/windows_amd64/gokc.exe $(PWD)/snapshot/gokc_windows_amd64.exe
 	cp -p $(PWD)/snapshot/windows_386/gokc.exe $(PWD)/snapshot/gokc_windows_386.exe
 
+patch: gobump
+	./script/release.sh patch
+
+minor: gobump
+	./script/release.sh minor
+
+gobump:
+	go get github.com/motemen/gobump/cmd/gobump
+
 deps:
 	go get -d -v ./...
 
