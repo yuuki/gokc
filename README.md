@@ -28,14 +28,6 @@ $ brew install gokc
  $ go install github.com/yuuki1/gokc/...
 ```
 
-## Release
-
-```bash
-$ vim ./version.go
-$ make cross
-$ ghr -u yuuki1 -p 2 $VERSION snapshot/
-```
-
 ## Contribution
 
 1. Fork ([https://github.com/y_uuki/gokc/fork](https://github.com/y_uuki/gokc/fork))
