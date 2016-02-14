@@ -1,6 +1,7 @@
 gokc
 ====
 [![Latest Version](http://img.shields.io/github/release/yuuki1/gokc.svg?style=flat-square)](https://github.com/yuuki1/gokc/releases)
+[![Go Report Card](https://goreportcard.com/badge/github.com/yuuki1/gokc)](https://goreportcard.com/report/github.com/yuuki1/gokc)
 
 Yet Another [Keepalived](http://keepalived.org/) syntax checker in golang.
 
