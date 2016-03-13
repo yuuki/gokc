@@ -8,8 +8,8 @@ import (
 
 	"github.com/mitchellh/colorstring"
 
-	"github.com/yuuki1/gokc/log"
-	"github.com/yuuki1/gokc/parser"
+	"github.com/yuuki/gokc/log"
+	"github.com/yuuki/gokc/parser"
 )
 
 func setDebugOutputLevel() {

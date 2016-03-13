@@ -1,7 +1,7 @@
 gokc
 ====
-[![Latest Version](http://img.shields.io/github/release/yuuki1/gokc.svg?style=flat-square)](https://github.com/yuuki1/gokc/releases)
-[![Go Report Card](https://goreportcard.com/badge/github.com/yuuki1/gokc)](https://goreportcard.com/report/github.com/yuuki1/gokc)
+[![Latest Version](http://img.shields.io/github/release/yuuki/gokc.svg?style=flat-square)](https://github.com/yuuki/gokc/releases)
+[![Go Report Card](https://goreportcard.com/badge/github.com/yuuki/gokc)](https://goreportcard.com/report/github.com/yuuki/gokc)
 
 Yet Another [Keepalived](http://keepalived.org/) syntax checker in golang.
 
@@ -16,17 +16,17 @@ gokc: the configuration file /etc/keepalived/keepalived.conf syntax is ok
 
 ### Homebrew
 ```bash
-$ brew tap yuuki1/gokc
+$ brew tap yuuki/gokc
 $ brew install gokc
 ```
 
 ### Download binary from GitHub Releases
-[Releases・yuuki1/gokc - GitHub](https://github.com/yuuki1/gokc/releases)
+[Releases・yuuki/gokc - GitHub](https://github.com/yuuki/gokc/releases)
 
 ### Build from source
 ```bash
- $ go get github.com/yuuki1/gokc
- $ go install github.com/yuuki1/gokc/...
+ $ go get github.com/yuuki/gokc
+ $ go install github.com/yuuki/gokc/...
 ```
 
 ## Contribution
@@ -45,4 +45,4 @@ $ brew install gokc
 
 ## Author
 
-[y_uuki](https://github.com/yuuki1)
+[y_uuki](https://github.com/yuuki)

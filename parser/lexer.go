@@ -12,7 +12,7 @@ import (
 	"text/scanner"
 	"unicode"
 
-	"github.com/yuuki1/gokc/log"
+	"github.com/yuuki/gokc/log"
 )
 
 var SYMBOL_TABLES = map[string]int{
