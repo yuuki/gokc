@@ -78,6 +78,7 @@ vrrp_sync_group_statement: { }
 | NOTIFY_MASTER	STRING { }
 | NOTIFY_BACKUP	STRING { }
 | NOTIFY_FAULT	STRING { }
+| NOTIFY	STRING { }
 
 vrrp_group_ids: vrrp_group_id vrrp_group_ids | vrrp_group_id { }
 
