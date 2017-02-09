@@ -6,7 +6,7 @@ yacc: deps
 	go tool yacc -o parser/parser.go -v parser/parser.output parser/parser.go.y
 
 build: yacc
-	go build -o $(BIN) ./cmd
+	go build -o $(BIN) ./cmd/...
 
 buildlinux: yacc
 	GOOS=linux GOARCH=amd64 make build
