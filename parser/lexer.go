@@ -285,7 +285,7 @@ func (l *Lexer) run() {
 	for {
 		token, s := l.ctx.scanNextToken()
 
-		if s == "include" {
+		for s == "include" {
 			token, s = l.ctx.scanNextToken()
 
 			if err := l.scanInclude(s); err != nil {
