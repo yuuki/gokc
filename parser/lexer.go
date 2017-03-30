@@ -357,7 +357,7 @@ func (e *Error) Error() string {
 }
 
 func NewLexer(tokens []*Token) *Lexer {
-	return &Lexer{tokens: tokens, pos: 0}
+	return &Lexer{tokens: tokens, pos: -1}
 }
 
 func isIdentRune(ch rune, i int) bool {
@@ -368,12 +368,16 @@ func (l *Lexer) curToken() *Token {
 	return l.tokens[l.pos]
 }
 
+func (l *Lexer) nextToken() *Token {
+	l.pos++
+	return l.tokens[l.pos]
+}
+
 func (l *Lexer) Lex(lval *yySymType) int {
-	if len(l.tokens) == l.pos {
+	if (len(l.tokens) - 1) == l.pos {
 		return EOF
 	}
-	token := l.tokens[l.pos]
-	l.pos++
+	token := l.nextToken()
 	return token.value
 }
 
