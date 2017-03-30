@@ -213,7 +213,7 @@ func (l *Lexer) scanNextToken() (int, string) {
 	s := l.scanner.TokenText()
 
 	for s == "!" || s == "#" {
-		l.skipComments()
+		skipComments(&l.scanner)
 
 		token = int(l.scanner.Scan())
 		s = l.scanner.TokenText()
@@ -224,10 +224,10 @@ func (l *Lexer) scanNextToken() (int, string) {
 	return token, s
 }
 
-func (l *Lexer) skipComments() {
-	ch := l.scanner.Next()
+func skipComments(scanner *scanner.Scanner) {
+	ch := scanner.Next()
 	for ch != '\n' && ch >= 0 {
-		ch = l.scanner.Next()
+		ch = scanner.Next()
 	}
 }
 
