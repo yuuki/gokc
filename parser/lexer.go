@@ -15,6 +15,10 @@ import (
 	"github.com/yuuki/gokc/log"
 )
 
+const (
+	EOF = 0
+)
+
 var SYMBOL_TABLES = map[string]int{
 	"{": LB,
 	"}": RB,
@@ -169,14 +173,11 @@ var SYMBOL_TABLES = map[string]int{
 }
 
 type Lexer struct {
-	ctx     *Context
-	emitter chan int
-	e       error
-}
-
-type Context struct {
 	scanner  scanner.Scanner
+	tokens   []int
+	pos      int
 	filename string
+	e        error
 }
 
 type Error struct {
@@ -192,32 +193,27 @@ func (e *Error) Error() string {
 
 func NewLexer(src io.Reader, filename string) *Lexer {
 	var lex Lexer
-	lex.ctx = NewContext(src, filename)
-	lex.emitter = make(chan int)
+	lex.scanner.Init(src)
+	lex.scanner.Mode &^= scanner.ScanInts | scanner.ScanFloats | scanner.ScanChars | scanner.ScanRawStrings | scanner.ScanComments | scanner.SkipComments
+	lex.scanner.IsIdentRune = isIdentRune
+	lex.tokens = []int{}
+	lex.filename = filename
 	return &lex
-}
-
-func NewContext(src io.Reader, filename string) *Context {
-	c := &Context{filename: filename}
-	c.scanner.Init(src)
-	c.scanner.Mode &^= scanner.ScanInts | scanner.ScanFloats | scanner.ScanChars | scanner.ScanRawStrings | scanner.ScanComments | scanner.SkipComments
-	c.scanner.IsIdentRune = isIdentRune
-	return c
 }
 
 func isIdentRune(ch rune, i int) bool {
 	return ch == '_' || ch == '.' || ch == '/' || ch == ':' || ch == '-' || ch == '+' || ch == '*' || ch == '?' || ch == '=' || ch == '&' || ch == '@' || unicode.IsLetter(ch) || unicode.IsDigit(ch)
 }
 
-func (c *Context) scanNextToken() (int, string) {
-	token := int(c.scanner.Scan())
-	s := c.scanner.TokenText()
+func (l *Lexer) scanNextToken() (int, string) {
+	token := int(l.scanner.Scan())
+	s := l.scanner.TokenText()
 
 	for s == "!" || s == "#" {
-		c.skipComments()
+		l.skipComments()
 
-		token = int(c.scanner.Scan())
-		s = c.scanner.TokenText()
+		token = int(l.scanner.Scan())
+		s = l.scanner.TokenText()
 	}
 
 	log.Debugf("token text: %s\n", s)
@@ -225,10 +221,10 @@ func (c *Context) scanNextToken() (int, string) {
 	return token, s
 }
 
-func (c *Context) skipComments() {
-	ch := c.scanner.Next()
+func (l *Lexer) skipComments() {
+	ch := l.scanner.Next()
 	for ch != '\n' && ch >= 0 {
-		ch = c.scanner.Next()
+		ch = l.scanner.Next()
 	}
 }
 
@@ -238,7 +234,7 @@ func (l *Lexer) scanInclude(rawfilename string) error {
 		return err
 	}
 
-	baseDir := filepath.Dir(l.ctx.filename)
+	baseDir := filepath.Dir(l.filename)
 	os.Chdir(baseDir)
 	defer os.Chdir(curDir)
 
@@ -251,11 +247,9 @@ func (l *Lexer) scanInclude(rawfilename string) error {
 		log.Infof("warning: %s: No such file or directory", rawfilename)
 	}
 
-	prevctx := l.ctx
-	defer func() { l.ctx = prevctx }()
-
 	for _, rawpath := range rawpaths {
 		relpath := filepath.Join(baseDir, rawpath)
+		l.filename = relpath
 		log.Verbosef("--> Parsing ... %s\n", relpath)
 
 		f, err := os.Open(rawpath)
@@ -263,8 +257,7 @@ func (l *Lexer) scanInclude(rawfilename string) error {
 			return err
 		}
 
-		l.ctx = NewContext(f, relpath)
-		l.run()
+		l.tokenize()
 
 		f.Close()
 	}
@@ -273,29 +266,26 @@ func (l *Lexer) scanInclude(rawfilename string) error {
 }
 
 func (l *Lexer) Lex(lval *yySymType) int {
-	return <-l.emitter
+	if len(l.tokens) == l.pos {
+		return EOF
+	}
+	token := l.tokens[l.pos]
+	l.pos++
+	return token
 }
 
-func (l *Lexer) mainRun() {
-	l.run()
-	// XXX
-	l.emitter <- scanner.EOF
-	l.emitter <- scanner.EOF
-	close(l.emitter)
-}
-
-func (l *Lexer) run() {
+func (l *Lexer) tokenize() {
 	for {
-		token, s := l.ctx.scanNextToken()
+		token, s := l.scanNextToken()
 
 		for s == "include" {
-			token, s = l.ctx.scanNextToken()
+			token, s = l.scanNextToken()
 
 			if err := l.scanInclude(s); err != nil {
 				l.Error(err.Error())
 			}
 
-			token, s = l.ctx.scanNextToken()
+			token, s = l.scanNextToken()
 		}
 
 		if token == scanner.EOF {
@@ -349,15 +339,15 @@ func (l *Lexer) run() {
 			token = SYMBOL_TABLES[s]
 		}
 
-		l.emitter <- token
+		l.tokens = append(l.tokens, token)
 	}
 }
 
 func (l *Lexer) Error(msg string) {
 	l.e = &Error{
-		Filename: l.ctx.filename,
-		Line:     l.ctx.scanner.Line,
-		Column:   l.ctx.scanner.Column,
+		Filename: l.filename,
+		Line:     l.scanner.Line,
+		Column:   l.scanner.Column,
 		Message:  msg,
 	}
 }
@@ -365,7 +355,7 @@ func (l *Lexer) Error(msg string) {
 func Parse(src io.Reader, filename string) error {
 	yyErrorVerbose = true
 	l := NewLexer(src, filename)
-	go l.mainRun()
+	l.tokenize()
 	if ret := yyParse(l); ret != 0 {
 		return l.e
 	}
