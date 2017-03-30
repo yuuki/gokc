@@ -188,7 +188,7 @@ func NewTokenizer(src io.Reader, filename string) *Tokenizer {
 }
 
 func (t *Tokenizer) NextAll() ([]*Token, error) {
-	var tokens []*Token
+	var result []*Token
 
 	for {
 		token, s := t.scanNextToken()
@@ -196,9 +196,11 @@ func (t *Tokenizer) NextAll() ([]*Token, error) {
 		for s == "include" {
 			token, s = t.scanNextToken()
 
-			if err := t.scanInclude(s); err != nil {
+			tokens, err := t.scanInclude(s)
+			if err != nil {
 				return nil, err
 			}
+			result = append(result, tokens...)
 
 			token, s = t.scanNextToken()
 		}
@@ -254,7 +256,7 @@ func (t *Tokenizer) NextAll() ([]*Token, error) {
 			token = SYMBOL_TABLES[s]
 		}
 
-		tokens = append(tokens, &Token{
+		result = append(result, &Token{
 			value:    token,
 			filename: t.filename,
 			line:     t.scanner.Line,
@@ -262,7 +264,7 @@ func (t *Tokenizer) NextAll() ([]*Token, error) {
 		})
 	}
 
-	return tokens, nil
+	return result, nil
 }
 
 func skipComments(scanner *scanner.Scanner) {
@@ -288,10 +290,10 @@ func (t *Tokenizer) scanNextToken() (int, string) {
 	return token, s
 }
 
-func (t *Tokenizer) scanInclude(rawfilename string) error {
+func (t *Tokenizer) scanInclude(rawfilename string) ([]*Token, error) {
 	curDir, err := filepath.Abs(".")
 	if err != nil {
-		return err
+		return nil, err
 	}
 
 	baseDir := filepath.Dir(t.filename)
@@ -300,11 +302,11 @@ func (t *Tokenizer) scanInclude(rawfilename string) error {
 
 	rawpaths, err := filepath.Glob(rawfilename)
 	if err != nil {
-		return err
+		return nil, err
 	}
 
 	if len(rawpaths) < 1 {
-		return fmt.Errorf("warning: %s: No such file or directory", rawfilename)
+		return nil, fmt.Errorf("warning: %s: No such file or directory", rawfilename)
 	}
 
 	prevScanner := t.scanner
@@ -312,24 +314,29 @@ func (t *Tokenizer) scanInclude(rawfilename string) error {
 	prevFilename := t.filename
 	defer func() { t.filename = prevFilename }()
 
+	var result []*Token
 	for _, rawpath := range rawpaths {
 		t.filename = rawpath
 		log.Verbosef("--> Parsing ... %s\n", rawpath)
 
 		f, err := os.Open(rawpath)
 		if err != nil {
-			return err
+			return nil, err
 		}
 
 		t.scanner.Init(f)
 		t.scanner.Mode &^= scanner.ScanInts | scanner.ScanFloats | scanner.ScanChars | scanner.ScanRawStrings | scanner.ScanComments | scanner.SkipComments
 		t.scanner.IsIdentRune = isIdentRune
-		t.NextAll()
+		tokens, err := t.NextAll()
+		if err != nil {
+			return nil, err
+		}
+		result = append(result, tokens...)
 
 		f.Close()
 	}
 
-	return nil
+	return result, nil
 }
 
 type Token struct {
