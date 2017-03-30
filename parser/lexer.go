@@ -174,12 +174,11 @@ var SYMBOL_TABLES = map[string]int{
 }
 
 type Lexer struct {
-	scanner     scanner.Scanner
-	tokens      []int
-	pos         int
-	filename    string
-	curFilename string
-	e           error
+	scanner  scanner.Scanner
+	tokens   []int
+	pos      int
+	filename string
+	e        error
 }
 
 type Error struct {
@@ -200,7 +199,6 @@ func NewLexer(src io.Reader, filename string) *Lexer {
 	lex.scanner.IsIdentRune = isIdentRune
 	lex.tokens = []int{}
 	lex.filename = filename
-	lex.curFilename = filename
 	return &lex
 }
 
@@ -237,7 +235,7 @@ func (l *Lexer) scanInclude(rawfilename string) error {
 		return err
 	}
 
-	baseDir := filepath.Dir(l.curFilename)
+	baseDir := filepath.Dir(l.filename)
 	os.Chdir(baseDir)
 	defer os.Chdir(curDir)
 
@@ -252,11 +250,11 @@ func (l *Lexer) scanInclude(rawfilename string) error {
 
 	prevScanner := l.scanner
 	defer func() { l.scanner = prevScanner }()
-	prevFilename := l.curFilename
-	defer func() { l.curFilename = prevFilename }()
+	prevFilename := l.filename
+	defer func() { l.filename = prevFilename }()
 
 	for _, rawpath := range rawpaths {
-		l.curFilename = rawpath
+		l.filename = rawpath
 		log.Verbosef("--> Parsing ... %s\n", rawpath)
 
 		f, err := os.Open(rawpath)
@@ -355,7 +353,7 @@ func (l *Lexer) tokenize() {
 
 func (l *Lexer) Error(msg string) {
 	l.e = &Error{
-		Filename: l.curFilename,
+		Filename: l.filename,
 		Line:     l.scanner.Line,
 		Column:   l.scanner.Column,
 		Message:  msg,
