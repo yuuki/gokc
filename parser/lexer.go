@@ -173,129 +173,36 @@ var SYMBOL_TABLES = map[string]int{
 	"quorum_down":         QUORUM_DOWN,
 }
 
-type Lexer struct {
-	scanner     scanner.Scanner
-	tokens      []int
-	pos         int
-	filename    string
-	curFilename string
-	e           error
+type Tokenizer struct {
+	scanner  scanner.Scanner
+	filename string
 }
 
-type Error struct {
-	Message  string
-	Filename string
-	Line     int
-	Column   int
+func NewTokenizer(src io.Reader, filename string) *Tokenizer {
+	var t Tokenizer
+	t.scanner.Init(src)
+	t.scanner.Mode &^= scanner.ScanInts | scanner.ScanFloats | scanner.ScanChars | scanner.ScanRawStrings | scanner.ScanComments | scanner.SkipComments
+	t.scanner.IsIdentRune = isIdentRune
+	t.filename = filename
+	return &t
 }
 
-func (e *Error) Error() string {
-	return e.Message
-}
+func (t *Tokenizer) NextAll() ([]*Token, error) {
+	var result []*Token
 
-func NewLexer(src io.Reader, filename string) *Lexer {
-	var lex Lexer
-	lex.scanner.Init(src)
-	lex.scanner.Mode &^= scanner.ScanInts | scanner.ScanFloats | scanner.ScanChars | scanner.ScanRawStrings | scanner.ScanComments | scanner.SkipComments
-	lex.scanner.IsIdentRune = isIdentRune
-	lex.tokens = []int{}
-	lex.filename = filename
-	lex.curFilename = filename
-	return &lex
-}
-
-func isIdentRune(ch rune, i int) bool {
-	return ch == '_' || ch == '.' || ch == '/' || ch == ':' || ch == '-' || ch == '+' || ch == '*' || ch == '?' || ch == '=' || ch == '&' || ch == '@' || unicode.IsLetter(ch) || unicode.IsDigit(ch)
-}
-
-func (l *Lexer) scanNextToken() (int, string) {
-	token := int(l.scanner.Scan())
-	s := l.scanner.TokenText()
-
-	for s == "!" || s == "#" {
-		l.skipComments()
-
-		token = int(l.scanner.Scan())
-		s = l.scanner.TokenText()
-	}
-
-	log.Debugf("token text: %s\n", s)
-
-	return token, s
-}
-
-func (l *Lexer) skipComments() {
-	ch := l.scanner.Next()
-	for ch != '\n' && ch >= 0 {
-		ch = l.scanner.Next()
-	}
-}
-
-func (l *Lexer) scanInclude(rawfilename string) error {
-	curDir, err := filepath.Abs(".")
-	if err != nil {
-		return err
-	}
-
-	baseDir := filepath.Dir(l.curFilename)
-	os.Chdir(baseDir)
-	defer os.Chdir(curDir)
-
-	rawpaths, err := filepath.Glob(rawfilename)
-	if err != nil {
-		return err
-	}
-
-	if len(rawpaths) < 1 {
-		return fmt.Errorf("warning: %s: No such file or directory", rawfilename)
-	}
-
-	prevScanner := l.scanner
-	defer func() { l.scanner = prevScanner }()
-	prevFilename := l.curFilename
-	defer func() { l.curFilename = prevFilename }()
-
-	for _, rawpath := range rawpaths {
-		l.curFilename = rawpath
-		log.Verbosef("--> Parsing ... %s\n", rawpath)
-
-		f, err := os.Open(rawpath)
-		if err != nil {
-			return err
-		}
-
-		l.scanner.Init(f)
-		l.scanner.Mode &^= scanner.ScanInts | scanner.ScanFloats | scanner.ScanChars | scanner.ScanRawStrings | scanner.ScanComments | scanner.SkipComments
-		l.scanner.IsIdentRune = isIdentRune
-		l.tokenize()
-
-		f.Close()
-	}
-
-	return nil
-}
-
-func (l *Lexer) Lex(lval *yySymType) int {
-	if len(l.tokens) == l.pos {
-		return EOF
-	}
-	token := l.tokens[l.pos]
-	l.pos++
-	return token
-}
-
-func (l *Lexer) tokenize() {
 	for {
-		token, s := l.scanNextToken()
+		token, s := t.scanNextToken()
 
 		for s == "include" {
-			token, s = l.scanNextToken()
+			token, s = t.scanNextToken()
 
-			if err := l.scanInclude(s); err != nil {
-				l.Error(err.Error())
+			tokens, err := t.scanInclude(s)
+			if err != nil {
+				return nil, err
 			}
+			result = append(result, tokens...)
 
-			token, s = l.scanNextToken()
+			token, s = t.scanNextToken()
 		}
 
 		if token == scanner.EOF {
@@ -349,23 +256,148 @@ func (l *Lexer) tokenize() {
 			token = SYMBOL_TABLES[s]
 		}
 
-		l.tokens = append(l.tokens, token)
+		result = append(result, &Token{
+			value:    token,
+			filename: t.filename,
+			line:     t.scanner.Line,
+			column:   t.scanner.Column,
+		})
+	}
+
+	return result, nil
+}
+
+func skipComments(scanner *scanner.Scanner) {
+	ch := scanner.Next()
+	for ch != '\n' && ch >= 0 {
+		ch = scanner.Next()
 	}
 }
 
+func (t *Tokenizer) scanNextToken() (int, string) {
+	token := int(t.scanner.Scan())
+	s := t.scanner.TokenText()
+
+	for s == "!" || s == "#" {
+		skipComments(&t.scanner)
+
+		token = int(t.scanner.Scan())
+		s = t.scanner.TokenText()
+	}
+
+	log.Debugf("token text: %s\n", s)
+
+	return token, s
+}
+
+func (t *Tokenizer) scanInclude(rawfilename string) ([]*Token, error) {
+	curDir, err := filepath.Abs(".")
+	if err != nil {
+		return nil, err
+	}
+
+	baseDir := filepath.Dir(t.filename)
+	os.Chdir(baseDir)
+	defer os.Chdir(curDir)
+
+	rawpaths, err := filepath.Glob(rawfilename)
+	if err != nil {
+		return nil, err
+	}
+
+	if len(rawpaths) < 1 {
+		return nil, fmt.Errorf("warning: %s: No such file or directory", rawfilename)
+	}
+
+	var result []*Token
+	for _, rawpath := range rawpaths {
+		log.Verbosef("--> Parsing ... %s\n", rawpath)
+
+		f, err := os.Open(rawpath)
+		if err != nil {
+			return nil, err
+		}
+
+		child := NewTokenizer(f, rawpath)
+		tokens, err := child.NextAll()
+		if err != nil {
+			return nil, err
+		}
+		result = append(result, tokens...)
+
+		f.Close()
+	}
+
+	return result, nil
+}
+
+type Token struct {
+	value    int
+	filename string
+	line     int
+	column   int
+}
+
+type Lexer struct {
+	tokens []*Token
+	pos    int
+	e      error
+}
+
+type Error struct {
+	Message  string
+	Filename string
+	Line     int
+	Column   int
+}
+
+func (e *Error) Error() string {
+	return e.Message
+}
+
+func NewLexer(tokens []*Token) *Lexer {
+	return &Lexer{tokens: tokens, pos: -1}
+}
+
+func isIdentRune(ch rune, i int) bool {
+	return ch == '_' || ch == '.' || ch == '/' || ch == ':' || ch == '-' || ch == '+' || ch == '*' || ch == '?' || ch == '=' || ch == '&' || ch == '@' || unicode.IsLetter(ch) || unicode.IsDigit(ch)
+}
+
+func (l *Lexer) curToken() *Token {
+	return l.tokens[l.pos]
+}
+
+func (l *Lexer) nextToken() *Token {
+	l.pos++
+	return l.tokens[l.pos]
+}
+
+func (l *Lexer) Lex(lval *yySymType) int {
+	if (len(l.tokens) - 1) == l.pos {
+		return EOF
+	}
+	token := l.nextToken()
+	return token.value
+}
+
 func (l *Lexer) Error(msg string) {
+	token := l.curToken()
 	l.e = &Error{
-		Filename: l.curFilename,
-		Line:     l.scanner.Line,
-		Column:   l.scanner.Column,
+		Filename: token.filename,
+		Line:     token.line,
+		Column:   token.column,
 		Message:  msg,
 	}
 }
 
 func Parse(src io.Reader, filename string) error {
 	yyErrorVerbose = true
-	l := NewLexer(src, filename)
-	l.tokenize()
+	t := NewTokenizer(src, filename)
+	tokens, err := t.NextAll()
+	if err != nil {
+		return err
+	}
+	l := NewLexer(tokens)
 	if ret := yyParse(l); ret != 0 {
 		return l.e
 	}
