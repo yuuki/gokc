@@ -240,7 +240,7 @@ func (l *Lexer) scanInclude(rawfilename string) error {
 	os.Chdir(baseDir)
 	defer os.Chdir(curDir)
 
-	rawpaths, err := filepath.Glob(filepath.Join(baseDir, rawfilename))
+	rawpaths, err := filepath.Glob(rawfilename)
 	if err != nil {
 		return err
 	}
@@ -251,6 +251,8 @@ func (l *Lexer) scanInclude(rawfilename string) error {
 
 	prevScanner := l.scanner
 	defer func() { l.scanner = prevScanner }()
+	prevFilename := l.curFilename
+	defer func() { l.curFilename = prevFilename }()
 
 	for _, rawpath := range rawpaths {
 		l.curFilename = rawpath
