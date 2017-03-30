@@ -31,7 +31,7 @@ func Verbose(v ...interface{}) {
 
 func Verbosef(format string, v ...interface{}) {
 	if IsVerbose == true {
-		log.Printf(format, v)
+		log.Printf(format, v...)
 	}
 }
 
