@@ -1,6 +1,7 @@
 package parser
 
 import (
+	"fmt"
 	"io"
 	"net"
 	"net/mail"
@@ -246,7 +247,7 @@ func (l *Lexer) scanInclude(rawfilename string) error {
 	}
 
 	if len(rawpaths) < 1 {
-		log.Infof("warning: %s: No such file or directory", rawfilename)
+		return fmt.Errorf("warning: %s: No such file or directory", rawfilename)
 	}
 
 	prevScanner := l.scanner
