@@ -173,11 +173,12 @@ var SYMBOL_TABLES = map[string]int{
 }
 
 type Lexer struct {
-	scanner  scanner.Scanner
-	tokens   []int
-	pos      int
-	filename string
-	e        error
+	scanner     scanner.Scanner
+	tokens      []int
+	pos         int
+	filename    string
+	curFilename string
+	e           error
 }
 
 type Error struct {
@@ -198,6 +199,7 @@ func NewLexer(src io.Reader, filename string) *Lexer {
 	lex.scanner.IsIdentRune = isIdentRune
 	lex.tokens = []int{}
 	lex.filename = filename
+	lex.curFilename = filename
 	return &lex
 }
 
@@ -238,7 +240,7 @@ func (l *Lexer) scanInclude(rawfilename string) error {
 	os.Chdir(baseDir)
 	defer os.Chdir(curDir)
 
-	rawpaths, err := filepath.Glob(rawfilename)
+	rawpaths, err := filepath.Glob(filepath.Join(baseDir, rawfilename))
 	if err != nil {
 		return err
 	}
@@ -247,16 +249,21 @@ func (l *Lexer) scanInclude(rawfilename string) error {
 		log.Infof("warning: %s: No such file or directory", rawfilename)
 	}
 
+	prevScanner := l.scanner
+	defer func() { l.scanner = prevScanner }()
+
 	for _, rawpath := range rawpaths {
-		relpath := filepath.Join(baseDir, rawpath)
-		l.filename = relpath
-		log.Verbosef("--> Parsing ... %s\n", relpath)
+		l.curFilename = rawpath
+		log.Verbosef("--> Parsing ... %s\n", rawpath)
 
 		f, err := os.Open(rawpath)
 		if err != nil {
 			return err
 		}
 
+		l.scanner.Init(f)
+		l.scanner.Mode &^= scanner.ScanInts | scanner.ScanFloats | scanner.ScanChars | scanner.ScanRawStrings | scanner.ScanComments | scanner.SkipComments
+		l.scanner.IsIdentRune = isIdentRune
 		l.tokenize()
 
 		f.Close()
@@ -345,7 +352,7 @@ func (l *Lexer) tokenize() {
 
 func (l *Lexer) Error(msg string) {
 	l.e = &Error{
-		Filename: l.filename,
+		Filename: l.curFilename,
 		Line:     l.scanner.Line,
 		Column:   l.scanner.Column,
 		Message:  msg,
