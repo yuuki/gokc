@@ -309,14 +309,8 @@ func (t *Tokenizer) scanInclude(rawfilename string) ([]*Token, error) {
 		return nil, fmt.Errorf("warning: %s: No such file or directory", rawfilename)
 	}
 
-	prevScanner := t.scanner
-	defer func() { t.scanner = prevScanner }()
-	prevFilename := t.filename
-	defer func() { t.filename = prevFilename }()
-
 	var result []*Token
 	for _, rawpath := range rawpaths {
-		t.filename = rawpath
 		log.Verbosef("--> Parsing ... %s\n", rawpath)
 
 		f, err := os.Open(rawpath)
@@ -324,10 +318,8 @@ func (t *Tokenizer) scanInclude(rawfilename string) ([]*Token, error) {
 			return nil, err
 		}
 
-		t.scanner.Init(f)
-		t.scanner.Mode &^= scanner.ScanInts | scanner.ScanFloats | scanner.ScanChars | scanner.ScanRawStrings | scanner.ScanComments | scanner.SkipComments
-		t.scanner.IsIdentRune = isIdentRune
-		tokens, err := t.NextAll()
+		child := NewTokenizer(f, rawpath)
+		tokens, err := child.NextAll()
 		if err != nil {
 			return nil, err
 		}
