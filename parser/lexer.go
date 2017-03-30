@@ -236,7 +236,7 @@ func (l *Lexer) scanInclude(rawfilename string) error {
 		return err
 	}
 
-	baseDir := filepath.Dir(l.filename)
+	baseDir := filepath.Dir(l.curFilename)
 	os.Chdir(baseDir)
 	defer os.Chdir(curDir)
 
