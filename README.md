@@ -1,5 +1,6 @@
 gokc
 ====
+[![Build Status](https://travis-ci.org/yuuki/diamondb.svg?branch=master)](https://travis-ci.org/yuuki/diamondb)
 [![Latest Version](http://img.shields.io/github/release/yuuki/gokc.svg?style=flat-square)](https://github.com/yuuki/gokc/releases)
 [![Go Report Card](https://goreportcard.com/badge/github.com/yuuki/gokc)](https://goreportcard.com/report/github.com/yuuki/gokc)
 
