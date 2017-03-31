@@ -11,7 +11,10 @@ build: yacc
 buildlinux: yacc
 	GOOS=linux GOARCH=amd64 make build
 
-test: build
+test: yacc
+	go test -v $$(go list ./... | grep -v vendor)
+
+testfiles: build
 	find ./testdata -type f | xargs -I{} ./$(BIN) -f {}
 	find ./keepalived/doc/samples/keepalived.conf.* -type f | xargs -I{} ./$(BIN) -f {}
 
