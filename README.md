@@ -31,7 +31,7 @@ $ brew install gokc
 
 ## Contribution
 
-1. Fork ([https://github.com/y_uuki/gokc/fork](https://github.com/y_uuki/gokc/fork))
+1. Fork ([https://github.com/yuuki/gokc/fork](https://github.com/yuuki/gokc/fork))
 1. Create a feature branch
 1. Commit your changes
 1. Rebase your local changes against the master branch
