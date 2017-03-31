@@ -1,6 +1,6 @@
 [submodule "keepalived"]
 	path = keepalived
-	url = git@github.com:acassen/keepalived
+	url = https://github.com/acassen/keepalived
 [submodule "vendor/github.com/mitchellh/colorstring"]
 	path = vendor/github.com/mitchellh/colorstring
 	url = https://github.com/mitchellh/colorstring
