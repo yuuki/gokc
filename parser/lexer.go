@@ -58,6 +58,7 @@ var SYMBOL_TABLES = map[string]int{
 	"lvs_sync_daemon_interface":  LVS_SYNC_DAEMON_INTERFACE,
 	"virtual_router_id":          VIRTUAL_ROUTER_ID,
 	"nopreempt":                  NOPREEMPT,
+	"preempt_delay":              PREEMPT_DELAY,
 	"priority":                   PRIORITY,
 	"advert_int":                 ADVERT_INT,
 	"virtual_ipaddress":          VIRTUAL_IPADDRESS,
