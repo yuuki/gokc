@@ -25,7 +25,7 @@ func TestNewTokenizer(t *testing.T) {
 
 var (
 	tokenMap = map[string][]int{
-		"unicast_mcast": []int{
+		"unicast_mcast": {
 			VRRP_INSTANCE, STRING, LB, MCAST_SRC_IP, IPV4,
 			UNICAST_SRC_IP, IPV4, UNICAST_PEER, LB,
 			IPV4, IPV4, IPV4, RB, RB,
