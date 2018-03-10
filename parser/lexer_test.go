@@ -77,7 +77,7 @@ func TestNewLexer(t *testing.T) {
 		t.Errorf("pos got %v, want %v", l.pos, -1)
 	}
 	if l.e != nil {
-		t.Errorf("lexer error: got %v, want %v", l.e)
+		t.Errorf("lexer error: %v", l.e)
 	}
 }
 
