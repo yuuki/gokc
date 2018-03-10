@@ -35,11 +35,15 @@ func init() {
 }
 
 func main() {
-	var filepath string
-	var isVersion bool
+	var (
+		filepath  string
+		isVersion bool
+		json      bool
+	)
 	flag.StringVar(&filepath, "f", "/etc/keepalived/keepalived.conf", "keepalived.conf file path")
 	flag.BoolVar(&isVersion, "v", false, "print the version")
 	flag.BoolVar(&log.IsVerbose, "V", false, "verbose log mode")
+	flag.BoolVar(&json, "json", false, "print configuration as json")
 	flag.Parse()
 
 	if isVersion {
@@ -66,5 +70,9 @@ func main() {
 		}
 	}
 
-	log.Infof("gokc: the configuration file %s syntax is ok", filepath)
+	if json {
+		//
+	} else {
+		log.Infof("gokc: the configuration file %s syntax is ok", filepath)
+	}
 }
