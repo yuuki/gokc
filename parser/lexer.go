@@ -20,7 +20,7 @@ const (
 	EOF = 0
 )
 
-var SYMBOL_TABLES = map[string]int{
+var symbolTables = map[string]int{
 	"{": LB,
 	"}": RB,
 
@@ -253,8 +253,8 @@ func (t *Tokenizer) NextAll() ([]*Token, error) {
 			token = EMAIL
 		}
 
-		if _, ok := SYMBOL_TABLES[s]; ok {
-			token = SYMBOL_TABLES[s]
+		if _, ok := symbolTables[s]; ok {
+			token = symbolTables[s]
 		}
 
 		result = append(result, &Token{
