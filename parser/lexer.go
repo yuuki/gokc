@@ -258,7 +258,8 @@ func (t *Tokenizer) NextAll() ([]*Token, error) {
 		}
 
 		result = append(result, &Token{
-			value:    token,
+			tok:      token,
+			lit:      s,
 			filename: t.filename,
 			line:     t.scanner.Line,
 			column:   t.scanner.Column,
@@ -332,13 +333,6 @@ func (t *Tokenizer) scanInclude(rawfilename string) ([]*Token, error) {
 	return result, nil
 }
 
-type Token struct {
-	value    int
-	filename string
-	line     int
-	column   int
-}
-
 type Lexer struct {
 	tokens []*Token
 	pos    int
@@ -378,7 +372,7 @@ func (l *Lexer) Lex(lval *yySymType) int {
 		return EOF
 	}
 	token := l.nextToken()
-	return token.value
+	return token.tok
 }
 
 func (l *Lexer) Error(msg string) {

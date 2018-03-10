@@ -57,7 +57,7 @@ func TestTokenizer_NextAll(t *testing.T) {
 		}
 		fmt.Printf("%+v", len(tokens))
 		for i, token := range tokens {
-			got, want := token.value, tt.toks[i]
+			got, want := token.tok, tt.toks[i]
 			if got != want {
 				t.Errorf("token got %v, want %v (%v)", got, want, i)
 			}
@@ -67,7 +67,7 @@ func TestTokenizer_NextAll(t *testing.T) {
 
 func TestNewLexer(t *testing.T) {
 	tokens := []*Token{
-		{VRRP_INSTANCE, "dummy.conf", 2, 10},
+		{VRRP_INSTANCE, "vrrp_instance", "dummy.conf", 2, 10},
 	}
 	l := NewLexer(tokens)
 	if !reflect.DeepEqual(l.tokens, tokens) {

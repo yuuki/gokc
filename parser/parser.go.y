@@ -3,8 +3,7 @@ package parser
 %}
 
 %union {
-  integer   int
-  symbol    string
+  token Token
 };
 
 %token <integer> NUMBER
