@@ -61,7 +61,8 @@ func main() {
 	}
 	defer file.Close()
 
-	if err := parser.Parse(file, filepath); err != nil {
+	result, err := parser.Parse(file, filepath)
+	if err != nil {
 		if e, ok := err.(*parser.Error); ok {
 			msg := colorstring.Color(fmt.Sprintf("[white]%s:%d:%d: [red]%s[reset]", e.Filename, e.Line, e.Column, e.Message))
 			log.Error(msg)
@@ -69,6 +70,7 @@ func main() {
 			log.Error(err)
 		}
 	}
+	log.Debugf("%#v\n", result)
 
 	if json {
 		//

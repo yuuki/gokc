@@ -337,6 +337,7 @@ type Lexer struct {
 	tokens []*Token
 	pos    int
 	e      error
+	result []Block
 }
 
 type Error struct {
@@ -372,6 +373,7 @@ func (l *Lexer) Lex(lval *yySymType) int {
 		return EOF
 	}
 	token := l.nextToken()
+	lval.token = *token
 	return token.tok
 }
 
@@ -385,16 +387,16 @@ func (l *Lexer) Error(msg string) {
 	}
 }
 
-func Parse(src io.Reader, filename string) error {
+func Parse(src io.Reader, filename string) ([]Block, error) {
 	yyErrorVerbose = true
 	t := NewTokenizer(src, filename)
 	tokens, err := t.NextAll()
 	if err != nil {
-		return err
+		return nil, err
 	}
 	l := NewLexer(tokens)
 	if ret := yyParse(l); ret != 0 {
-		return l.e
+		return nil, l.e
 	}
-	return l.e
+	return l.result, l.e
 }
