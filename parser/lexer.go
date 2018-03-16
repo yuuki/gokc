@@ -387,16 +387,16 @@ func (l *Lexer) Error(msg string) {
 	}
 }
 
-func Parse(src io.Reader, filename string) ([]Block, error) {
+func Parse(src io.Reader, filename string) (Configuration, error) {
 	yyErrorVerbose = true
 	t := NewTokenizer(src, filename)
 	tokens, err := t.NextAll()
 	if err != nil {
-		return nil, err
+		return Configuration{}, err
 	}
 	l := NewLexer(tokens)
 	if ret := yyParse(l); ret != 0 {
-		return nil, l.e
+		return Configuration{}, l.e
 	}
-	return l.result, l.e
+	return Configuration{Blocks: l.result}, l.e
 }

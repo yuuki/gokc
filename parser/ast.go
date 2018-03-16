@@ -9,6 +9,10 @@ type Token struct {
 	column   int
 }
 
+type Configuration struct {
+	Blocks []Block
+}
+
 type Block struct {
 	name  string // <STRING>: vrrp_script <STRING> { ... }
 	stmts []Stmt
