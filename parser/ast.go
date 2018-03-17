@@ -15,12 +15,18 @@ type Configuration struct {
 
 type Block struct {
 	name  string // <STRING>: vrrp_script <STRING> { ... }
-	stmts []Stmt
+	stmts []StmtAny
 }
 
-type Stmt struct {
-	name string
-	val  Value
-}
+type StmtAny interface{} //FIXME
+
+type Stmt map[string]Value // state: MASTER
+
+type StmtMulti map[string][]Value // virtual_ipaddress { vips }
 
 type Value interface{}
+
+// VIPAddr represents virtual_ipaddress
+type VIPAddr struct {
+	Addr string `json:"addr"`
+}

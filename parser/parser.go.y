@@ -3,22 +3,28 @@ package parser
 %}
 
 %union {
+  string string
   token   Token
   block   Block
   blocks  []Block
-  stmt    Stmt
-  stmts   []Stmt
-  value   Value
+  stmt_any    StmtAny
+  stmts_any   []StmtAny
+  stmt       Stmt
+  stmt_multi StmtMulti
+  values  []Value
+  vip_addr VIPAddr 
 };
 
 %token<token> NUMBER ID STRING EMAIL IPV4 IPV6 IP_CIDR IPADDR_RANGE HEX32 PATHSTR LB RB GLOBALDEFS NOTIFICATION_EMAIL NOTIFICATION_EMAIL_FROM SMTP_SERVER SMTP_CONNECT_TIMEOUT ROUTER_ID LVS_ID VRRP_MCAST_GROUP4 VRRP_MCAST_GROUP6 VRRP_GARP_MASTER_DELAY VRRP_GARP_MASTER_REPEAT VRRP_GARP_MASTER_REFRESH VRRP_GARP_MASTER_REFRESH_REPEAT VRRP_VERSION STATIC_IPADDRESS STATIC_ROUTES STATIC_RULES VRRP_SYNC_GROUP GROUP VRRP_INSTANCE USE_VMAC VERSION VMAC_XMIT_BASE NATIVE_IPV6 INTERFACE MCAST_SRC_IP UNICAST_SRC_IP UNICAST_PEER LVS_SYNC_DAEMON_INTERFACE VIRTUAL_ROUTER_ID NOPREEMPT PREEMPT_DELAY PRIORITY ADVERT_INT VIRTUAL_IPADDRESS VIRTUAL_IPADDRESS_EXCLUDED VIRTUAL_ROUTES STATE MASTER BACKUP GARP_MASTER_DELAY SMTP_ALERT AUTHENTICATION AUTH_TYPE AUTH_PASS PASS AH LABEL DEV SCOPE SITE LINK HOST NOWHERE GLOBAL BRD SRC FROM TO VIA GW OR TABLE METRIC TRACK_INTERFACE TRACK_SCRIPT DONT_TRACK_PRIMARY NOTIFY_MASTER NOTIFY_BACKUP NOTIFY_FAULT NOTIFY_STOP NOTIFY BLACKHOLE VRRP_SCRIPT SCRIPT INTERVAL TIMEOUT WEIGHT FALL RISE VIRTUAL_SERVER_GROUP VIRTUAL_SERVER DELAY_LOOP LB_ALGO LB_KIND LVS_SCHED LVS_METHOD RR WRR LC WLC FO OVF LBLC LBLCR SH DH SED NQ NAT DR TUN PERSISTENCE_TIMEOUT PROTOCOL TCP UDP SORRY_SERVER REAL_SERVER FWMARK INHIBIT_ON_FAILURE TCP_CHECK HTTP_GET SSL_GET SMTP_CHECK DNS_CHECK MISC_CHECK URL PATH DIGEST STATUS_CODE CONNECT_TIMEOUT CONNECT_PORT CONNECT_IP BINDTO BIND_PORT RETRY HELO_NAME TYPE NAME MISC_PATH MISC_TIMEOUT WARMUP MISC_DYNAMIC NB_GET_RETRY DELAY_BEFORE_RETRY VIRTUALHOST ALPHA OMEGA QUORUM HYSTERESIS QUORUM_UP QUORUM_DOWN
 
 %type<blocks> configuration
 %type<blocks> main_statements
-%type<stmts> vrrp_instance_statements
-%type<stmt> vrrp_instance_statement
 %type<block> vrrp_instance_block
-%type<value> vips vips_ex vip vip_ex ipaddr_literal ip46
+%type<stmts_any> vrrp_instance_statements
+%type<stmt_multi> vrrp_instance_statement
+%type<values> vips vips_ex
+%type<vip_addr> vip vip_ex
+%type<string> ipaddr_literal ip46
 
 %%
 
@@ -99,11 +105,11 @@ vrrp_instance_block :
 vrrp_instance_statements :
   vrrp_instance_statement vrrp_instance_statements 
   {
-    $$ = append([]Stmt{$1}, $2...)
+    $$ = append([]StmtAny{$1}, $2...)
   }
   | vrrp_instance_statement
   {
-    $$ = []Stmt{$1}
+    $$ = []StmtAny{$1}
   }
 
 vrrp_instance_statement: { }
@@ -124,11 +130,11 @@ vrrp_instance_statement: { }
 | ADVERT_INT NUMBER { }
 | VIRTUAL_IPADDRESS LB vips RB
   {
-    $$ = Stmt{name: $1.lit, val: $3}
+    $$ = StmtMulti{$1.lit: $3}
   }
 | VIRTUAL_IPADDRESS_EXCLUDED LB vips_ex RB
   {
-    $$ = Stmt{name: $1.lit, val: $3}
+    $$ = StmtMulti{$1.lit: $3}
   }
 | VIRTUAL_ROUTES LB virtual_routes_statements RB { }
 | STATE MASTER { }
@@ -326,19 +332,19 @@ protocol: { }
 vips:
   vip vips
   {
-    // $$ = append($1, $2...)
+    $$ = append([]Value{$1}, $2...)
   }
-  | vip { $$ = $1 }
+  | vip { $$ = []Value{$1} }
 
 vips_ex:
   vip_ex vips_ex
   {
-    //  $$ = append($1, $2...)
+    $$ = append([]Value{$1}, $2...)
   }
-  | vip_ex { $$ = $1 }
+  | vip_ex { $$ = []Value{$1} }
 
 vip: 
-  ipaddr_literal { $$ = $1 }
+  ipaddr_literal { $$ = VIPAddr{Addr: $1} }
 | LABEL STRING { }
 | DEV STRING { }
 | BRD ip46 { }

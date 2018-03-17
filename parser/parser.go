@@ -6,13 +6,17 @@ import __yyfmt__ "fmt"
 //line parser/parser.go.y:2
 //line parser/parser.go.y:5
 type yySymType struct {
-	yys    int
-	token  Token
-	block  Block
-	blocks []Block
-	stmt   Stmt
-	stmts  []Stmt
-	value  Value
+	yys        int
+	string     string
+	token      Token
+	block      Block
+	blocks     []Block
+	stmt_any   StmtAny
+	stmts_any  []StmtAny
+	stmt       Stmt
+	stmt_multi StmtMulti
+	values     []Value
+	vip_addr   VIPAddr
 }
 
 const NUMBER = 57346
@@ -335,7 +339,7 @@ const yyEofCode = 1
 const yyErrCode = 2
 const yyInitialStackSize = 16
 
-//line parser/parser.go.y:416
+//line parser/parser.go.y:422
 
 //line yacctab:1
 var yyExca = [...]int{
@@ -405,7 +409,7 @@ var yyAct = [...]int{
 	84, 82, 1, 53, 207, 21, 433, 422, 408, 485,
 	399, 392, 371, 286, 29, 202, 175, 336, 332, 328,
 	325, 308, 136, 75, 38, 11, 10, 9, 7, 6,
-	5, 4, 3, 321, 313, 8, 144, 2,
+	5, 4, 3, 321, 313, 144, 8, 2,
 }
 var yyPact = [...]int{
 
@@ -462,7 +466,7 @@ var yyPact = [...]int{
 }
 var yyPgo = [...]int{
 
-	0, 522, 557, 36, 556, 555, 17, 16, 554, 553,
+	0, 522, 557, 556, 36, 555, 17, 16, 554, 553,
 	15, 3, 552, 551, 550, 549, 548, 547, 546, 545,
 	170, 544, 22, 88, 34, 111, 543, 47, 542, 20,
 	541, 18, 540, 13, 11, 10, 539, 12, 538, 537,
@@ -478,10 +482,10 @@ var yyR1 = [...]int{
 	21, 21, 21, 21, 21, 21, 21, 21, 21, 21,
 	21, 21, 13, 14, 15, 25, 25, 16, 27, 27,
 	28, 28, 28, 28, 28, 28, 28, 29, 29, 30,
-	5, 3, 3, 4, 4, 4, 4, 4, 4, 4,
-	4, 4, 4, 4, 4, 4, 4, 4, 4, 4,
-	4, 4, 4, 4, 4, 4, 4, 4, 4, 4,
-	4, 4, 4, 4, 4, 4, 33, 33, 36, 36,
+	3, 4, 4, 5, 5, 5, 5, 5, 5, 5,
+	5, 5, 5, 5, 5, 5, 5, 5, 5, 5,
+	5, 5, 5, 5, 5, 5, 5, 5, 5, 5,
+	5, 5, 5, 5, 5, 5, 33, 33, 36, 36,
 	36, 36, 34, 34, 38, 38, 31, 31, 35, 35,
 	39, 39, 39, 17, 40, 40, 41, 41, 41, 41,
 	41, 41, 41, 32, 32, 42, 42, 19, 45, 45,
@@ -541,7 +545,7 @@ var yyR2 = [...]int{
 }
 var yyChk = [...]int{
 
-	-1000, -1, -2, -12, -13, -14, -15, -16, -5, -17,
+	-1000, -1, -2, -12, -13, -14, -15, -16, -3, -17,
 	-18, -19, 16, 30, 31, 32, 33, 35, 89, 97,
 	96, -1, 14, 14, 14, 14, 6, 6, 6, -47,
 	-48, 124, 34, -11, 8, 9, 6, -20, -21, 17,
@@ -555,7 +559,7 @@ var yyChk = [...]int{
 	68, 69, 70, 15, -24, -11, -11, 10, -11, -11,
 	-11, 6, 6, 4, 6, 4, -70, -11, 10, 15,
 	-25, -11, 10, -11, 10, -27, -28, 6, 34, 83,
-	84, 85, 87, -3, -4, 36, 37, 38, 39, 40,
+	84, 85, 87, -4, -5, 36, 37, 38, 39, 40,
 	41, 42, 43, 44, 45, 46, 47, 48, 49, 50,
 	51, 52, 53, 56, 57, 58, 80, 81, 82, 83,
 	84, 85, 86, 87, -40, -41, 90, 91, 92, 93,
@@ -563,7 +567,7 @@ var yyChk = [...]int{
 	118, 119, 122, 123, 151, 152, 153, 154, 155, 156,
 	157, -45, -46, -11, 11, 124, -22, -68, -37, 4,
 	6, 7, 12, -11, 10, 78, 78, 78, 78, 15,
-	-27, 14, 6, 6, 6, 6, 15, -3, 4, 6,
+	-27, 14, 6, 6, 6, 6, 15, -4, 4, 6,
 	-11, -11, 14, 6, 6, 4, 4, 4, 4, 14,
 	14, 14, 54, 55, 4, 14, 6, 14, 14, 6,
 	6, 6, 6, 6, 15, -40, 6, 4, 4, 4,
@@ -1011,1066 +1015,1066 @@ yydefault:
 
 	case 1:
 		yyDollar = yyS[yypt-2 : yypt+1]
-		//line parser/parser.go.y:27
+		//line parser/parser.go.y:33
 		{
 			yyVAL.blocks = append(yyDollar[1].blocks, yyDollar[2].blocks...)
 			yylex.(*Lexer).result = yyVAL.blocks
 		}
 	case 2:
 		yyDollar = yyS[yypt-1 : yypt+1]
-		//line parser/parser.go.y:32
+		//line parser/parser.go.y:38
 		{
 			yyVAL.blocks = yyDollar[1].blocks
 			yylex.(*Lexer).result = yyVAL.blocks
 		}
 	case 3:
 		yyDollar = yyS[yypt-0 : yypt+1]
-		//line parser/parser.go.y:37
+		//line parser/parser.go.y:43
 		{
 		}
 	case 4:
 		yyDollar = yyS[yypt-1 : yypt+1]
-		//line parser/parser.go.y:38
+		//line parser/parser.go.y:44
 		{
 		}
 	case 5:
 		yyDollar = yyS[yypt-1 : yypt+1]
-		//line parser/parser.go.y:39
+		//line parser/parser.go.y:45
 		{
 		}
 	case 6:
 		yyDollar = yyS[yypt-1 : yypt+1]
-		//line parser/parser.go.y:40
+		//line parser/parser.go.y:46
 		{
 		}
 	case 7:
 		yyDollar = yyS[yypt-1 : yypt+1]
-		//line parser/parser.go.y:41
+		//line parser/parser.go.y:47
 		{
 		}
 	case 8:
 		yyDollar = yyS[yypt-1 : yypt+1]
-		//line parser/parser.go.y:42
+		//line parser/parser.go.y:48
 		{
 		}
 	case 9:
 		yyDollar = yyS[yypt-1 : yypt+1]
-		//line parser/parser.go.y:43
+		//line parser/parser.go.y:49
 		{
 			yyVAL.blocks = []Block{yyDollar[1].block}
 		}
 	case 10:
 		yyDollar = yyS[yypt-1 : yypt+1]
-		//line parser/parser.go.y:44
+		//line parser/parser.go.y:50
 		{
 		}
 	case 11:
 		yyDollar = yyS[yypt-1 : yypt+1]
-		//line parser/parser.go.y:45
+		//line parser/parser.go.y:51
 		{
 		}
 	case 12:
 		yyDollar = yyS[yypt-1 : yypt+1]
-		//line parser/parser.go.y:46
+		//line parser/parser.go.y:52
 		{
 		}
 	case 17:
 		yyDollar = yyS[yypt-4 : yypt+1]
-		//line parser/parser.go.y:53
+		//line parser/parser.go.y:59
 		{
 		}
 	case 18:
 		yyDollar = yyS[yypt-2 : yypt+1]
-		//line parser/parser.go.y:54
+		//line parser/parser.go.y:60
 		{
 		}
 	case 19:
 		yyDollar = yyS[yypt-2 : yypt+1]
-		//line parser/parser.go.y:55
+		//line parser/parser.go.y:61
 		{
 		}
 	case 20:
 		yyDollar = yyS[yypt-2 : yypt+1]
-		//line parser/parser.go.y:56
+		//line parser/parser.go.y:62
 		{
 		}
 	case 21:
 		yyDollar = yyS[yypt-2 : yypt+1]
-		//line parser/parser.go.y:57
+		//line parser/parser.go.y:63
 		{
 		}
 	case 22:
 		yyDollar = yyS[yypt-2 : yypt+1]
-		//line parser/parser.go.y:58
+		//line parser/parser.go.y:64
 		{
 		}
 	case 23:
 		yyDollar = yyS[yypt-2 : yypt+1]
-		//line parser/parser.go.y:59
+		//line parser/parser.go.y:65
 		{
 		}
 	case 24:
 		yyDollar = yyS[yypt-2 : yypt+1]
-		//line parser/parser.go.y:60
+		//line parser/parser.go.y:66
 		{
 		}
 	case 25:
 		yyDollar = yyS[yypt-2 : yypt+1]
-		//line parser/parser.go.y:61
+		//line parser/parser.go.y:67
 		{
 		}
 	case 26:
 		yyDollar = yyS[yypt-2 : yypt+1]
-		//line parser/parser.go.y:62
+		//line parser/parser.go.y:68
 		{
 		}
 	case 27:
 		yyDollar = yyS[yypt-2 : yypt+1]
-		//line parser/parser.go.y:63
+		//line parser/parser.go.y:69
 		{
 		}
 	case 28:
 		yyDollar = yyS[yypt-2 : yypt+1]
-		//line parser/parser.go.y:64
+		//line parser/parser.go.y:70
 		{
 		}
 	case 29:
 		yyDollar = yyS[yypt-2 : yypt+1]
-		//line parser/parser.go.y:65
+		//line parser/parser.go.y:71
 		{
 		}
 	case 30:
 		yyDollar = yyS[yypt-2 : yypt+1]
-		//line parser/parser.go.y:66
+		//line parser/parser.go.y:72
 		{
 		}
 	case 31:
 		yyDollar = yyS[yypt-2 : yypt+1]
-		//line parser/parser.go.y:67
+		//line parser/parser.go.y:73
 		{
 		}
 	case 40:
 		yyDollar = yyS[yypt-0 : yypt+1]
-		//line parser/parser.go.y:81
+		//line parser/parser.go.y:87
 		{
 		}
 	case 41:
 		yyDollar = yyS[yypt-1 : yypt+1]
-		//line parser/parser.go.y:82
+		//line parser/parser.go.y:88
 		{
 		}
 	case 42:
 		yyDollar = yyS[yypt-4 : yypt+1]
-		//line parser/parser.go.y:83
+		//line parser/parser.go.y:89
 		{
 		}
 	case 43:
 		yyDollar = yyS[yypt-2 : yypt+1]
-		//line parser/parser.go.y:84
+		//line parser/parser.go.y:90
 		{
 		}
 	case 44:
 		yyDollar = yyS[yypt-2 : yypt+1]
-		//line parser/parser.go.y:85
+		//line parser/parser.go.y:91
 		{
 		}
 	case 45:
 		yyDollar = yyS[yypt-2 : yypt+1]
-		//line parser/parser.go.y:86
+		//line parser/parser.go.y:92
 		{
 		}
 	case 46:
 		yyDollar = yyS[yypt-2 : yypt+1]
-		//line parser/parser.go.y:87
+		//line parser/parser.go.y:93
 		{
 		}
 	case 48:
 		yyDollar = yyS[yypt-1 : yypt+1]
-		//line parser/parser.go.y:89
+		//line parser/parser.go.y:95
 		{
 		}
 	case 50:
 		yyDollar = yyS[yypt-5 : yypt+1]
-		//line parser/parser.go.y:95
+		//line parser/parser.go.y:101
 		{
-			yyVAL.block = Block{name: yyDollar[1].token.lit, stmts: yyDollar[4].stmts}
+			yyVAL.block = Block{name: yyDollar[1].token.lit, stmts: yyDollar[4].stmts_any}
 		}
 	case 51:
 		yyDollar = yyS[yypt-2 : yypt+1]
-		//line parser/parser.go.y:101
+		//line parser/parser.go.y:107
 		{
-			yyVAL.stmts = append([]Stmt{yyDollar[1].stmt}, yyDollar[2].stmts...)
+			yyVAL.stmts_any = append([]StmtAny{yyDollar[1].stmt_multi}, yyDollar[2].stmts_any...)
 		}
 	case 52:
 		yyDollar = yyS[yypt-1 : yypt+1]
-		//line parser/parser.go.y:105
+		//line parser/parser.go.y:111
 		{
-			yyVAL.stmts = []Stmt{yyDollar[1].stmt}
+			yyVAL.stmts_any = []StmtAny{yyDollar[1].stmt_multi}
 		}
 	case 53:
 		yyDollar = yyS[yypt-0 : yypt+1]
-		//line parser/parser.go.y:109
+		//line parser/parser.go.y:115
 		{
 		}
 	case 54:
 		yyDollar = yyS[yypt-1 : yypt+1]
-		//line parser/parser.go.y:110
+		//line parser/parser.go.y:116
 		{
 		}
 	case 55:
 		yyDollar = yyS[yypt-2 : yypt+1]
-		//line parser/parser.go.y:111
+		//line parser/parser.go.y:117
 		{
 		}
 	case 56:
 		yyDollar = yyS[yypt-1 : yypt+1]
-		//line parser/parser.go.y:112
+		//line parser/parser.go.y:118
 		{
 		}
 	case 57:
 		yyDollar = yyS[yypt-1 : yypt+1]
-		//line parser/parser.go.y:113
+		//line parser/parser.go.y:119
 		{
 		}
 	case 58:
 		yyDollar = yyS[yypt-2 : yypt+1]
-		//line parser/parser.go.y:114
+		//line parser/parser.go.y:120
 		{
 		}
 	case 59:
 		yyDollar = yyS[yypt-2 : yypt+1]
-		//line parser/parser.go.y:115
+		//line parser/parser.go.y:121
 		{
 		}
 	case 60:
 		yyDollar = yyS[yypt-2 : yypt+1]
-		//line parser/parser.go.y:116
+		//line parser/parser.go.y:122
 		{
 		}
 	case 61:
 		yyDollar = yyS[yypt-4 : yypt+1]
-		//line parser/parser.go.y:117
+		//line parser/parser.go.y:123
 		{
 		}
 	case 62:
 		yyDollar = yyS[yypt-2 : yypt+1]
-		//line parser/parser.go.y:118
+		//line parser/parser.go.y:124
 		{
 		}
 	case 63:
 		yyDollar = yyS[yypt-2 : yypt+1]
-		//line parser/parser.go.y:119
+		//line parser/parser.go.y:125
 		{
 		}
 	case 64:
 		yyDollar = yyS[yypt-2 : yypt+1]
-		//line parser/parser.go.y:120
+		//line parser/parser.go.y:126
 		{
 		}
 	case 65:
 		yyDollar = yyS[yypt-1 : yypt+1]
-		//line parser/parser.go.y:121
+		//line parser/parser.go.y:127
 		{
 		}
 	case 66:
 		yyDollar = yyS[yypt-2 : yypt+1]
-		//line parser/parser.go.y:122
+		//line parser/parser.go.y:128
 		{
 		}
 	case 67:
 		yyDollar = yyS[yypt-2 : yypt+1]
-		//line parser/parser.go.y:123
+		//line parser/parser.go.y:129
 		{
 		}
 	case 68:
 		yyDollar = yyS[yypt-2 : yypt+1]
-		//line parser/parser.go.y:124
+		//line parser/parser.go.y:130
 		{
 		}
 	case 69:
 		yyDollar = yyS[yypt-4 : yypt+1]
-		//line parser/parser.go.y:126
+		//line parser/parser.go.y:132
 		{
-			yyVAL.stmt = Stmt{name: yyDollar[1].token.lit, val: yyDollar[3].value}
+			yyVAL.stmt_multi = StmtMulti{yyDollar[1].token.lit: yyDollar[3].values}
 		}
 	case 70:
 		yyDollar = yyS[yypt-4 : yypt+1]
-		//line parser/parser.go.y:130
+		//line parser/parser.go.y:136
 		{
-			yyVAL.stmt = Stmt{name: yyDollar[1].token.lit, val: yyDollar[3].value}
+			yyVAL.stmt_multi = StmtMulti{yyDollar[1].token.lit: yyDollar[3].values}
 		}
 	case 71:
 		yyDollar = yyS[yypt-4 : yypt+1]
-		//line parser/parser.go.y:133
+		//line parser/parser.go.y:139
 		{
 		}
 	case 72:
 		yyDollar = yyS[yypt-2 : yypt+1]
-		//line parser/parser.go.y:134
+		//line parser/parser.go.y:140
 		{
 		}
 	case 73:
 		yyDollar = yyS[yypt-2 : yypt+1]
-		//line parser/parser.go.y:135
+		//line parser/parser.go.y:141
 		{
 		}
 	case 74:
 		yyDollar = yyS[yypt-2 : yypt+1]
-		//line parser/parser.go.y:136
+		//line parser/parser.go.y:142
 		{
 		}
 	case 75:
 		yyDollar = yyS[yypt-1 : yypt+1]
-		//line parser/parser.go.y:137
+		//line parser/parser.go.y:143
 		{
 		}
 	case 76:
 		yyDollar = yyS[yypt-4 : yypt+1]
-		//line parser/parser.go.y:138
+		//line parser/parser.go.y:144
 		{
 		}
 	case 77:
 		yyDollar = yyS[yypt-2 : yypt+1]
-		//line parser/parser.go.y:139
+		//line parser/parser.go.y:145
 		{
 		}
 	case 78:
 		yyDollar = yyS[yypt-4 : yypt+1]
-		//line parser/parser.go.y:140
+		//line parser/parser.go.y:146
 		{
 		}
 	case 79:
 		yyDollar = yyS[yypt-4 : yypt+1]
-		//line parser/parser.go.y:141
+		//line parser/parser.go.y:147
 		{
 		}
 	case 80:
 		yyDollar = yyS[yypt-1 : yypt+1]
-		//line parser/parser.go.y:142
+		//line parser/parser.go.y:148
 		{
 		}
 	case 81:
 		yyDollar = yyS[yypt-2 : yypt+1]
-		//line parser/parser.go.y:143
+		//line parser/parser.go.y:149
 		{
 		}
 	case 82:
 		yyDollar = yyS[yypt-2 : yypt+1]
-		//line parser/parser.go.y:144
+		//line parser/parser.go.y:150
 		{
 		}
 	case 83:
 		yyDollar = yyS[yypt-2 : yypt+1]
-		//line parser/parser.go.y:145
+		//line parser/parser.go.y:151
 		{
 		}
 	case 84:
 		yyDollar = yyS[yypt-2 : yypt+1]
-		//line parser/parser.go.y:146
+		//line parser/parser.go.y:152
 		{
 		}
 	case 85:
 		yyDollar = yyS[yypt-2 : yypt+1]
-		//line parser/parser.go.y:147
+		//line parser/parser.go.y:153
 		{
 		}
 	case 88:
 		yyDollar = yyS[yypt-0 : yypt+1]
-		//line parser/parser.go.y:151
+		//line parser/parser.go.y:157
 		{
 		}
 	case 89:
 		yyDollar = yyS[yypt-2 : yypt+1]
-		//line parser/parser.go.y:152
+		//line parser/parser.go.y:158
 		{
 		}
 	case 90:
 		yyDollar = yyS[yypt-2 : yypt+1]
-		//line parser/parser.go.y:153
+		//line parser/parser.go.y:159
 		{
 		}
 	case 91:
 		yyDollar = yyS[yypt-2 : yypt+1]
-		//line parser/parser.go.y:154
+		//line parser/parser.go.y:160
 		{
 		}
 	case 95:
 		yyDollar = yyS[yypt-2 : yypt+1]
-		//line parser/parser.go.y:159
+		//line parser/parser.go.y:165
 		{
 		}
 	case 100:
 		yyDollar = yyS[yypt-0 : yypt+1]
-		//line parser/parser.go.y:165
+		//line parser/parser.go.y:171
 		{
 		}
 	case 101:
 		yyDollar = yyS[yypt-1 : yypt+1]
-		//line parser/parser.go.y:166
+		//line parser/parser.go.y:172
 		{
 		}
 	case 102:
 		yyDollar = yyS[yypt-3 : yypt+1]
-		//line parser/parser.go.y:167
+		//line parser/parser.go.y:173
 		{
 		}
 	case 106:
 		yyDollar = yyS[yypt-0 : yypt+1]
-		//line parser/parser.go.y:173
+		//line parser/parser.go.y:179
 		{
 		}
 	case 107:
 		yyDollar = yyS[yypt-2 : yypt+1]
-		//line parser/parser.go.y:174
+		//line parser/parser.go.y:180
 		{
 		}
 	case 108:
 		yyDollar = yyS[yypt-2 : yypt+1]
-		//line parser/parser.go.y:175
+		//line parser/parser.go.y:181
 		{
 		}
 	case 109:
 		yyDollar = yyS[yypt-2 : yypt+1]
-		//line parser/parser.go.y:176
+		//line parser/parser.go.y:182
 		{
 		}
 	case 110:
 		yyDollar = yyS[yypt-2 : yypt+1]
-		//line parser/parser.go.y:177
+		//line parser/parser.go.y:183
 		{
 		}
 	case 111:
 		yyDollar = yyS[yypt-2 : yypt+1]
-		//line parser/parser.go.y:178
+		//line parser/parser.go.y:184
 		{
 		}
 	case 112:
 		yyDollar = yyS[yypt-2 : yypt+1]
-		//line parser/parser.go.y:179
+		//line parser/parser.go.y:185
 		{
 		}
 	case 120:
 		yyDollar = yyS[yypt-0 : yypt+1]
-		//line parser/parser.go.y:189
+		//line parser/parser.go.y:195
 		{
 		}
 	case 121:
 		yyDollar = yyS[yypt-2 : yypt+1]
-		//line parser/parser.go.y:190
+		//line parser/parser.go.y:196
 		{
 		}
 	case 122:
 		yyDollar = yyS[yypt-2 : yypt+1]
-		//line parser/parser.go.y:191
+		//line parser/parser.go.y:197
 		{
 		}
 	case 123:
 		yyDollar = yyS[yypt-2 : yypt+1]
-		//line parser/parser.go.y:192
+		//line parser/parser.go.y:198
 		{
 		}
 	case 129:
 		yyDollar = yyS[yypt-2 : yypt+1]
-		//line parser/parser.go.y:200
+		//line parser/parser.go.y:206
 		{
 		}
 	case 130:
 		yyDollar = yyS[yypt-2 : yypt+1]
-		//line parser/parser.go.y:201
+		//line parser/parser.go.y:207
 		{
 		}
 	case 131:
 		yyDollar = yyS[yypt-0 : yypt+1]
-		//line parser/parser.go.y:203
+		//line parser/parser.go.y:209
 		{
 		}
 	case 132:
 		yyDollar = yyS[yypt-2 : yypt+1]
-		//line parser/parser.go.y:204
+		//line parser/parser.go.y:210
 		{
 		}
 	case 133:
 		yyDollar = yyS[yypt-2 : yypt+1]
-		//line parser/parser.go.y:205
+		//line parser/parser.go.y:211
 		{
 		}
 	case 134:
 		yyDollar = yyS[yypt-2 : yypt+1]
-		//line parser/parser.go.y:206
+		//line parser/parser.go.y:212
 		{
 		}
 	case 135:
 		yyDollar = yyS[yypt-2 : yypt+1]
-		//line parser/parser.go.y:207
+		//line parser/parser.go.y:213
 		{
 		}
 	case 136:
 		yyDollar = yyS[yypt-2 : yypt+1]
-		//line parser/parser.go.y:208
+		//line parser/parser.go.y:214
 		{
 		}
 	case 137:
 		yyDollar = yyS[yypt-2 : yypt+1]
-		//line parser/parser.go.y:209
+		//line parser/parser.go.y:215
 		{
 		}
 	case 138:
 		yyDollar = yyS[yypt-2 : yypt+1]
-		//line parser/parser.go.y:210
+		//line parser/parser.go.y:216
 		{
 		}
 	case 139:
 		yyDollar = yyS[yypt-3 : yypt+1]
-		//line parser/parser.go.y:211
+		//line parser/parser.go.y:217
 		{
 		}
 	case 142:
 		yyDollar = yyS[yypt-2 : yypt+1]
-		//line parser/parser.go.y:214
+		//line parser/parser.go.y:220
 		{
 		}
 	case 145:
 		yyDollar = yyS[yypt-2 : yypt+1]
-		//line parser/parser.go.y:217
+		//line parser/parser.go.y:223
 		{
 		}
 	case 146:
 		yyDollar = yyS[yypt-2 : yypt+1]
-		//line parser/parser.go.y:218
+		//line parser/parser.go.y:224
 		{
 		}
 	case 147:
 		yyDollar = yyS[yypt-2 : yypt+1]
-		//line parser/parser.go.y:219
+		//line parser/parser.go.y:225
 		{
 		}
 	case 148:
 		yyDollar = yyS[yypt-2 : yypt+1]
-		//line parser/parser.go.y:220
+		//line parser/parser.go.y:226
 		{
 		}
 	case 150:
 		yyDollar = yyS[yypt-1 : yypt+1]
-		//line parser/parser.go.y:222
+		//line parser/parser.go.y:228
 		{
 		}
 	case 151:
 		yyDollar = yyS[yypt-0 : yypt+1]
-		//line parser/parser.go.y:224
+		//line parser/parser.go.y:230
 		{
 		}
 	case 152:
 		yyDollar = yyS[yypt-2 : yypt+1]
-		//line parser/parser.go.y:225
+		//line parser/parser.go.y:231
 		{
 		}
 	case 153:
 		yyDollar = yyS[yypt-1 : yypt+1]
-		//line parser/parser.go.y:226
+		//line parser/parser.go.y:232
 		{
 		}
 	case 154:
 		yyDollar = yyS[yypt-4 : yypt+1]
-		//line parser/parser.go.y:227
+		//line parser/parser.go.y:233
 		{
 		}
 	case 155:
 		yyDollar = yyS[yypt-4 : yypt+1]
-		//line parser/parser.go.y:228
+		//line parser/parser.go.y:234
 		{
 		}
 	case 156:
 		yyDollar = yyS[yypt-4 : yypt+1]
-		//line parser/parser.go.y:229
+		//line parser/parser.go.y:235
 		{
 		}
 	case 157:
 		yyDollar = yyS[yypt-4 : yypt+1]
-		//line parser/parser.go.y:230
+		//line parser/parser.go.y:236
 		{
 		}
 	case 158:
 		yyDollar = yyS[yypt-4 : yypt+1]
-		//line parser/parser.go.y:231
+		//line parser/parser.go.y:237
 		{
 		}
 	case 159:
 		yyDollar = yyS[yypt-4 : yypt+1]
-		//line parser/parser.go.y:232
+		//line parser/parser.go.y:238
 		{
 		}
 	case 161:
 		yyDollar = yyS[yypt-1 : yypt+1]
-		//line parser/parser.go.y:234
+		//line parser/parser.go.y:240
 		{
 		}
 	case 162:
 		yyDollar = yyS[yypt-0 : yypt+1]
-		//line parser/parser.go.y:236
+		//line parser/parser.go.y:242
 		{
 		}
 	case 163:
 		yyDollar = yyS[yypt-2 : yypt+1]
-		//line parser/parser.go.y:237
+		//line parser/parser.go.y:243
 		{
 		}
 	case 164:
 		yyDollar = yyS[yypt-2 : yypt+1]
-		//line parser/parser.go.y:238
+		//line parser/parser.go.y:244
 		{
 		}
 	case 165:
 		yyDollar = yyS[yypt-2 : yypt+1]
-		//line parser/parser.go.y:239
+		//line parser/parser.go.y:245
 		{
 		}
 	case 166:
 		yyDollar = yyS[yypt-2 : yypt+1]
-		//line parser/parser.go.y:240
+		//line parser/parser.go.y:246
 		{
 		}
 	case 167:
 		yyDollar = yyS[yypt-2 : yypt+1]
-		//line parser/parser.go.y:241
+		//line parser/parser.go.y:247
 		{
 		}
 	case 169:
 		yyDollar = yyS[yypt-1 : yypt+1]
-		//line parser/parser.go.y:243
+		//line parser/parser.go.y:249
 		{
 		}
 	case 170:
 		yyDollar = yyS[yypt-0 : yypt+1]
-		//line parser/parser.go.y:245
+		//line parser/parser.go.y:251
 		{
 		}
 	case 171:
 		yyDollar = yyS[yypt-4 : yypt+1]
-		//line parser/parser.go.y:246
+		//line parser/parser.go.y:252
 		{
 		}
 	case 172:
 		yyDollar = yyS[yypt-2 : yypt+1]
-		//line parser/parser.go.y:247
+		//line parser/parser.go.y:253
 		{
 		}
 	case 173:
 		yyDollar = yyS[yypt-2 : yypt+1]
-		//line parser/parser.go.y:248
+		//line parser/parser.go.y:254
 		{
 		}
 	case 174:
 		yyDollar = yyS[yypt-2 : yypt+1]
-		//line parser/parser.go.y:249
+		//line parser/parser.go.y:255
 		{
 		}
 	case 175:
 		yyDollar = yyS[yypt-2 : yypt+1]
-		//line parser/parser.go.y:250
+		//line parser/parser.go.y:256
 		{
 		}
 	case 176:
 		yyDollar = yyS[yypt-2 : yypt+1]
-		//line parser/parser.go.y:251
+		//line parser/parser.go.y:257
 		{
 		}
 	case 178:
 		yyDollar = yyS[yypt-1 : yypt+1]
-		//line parser/parser.go.y:253
+		//line parser/parser.go.y:259
 		{
 		}
 	case 179:
 		yyDollar = yyS[yypt-0 : yypt+1]
-		//line parser/parser.go.y:255
+		//line parser/parser.go.y:261
 		{
 		}
 	case 180:
 		yyDollar = yyS[yypt-2 : yypt+1]
-		//line parser/parser.go.y:256
+		//line parser/parser.go.y:262
 		{
 		}
 	case 181:
 		yyDollar = yyS[yypt-2 : yypt+1]
-		//line parser/parser.go.y:257
+		//line parser/parser.go.y:263
 		{
 		}
 	case 182:
 		yyDollar = yyS[yypt-2 : yypt+1]
-		//line parser/parser.go.y:258
+		//line parser/parser.go.y:264
 		{
 		}
 	case 183:
 		yyDollar = yyS[yypt-2 : yypt+1]
-		//line parser/parser.go.y:259
+		//line parser/parser.go.y:265
 		{
 		}
 	case 185:
 		yyDollar = yyS[yypt-1 : yypt+1]
-		//line parser/parser.go.y:261
+		//line parser/parser.go.y:267
 		{
 		}
 	case 186:
 		yyDollar = yyS[yypt-0 : yypt+1]
-		//line parser/parser.go.y:263
+		//line parser/parser.go.y:269
 		{
 		}
 	case 187:
 		yyDollar = yyS[yypt-1 : yypt+1]
-		//line parser/parser.go.y:264
+		//line parser/parser.go.y:270
 		{
 		}
 	case 194:
 		yyDollar = yyS[yypt-1 : yypt+1]
-		//line parser/parser.go.y:271
+		//line parser/parser.go.y:277
 		{
 		}
 	case 195:
 		yyDollar = yyS[yypt-0 : yypt+1]
-		//line parser/parser.go.y:273
+		//line parser/parser.go.y:279
 		{
 		}
 	case 196:
 		yyDollar = yyS[yypt-2 : yypt+1]
-		//line parser/parser.go.y:274
+		//line parser/parser.go.y:280
 		{
 		}
 	case 197:
 		yyDollar = yyS[yypt-2 : yypt+1]
-		//line parser/parser.go.y:275
+		//line parser/parser.go.y:281
 		{
 		}
 	case 198:
 		yyDollar = yyS[yypt-2 : yypt+1]
-		//line parser/parser.go.y:276
+		//line parser/parser.go.y:282
 		{
 		}
 	case 199:
 		yyDollar = yyS[yypt-2 : yypt+1]
-		//line parser/parser.go.y:277
+		//line parser/parser.go.y:283
 		{
 		}
 	case 200:
 		yyDollar = yyS[yypt-2 : yypt+1]
-		//line parser/parser.go.y:278
+		//line parser/parser.go.y:284
 		{
 		}
 	case 201:
 		yyDollar = yyS[yypt-2 : yypt+1]
-		//line parser/parser.go.y:279
+		//line parser/parser.go.y:285
 		{
 		}
 	case 203:
 		yyDollar = yyS[yypt-1 : yypt+1]
-		//line parser/parser.go.y:281
+		//line parser/parser.go.y:287
 		{
 		}
 	case 204:
 		yyDollar = yyS[yypt-0 : yypt+1]
-		//line parser/parser.go.y:283
+		//line parser/parser.go.y:289
 		{
 		}
 	case 205:
 		yyDollar = yyS[yypt-2 : yypt+1]
-		//line parser/parser.go.y:284
+		//line parser/parser.go.y:290
 		{
 		}
 	case 206:
 		yyDollar = yyS[yypt-2 : yypt+1]
-		//line parser/parser.go.y:285
+		//line parser/parser.go.y:291
 		{
 		}
 	case 207:
 		yyDollar = yyS[yypt-2 : yypt+1]
-		//line parser/parser.go.y:286
+		//line parser/parser.go.y:292
 		{
 		}
 	case 208:
 		yyDollar = yyS[yypt-2 : yypt+1]
-		//line parser/parser.go.y:287
+		//line parser/parser.go.y:293
 		{
 		}
 	case 209:
 		yyDollar = yyS[yypt-2 : yypt+1]
-		//line parser/parser.go.y:288
+		//line parser/parser.go.y:294
 		{
 		}
 	case 210:
 		yyDollar = yyS[yypt-2 : yypt+1]
-		//line parser/parser.go.y:289
+		//line parser/parser.go.y:295
 		{
 		}
 	case 211:
 		yyDollar = yyS[yypt-2 : yypt+1]
-		//line parser/parser.go.y:290
+		//line parser/parser.go.y:296
 		{
 		}
 	case 212:
 		yyDollar = yyS[yypt-2 : yypt+1]
-		//line parser/parser.go.y:291
+		//line parser/parser.go.y:297
 		{
 		}
 	case 213:
 		yyDollar = yyS[yypt-2 : yypt+1]
-		//line parser/parser.go.y:292
+		//line parser/parser.go.y:298
 		{
 		}
 	case 215:
 		yyDollar = yyS[yypt-1 : yypt+1]
-		//line parser/parser.go.y:294
+		//line parser/parser.go.y:300
 		{
 		}
 	case 216:
 		yyDollar = yyS[yypt-0 : yypt+1]
-		//line parser/parser.go.y:296
+		//line parser/parser.go.y:302
 		{
 		}
 	case 217:
 		yyDollar = yyS[yypt-2 : yypt+1]
-		//line parser/parser.go.y:297
+		//line parser/parser.go.y:303
 		{
 		}
 	case 218:
 		yyDollar = yyS[yypt-2 : yypt+1]
-		//line parser/parser.go.y:298
+		//line parser/parser.go.y:304
 		{
 		}
 	case 219:
 		yyDollar = yyS[yypt-2 : yypt+1]
-		//line parser/parser.go.y:299
+		//line parser/parser.go.y:305
 		{
 		}
 	case 220:
 		yyDollar = yyS[yypt-2 : yypt+1]
-		//line parser/parser.go.y:300
+		//line parser/parser.go.y:306
 		{
 		}
 	case 221:
 		yyDollar = yyS[yypt-1 : yypt+1]
-		//line parser/parser.go.y:301
+		//line parser/parser.go.y:307
 		{
 		}
 	case 222:
 		yyDollar = yyS[yypt-0 : yypt+1]
-		//line parser/parser.go.y:303
+		//line parser/parser.go.y:309
 		{
 		}
 	case 223:
 		yyDollar = yyS[yypt-1 : yypt+1]
-		//line parser/parser.go.y:304
+		//line parser/parser.go.y:310
 		{
 		}
 	case 224:
 		yyDollar = yyS[yypt-1 : yypt+1]
-		//line parser/parser.go.y:305
+		//line parser/parser.go.y:311
 		{
 		}
 	case 225:
 		yyDollar = yyS[yypt-1 : yypt+1]
-		//line parser/parser.go.y:306
+		//line parser/parser.go.y:312
 		{
 		}
 	case 226:
 		yyDollar = yyS[yypt-1 : yypt+1]
-		//line parser/parser.go.y:307
+		//line parser/parser.go.y:313
 		{
 		}
 	case 227:
 		yyDollar = yyS[yypt-1 : yypt+1]
-		//line parser/parser.go.y:308
+		//line parser/parser.go.y:314
 		{
 		}
 	case 228:
 		yyDollar = yyS[yypt-1 : yypt+1]
-		//line parser/parser.go.y:309
+		//line parser/parser.go.y:315
 		{
 		}
 	case 229:
 		yyDollar = yyS[yypt-1 : yypt+1]
-		//line parser/parser.go.y:310
+		//line parser/parser.go.y:316
 		{
 		}
 	case 230:
 		yyDollar = yyS[yypt-1 : yypt+1]
-		//line parser/parser.go.y:311
+		//line parser/parser.go.y:317
 		{
 		}
 	case 231:
 		yyDollar = yyS[yypt-1 : yypt+1]
-		//line parser/parser.go.y:312
+		//line parser/parser.go.y:318
 		{
 		}
 	case 232:
 		yyDollar = yyS[yypt-1 : yypt+1]
-		//line parser/parser.go.y:313
+		//line parser/parser.go.y:319
 		{
 		}
 	case 233:
 		yyDollar = yyS[yypt-1 : yypt+1]
-		//line parser/parser.go.y:314
+		//line parser/parser.go.y:320
 		{
 		}
 	case 234:
 		yyDollar = yyS[yypt-1 : yypt+1]
-		//line parser/parser.go.y:315
+		//line parser/parser.go.y:321
 		{
 		}
 	case 235:
 		yyDollar = yyS[yypt-0 : yypt+1]
-		//line parser/parser.go.y:317
+		//line parser/parser.go.y:323
 		{
 		}
 	case 236:
 		yyDollar = yyS[yypt-1 : yypt+1]
-		//line parser/parser.go.y:318
+		//line parser/parser.go.y:324
 		{
 		}
 	case 237:
 		yyDollar = yyS[yypt-1 : yypt+1]
-		//line parser/parser.go.y:319
+		//line parser/parser.go.y:325
 		{
 		}
 	case 238:
 		yyDollar = yyS[yypt-1 : yypt+1]
-		//line parser/parser.go.y:320
+		//line parser/parser.go.y:326
 		{
 		}
 	case 239:
 		yyDollar = yyS[yypt-0 : yypt+1]
-		//line parser/parser.go.y:322
+		//line parser/parser.go.y:328
 		{
 		}
 	case 240:
 		yyDollar = yyS[yypt-1 : yypt+1]
-		//line parser/parser.go.y:323
+		//line parser/parser.go.y:329
 		{
 		}
 	case 241:
 		yyDollar = yyS[yypt-1 : yypt+1]
-		//line parser/parser.go.y:324
+		//line parser/parser.go.y:330
 		{
 		}
 	case 242:
 		yyDollar = yyS[yypt-2 : yypt+1]
-		//line parser/parser.go.y:328
+		//line parser/parser.go.y:334
 		{
-			yyVAL.value = append([]string{yyDollar[1].value}, yyDollar[2].value...)
+			yyVAL.values = append([]Value{yyDollar[1].vip_addr}, yyDollar[2].values...)
 		}
 	case 243:
 		yyDollar = yyS[yypt-1 : yypt+1]
-		//line parser/parser.go.y:331
+		//line parser/parser.go.y:337
 		{
-			yyVAL.value = yyDollar[1].value
+			yyVAL.values = []Value{yyDollar[1].vip_addr}
 		}
 	case 244:
 		yyDollar = yyS[yypt-2 : yypt+1]
-		//line parser/parser.go.y:335
+		//line parser/parser.go.y:341
 		{
-			//  $$ = append($1, $2...)
+			yyVAL.values = append([]Value{yyDollar[1].vip_addr}, yyDollar[2].values...)
 		}
 	case 245:
 		yyDollar = yyS[yypt-1 : yypt+1]
-		//line parser/parser.go.y:338
+		//line parser/parser.go.y:344
 		{
-			yyVAL.value = yyDollar[1].value
+			yyVAL.values = []Value{yyDollar[1].vip_addr}
 		}
 	case 246:
 		yyDollar = yyS[yypt-1 : yypt+1]
-		//line parser/parser.go.y:341
-		{
-			yyVAL.value = yyDollar[1].value
-		}
-	case 247:
-		yyDollar = yyS[yypt-2 : yypt+1]
-		//line parser/parser.go.y:342
-		{
-		}
-	case 248:
-		yyDollar = yyS[yypt-2 : yypt+1]
-		//line parser/parser.go.y:343
-		{
-		}
-	case 249:
-		yyDollar = yyS[yypt-2 : yypt+1]
-		//line parser/parser.go.y:344
-		{
-		}
-	case 250:
-		yyDollar = yyS[yypt-1 : yypt+1]
-		//line parser/parser.go.y:346
-		{
-		}
-	case 251:
-		yyDollar = yyS[yypt-2 : yypt+1]
 		//line parser/parser.go.y:347
 		{
+			yyVAL.vip_addr = VIPAddr{Addr: yyDollar[1].string}
 		}
-	case 252:
+	case 247:
 		yyDollar = yyS[yypt-2 : yypt+1]
 		//line parser/parser.go.y:348
 		{
 		}
-	case 254:
-		yyDollar = yyS[yypt-1 : yypt+1]
+	case 248:
+		yyDollar = yyS[yypt-2 : yypt+1]
+		//line parser/parser.go.y:349
+		{
+		}
+	case 249:
+		yyDollar = yyS[yypt-2 : yypt+1]
 		//line parser/parser.go.y:350
 		{
 		}
-	case 255:
+	case 250:
 		yyDollar = yyS[yypt-1 : yypt+1]
 		//line parser/parser.go.y:352
 		{
 		}
+	case 251:
+		yyDollar = yyS[yypt-2 : yypt+1]
+		//line parser/parser.go.y:353
+		{
+		}
+	case 252:
+		yyDollar = yyS[yypt-2 : yypt+1]
+		//line parser/parser.go.y:354
+		{
+		}
+	case 254:
+		yyDollar = yyS[yypt-1 : yypt+1]
+		//line parser/parser.go.y:356
+		{
+		}
+	case 255:
+		yyDollar = yyS[yypt-1 : yypt+1]
+		//line parser/parser.go.y:358
+		{
+		}
 	case 258:
 		yyDollar = yyS[yypt-0 : yypt+1]
-		//line parser/parser.go.y:356
+		//line parser/parser.go.y:362
 		{
 		}
 	case 266:
 		yyDollar = yyS[yypt-0 : yypt+1]
-		//line parser/parser.go.y:365
+		//line parser/parser.go.y:371
 		{
 		}
 	case 283:
 		yyDollar = yyS[yypt-0 : yypt+1]
-		//line parser/parser.go.y:383
+		//line parser/parser.go.y:389
 		{
 		}
 	case 288:
 		yyDollar = yyS[yypt-0 : yypt+1]
-		//line parser/parser.go.y:389
+		//line parser/parser.go.y:395
 		{
 		}
 	case 294:
 		yyDollar = yyS[yypt-1 : yypt+1]
-		//line parser/parser.go.y:397
+		//line parser/parser.go.y:403
 		{
-			yyVAL.value = yyDollar[1].value
+			yyVAL.string = yyDollar[1].string
 		}
 	case 295:
 		yyDollar = yyS[yypt-1 : yypt+1]
-		//line parser/parser.go.y:398
+		//line parser/parser.go.y:404
 		{
-			yyVAL.value = yyDollar[1].token.lit
+			yyVAL.string = yyDollar[1].token.lit
 		}
 	case 296:
 		yyDollar = yyS[yypt-1 : yypt+1]
-		//line parser/parser.go.y:401
+		//line parser/parser.go.y:407
 		{
-			yyVAL.value = yyDollar[1].token.lit
+			yyVAL.string = yyDollar[1].token.lit
 		}
 	case 297:
 		yyDollar = yyS[yypt-1 : yypt+1]
-		//line parser/parser.go.y:402
+		//line parser/parser.go.y:408
 		{
-			yyVAL.value = yyDollar[1].token.lit
+			yyVAL.string = yyDollar[1].token.lit
 		}
 	case 298:
 		yyDollar = yyS[yypt-0 : yypt+1]
-		//line parser/parser.go.y:404
+		//line parser/parser.go.y:410
 		{
 		}
 	case 301:
 		yyDollar = yyS[yypt-0 : yypt+1]
-		//line parser/parser.go.y:408
+		//line parser/parser.go.y:414
 		{
 		}
 	}
