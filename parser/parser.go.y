@@ -11,49 +11,52 @@ package parser
   stmts_any   []StmtAny
   stmt       Stmt
   stmt_multi StmtMulti
+  stmt_value StmtValue
   values  []Value
   vip_addr VIPAddr 
 };
 
 %token<token> NUMBER ID STRING EMAIL IPV4 IPV6 IP_CIDR IPADDR_RANGE HEX32 PATHSTR LB RB GLOBALDEFS NOTIFICATION_EMAIL NOTIFICATION_EMAIL_FROM SMTP_SERVER SMTP_CONNECT_TIMEOUT ROUTER_ID LVS_ID VRRP_MCAST_GROUP4 VRRP_MCAST_GROUP6 VRRP_GARP_MASTER_DELAY VRRP_GARP_MASTER_REPEAT VRRP_GARP_MASTER_REFRESH VRRP_GARP_MASTER_REFRESH_REPEAT VRRP_VERSION STATIC_IPADDRESS STATIC_ROUTES STATIC_RULES VRRP_SYNC_GROUP GROUP VRRP_INSTANCE USE_VMAC VERSION VMAC_XMIT_BASE NATIVE_IPV6 INTERFACE MCAST_SRC_IP UNICAST_SRC_IP UNICAST_PEER LVS_SYNC_DAEMON_INTERFACE VIRTUAL_ROUTER_ID NOPREEMPT PREEMPT_DELAY PRIORITY ADVERT_INT VIRTUAL_IPADDRESS VIRTUAL_IPADDRESS_EXCLUDED VIRTUAL_ROUTES STATE MASTER BACKUP GARP_MASTER_DELAY SMTP_ALERT AUTHENTICATION AUTH_TYPE AUTH_PASS PASS AH LABEL DEV SCOPE SITE LINK HOST NOWHERE GLOBAL BRD SRC FROM TO VIA GW OR TABLE METRIC TRACK_INTERFACE TRACK_SCRIPT DONT_TRACK_PRIMARY NOTIFY_MASTER NOTIFY_BACKUP NOTIFY_FAULT NOTIFY_STOP NOTIFY BLACKHOLE VRRP_SCRIPT SCRIPT INTERVAL TIMEOUT WEIGHT FALL RISE VIRTUAL_SERVER_GROUP VIRTUAL_SERVER DELAY_LOOP LB_ALGO LB_KIND LVS_SCHED LVS_METHOD RR WRR LC WLC FO OVF LBLC LBLCR SH DH SED NQ NAT DR TUN PERSISTENCE_TIMEOUT PROTOCOL TCP UDP SORRY_SERVER REAL_SERVER FWMARK INHIBIT_ON_FAILURE TCP_CHECK HTTP_GET SSL_GET SMTP_CHECK DNS_CHECK MISC_CHECK URL PATH DIGEST STATUS_CODE CONNECT_TIMEOUT CONNECT_PORT CONNECT_IP BINDTO BIND_PORT RETRY HELO_NAME TYPE NAME MISC_PATH MISC_TIMEOUT WARMUP MISC_DYNAMIC NB_GET_RETRY DELAY_BEFORE_RETRY VIRTUALHOST ALPHA OMEGA QUORUM HYSTERESIS QUORUM_UP QUORUM_DOWN
 
-%type<blocks> configuration
-%type<blocks> main_statements
-%type<block> vrrp_instance_block
-%type<stmts_any> vrrp_instance_statements
-%type<stmt_multi> vrrp_instance_statement
+%type<blocks> configuration main_blocks
+%type<block> global vrrp_instance_block static_ipaddress_block static_routes_block static_rules_block  vrrp_sync_group_block vrrp_instance_block vrrp_script_block virtual_server_block virtual_server_group_block 
+%type<stmts_any> global_statements vrrp_instance_statements vrrp_sync_group_statements vrrp_script_statements address_options route_options rule_options virtual_server_group_statements virtual_server_statements
+%type<stmt_any> vrrp_instance_statement vrrp_sync_group_statement vrrp_script_statement virtual_server_group_statement virtual_server_statement route_option rule_option
 %type<values> vips vips_ex
 %type<vip_addr> vip vip_ex
 %type<string> ipaddr_literal ip46
 
 %%
 
-configuration:
-  main_statements configuration
+configuration: main_blocks configuration
   {
     $$ = append($1, $2...)
     yylex.(*Lexer).result = $$
   }
-  | main_statements
+  | main_blocks
   { 
     $$ = $1
     yylex.(*Lexer).result = $$
   }
 
-main_statements:  { }
-| global { }
-| static_ipaddress_block { }
-| static_routes_block { }
-| static_rules_block { }
-| vrrp_sync_group_block { }
-| vrrp_instance_block { $$ = []Block{$1} }
-| vrrp_script_block { }
-| virtual_server_block { }
-| virtual_server_group_block { }
+main_blocks:
+    global { $$ = []Block{$1} }
+  | static_ipaddress_block { $$ = []Block{$1} }
+  | static_routes_block { $$ = []Block{$1} }
+  | static_rules_block { $$ = []Block{$1} }
+  | vrrp_sync_group_block { $$ = []Block{$1} }
+  | vrrp_instance_block { $$ = []Block{$1} }
+  | vrrp_script_block { $$ = []Block{$1} }
+  | virtual_server_block { $$ = []Block{$1} }
+  | virtual_server_group_block { $$ = []Block{$1} }
 
-global:	GLOBALDEFS LB global_statements RB
+global:
+	GLOBALDEFS LB global_statements RB
+  {
+    $$ = Block{name: $1.lit, stmts: $3}
+  }
 
-global_statements:	global_statement global_statements | global_statement
+global_statements:	global_statement global_statements { } | global_statement { }
 
 global_statement:
 | NOTIFICATION_EMAIL LB mail_statements RB  { }
@@ -72,17 +75,39 @@ global_statement:
 | VRRP_MCAST_GROUP6 IPV6 { }
 | VRRP_VERSION NUMBER { }
 
-static_ipaddress_block: STATIC_IPADDRESS LB address_options RB
+static_ipaddress_block:
+  STATIC_IPADDRESS LB address_options RB
+  {
+    $$ = Block{name: $1.lit, stmts: $3}
+  }
 
-static_routes_block: STATIC_ROUTES LB route_options RB
+static_routes_block:
+  STATIC_ROUTES LB route_options RB
+  {
+    $$ = Block{name: $1.lit, stmts: $3}
+  }
 
-static_rules_block: STATIC_RULES LB rule_options RB
+static_rules_block:
+  STATIC_RULES LB rule_options RB
+  {
+    $$ = Block{name: $1.lit, stmts: $3}
+  }
 
-rule_options: rule_option rule_options | rule_option
+rule_options:
+ rule_option rule_options { } | rule_option { }
 
-vrrp_sync_group_block: VRRP_SYNC_GROUP STRING LB vrrp_sync_group_statements RB
+vrrp_sync_group_block:
+  VRRP_SYNC_GROUP STRING LB vrrp_sync_group_statements RB
+  {
+    $$ = Block{name: $1.lit, stmts: $4}
+  }
 
-vrrp_sync_group_statements: vrrp_sync_group_statement vrrp_sync_group_statements | vrrp_sync_group_statement
+vrrp_sync_group_statements:
+  vrrp_sync_group_statement vrrp_sync_group_statements
+  {
+    $$ = append([]StmtAny{$1}, $2...)
+  }
+  | vrrp_sync_group_statement { $$ = []StmtAny{$1} }
 
 vrrp_sync_group_statement: { }
 | STRING { }
@@ -107,10 +132,7 @@ vrrp_instance_statements :
   {
     $$ = append([]StmtAny{$1}, $2...)
   }
-  | vrrp_instance_statement
-  {
-    $$ = []StmtAny{$1}
-  }
+  | vrrp_instance_statement { $$ = []StmtAny{$1} }
 
 vrrp_instance_statement: { }
 | USE_VMAC { }
@@ -172,9 +194,18 @@ track_script_statement: { }
 | STRING { }
 | STRING WEIGHT NUMBER { }
 
-vrrp_script_block: VRRP_SCRIPT STRING LB vrrp_script_statements RB
+vrrp_script_block:
+  VRRP_SCRIPT STRING LB vrrp_script_statements RB
+  {
+    $$ = Block{name: $1.lit, stmts: $4}
+  }
 
-vrrp_script_statements: vrrp_script_statement vrrp_script_statements | vrrp_script_statement
+vrrp_script_statements:
+  vrrp_script_statement vrrp_script_statements
+  {
+    $$ = append([]StmtAny{$1}, $2...)
+  }
+  | vrrp_script_statement { $$ = []StmtAny{$1} }
 
 vrrp_script_statement: { }
 | SCRIPT STRING { }
@@ -186,28 +217,51 @@ vrrp_script_statement: { }
 
 virtual_routes_statements: virtual_server_statement virtual_server_statements | virtual_server_statement 
 
-virtual_server_statement: route_option route_options | route_option
+virtual_server_statement:
+  route_option route_options
+  {
+    $$ = append([]StmtAny{$1}, $2...)
+  }
+  | route_option { $$ = []StmtAny{$1} }
 
-virtual_server_group_block: VIRTUAL_SERVER_GROUP STRING LB virtual_server_group_statements RB
+virtual_server_group_block:
+  VIRTUAL_SERVER_GROUP STRING LB virtual_server_group_statements RB
+  {
+    $$ = Block{name: $1.lit, stmts: $4}
+  }
 
-virtual_server_group_statements: virtual_server_group_statement virtual_server_group_statements | virtual_server_group_statement
+virtual_server_group_statements:
+  virtual_server_group_statement virtual_server_group_statements
+  {
+    $$ = append([]StmtAny{$1}, $2...)
+  }
+  | virtual_server_group_statement { $$ = []StmtAny{$1} }
 
 virtual_server_group_statement: { }
 | ip46 NUMBER { }
 | IPADDR_RANGE NUMBER { }
 | FWMARK NUMBER { }
 
-virtual_server_block: VIRTUAL_SERVER virtual_server_arg LB virtual_server_statements RB
+virtual_server_block:
+  VIRTUAL_SERVER virtual_server_arg LB virtual_server_statements RB
+  {
+    $$ = Block{name: $1.lit, stmts: $4}
+  }
 
-virtual_server_statements: virtual_server_statement virtual_server_statements | virtual_server_statement
+virtual_server_statements:
+  virtual_server_statement virtual_server_statements
+  {
+    $$ = append([]StmtAny{$1}, $2...)
+  }
+  | virtual_server_statement { $$ = []StmtAny{$1} }
 
 virtual_server_arg:
 | ipport
 | FWMARK NUMBER { }
 | GROUP STRING { }
 
-virtual_server_statement: { }
-| DELAY_LOOP NUMBER { }
+virtual_server_statement:
+  DELAY_LOOP NUMBER { }
 | LB_ALGO lb_algo { }
 | LB_KIND lb_kind { }
 | LVS_SCHED lb_algo { }
@@ -215,11 +269,11 @@ virtual_server_statement: { }
 | PERSISTENCE_TIMEOUT NUMBER { }
 | PROTOCOL protocol { }
 | SORRY_SERVER ip46 NUMBER { }
-| REAL_SERVER ip46 ipport LB real_server_statements RB
-| REAL_SERVER ip46 NUMBER LB real_server_statements RB
+| REAL_SERVER ip46 ipport LB real_server_statements RB { }
+| REAL_SERVER ip46 NUMBER LB real_server_statements RB { }
 | VIRTUALHOST STRING { }
-| ALPHA
-| OMEGA
+| ALPHA { }
+| OMEGA { }
 | QUORUM NUMBER { }
 | HYSTERESIS NUMBER { }
 | QUORUM_UP STRING { }
@@ -357,7 +411,7 @@ mail_statements: mail_statement mail_statements |  mail_statement { }
 
 mail_statement:	any_literal	{ }
 
-address_options: address_option address_options | address_option
+address_options: address_option address_options { } | address_option { }
 
 address_option: { }
 | ip46
@@ -366,31 +420,31 @@ address_option: { }
 | DEV STRING
 | SCOPE scope_val
 
-route_options: route_option route_options | route_option
+route_options: route_option route_options { } | route_option { }
 
 route_option: { }
-| SRC ip46
-| TO ip46
-| TO IP_CIDR
-| ip46
-| IP_CIDR
-| VIA ip46
-| GW ip46
-| OR ip46
-| DEV STRING
-| LABEL STRING
-| TABLE NUMBER
-| TABLE STRING
-| METRIC NUMBER
-| SCOPE scope_val
-| BLACKHOLE ip46
-| BLACKHOLE IP_CIDR
+| SRC ip46 { }
+| TO ip46 { }
+| TO IP_CIDR { }
+| ip46 { }
+| IP_CIDR { }
+| VIA ip46 { }
+| GW ip46 { }
+| OR ip46 { }
+| DEV STRING { }
+| LABEL STRING { }
+| TABLE NUMBER { }
+| TABLE STRING { }
+| METRIC NUMBER { }
+| SCOPE scope_val { }
+| BLACKHOLE ip46 { }
+| BLACKHOLE IP_CIDR { }
 
-rule_option: { }
-| FROM ip46 TABLE NUMBER
-| TO ip46 TABLE NUMBER
-| FROM IP_CIDR TABLE NUMBER
-| TO IP_CIDR TABLE NUMBER
+rule_option:
+  FROM ip46 TABLE NUMBER { }
+| TO ip46 TABLE NUMBER { }
+| FROM IP_CIDR TABLE NUMBER { }
+| TO IP_CIDR TABLE NUMBER { }
 
 scope_val: { }
 | SITE

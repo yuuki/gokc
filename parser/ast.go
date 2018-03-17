@@ -24,6 +24,8 @@ type Stmt map[string]Value // state: MASTER
 
 type StmtMulti map[string][]Value // virtual_ipaddress { vips }
 
+type StmtValue = Value // static_ipaddress { address_options }
+
 type Value interface{}
 
 // VIPAddr represents virtual_ipaddress
