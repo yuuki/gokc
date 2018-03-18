@@ -30,9 +30,15 @@ type SubBlockArgs BlockArgs // real_server <IP ADDRESS> <PORT> { ... }
 
 type StmtAny interface{} //FIXME
 
-type Stmt map[string]Value // state: MASTER
+type Stmt struct { // state: MASTER
+	Key string `json:"key"`
+	Val Value  `json:"value"`
+}
 
-type StmtMulti map[string][]Value // virtual_ipaddress { vips }
+type StmtMulti struct { // virtual_ipaddress { vips }
+	Key  string  `json:"key"`
+	Vals []Value `json:"values"`
+}
 
 type StmtValue = Value // static_ipaddress { address_options }
 

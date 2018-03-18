@@ -29,7 +29,7 @@ package parser
 %type<values> vips
 %type<vip_addr> vip
 %type<strings> virtual_server_arg
-%type<string> ipaddr_literal ip46
+%type<string> ipaddr_literal ip46 lb_algo lb_kind protocol
 
 %%
 
@@ -157,11 +157,11 @@ vrrp_instance_statement: { }
 | ADVERT_INT NUMBER { }
 | VIRTUAL_IPADDRESS LB vips RB
   {
-    $$ = StmtMulti{$1.lit: $3}
+    $$ = StmtMulti{$1.lit, $3}
   }
 | VIRTUAL_IPADDRESS_EXCLUDED LB vips RB
   {
-    $$ = StmtMulti{$1.lit: $3}
+    $$ = StmtMulti{$1.lit, $3}
   }
 | VIRTUAL_ROUTES LB virtual_routes_statements RB { }
 | STATE MASTER { }
@@ -266,25 +266,25 @@ virtual_server_arg:
   | GROUP STRING { $$ = []string{$1.lit, $2.lit} }
 
 virtual_server_statement:
-  DELAY_LOOP NUMBER { }
-| LB_ALGO lb_algo { }
-| LB_KIND lb_kind { }
-| LVS_SCHED lb_algo { }
-| LVS_METHOD lb_kind { }
-| PERSISTENCE_TIMEOUT NUMBER { }
-| PROTOCOL protocol { }
-| SORRY_SERVER ip46 NUMBER { }
+  DELAY_LOOP NUMBER { $$ = Stmt{$1.lit, $2.lit} }
+| LB_ALGO lb_algo { $$ = Stmt{$1.lit, $2} }
+| LB_KIND lb_kind { $$ = Stmt{$1.lit, $2} }
+| LVS_SCHED lb_algo { $$ = Stmt{$1.lit, $2} }
+| LVS_METHOD lb_kind { $$ = Stmt{$1.lit, $2} }
+| PERSISTENCE_TIMEOUT NUMBER { $$ = Stmt{$1.lit, $2.lit} }
+| PROTOCOL protocol { $$ = Stmt{$1.lit, $2} }
+| SORRY_SERVER ip46 NUMBER { $$ = StmtMulti{$1.lit, []Value{$2, $3.lit}} }
 | REAL_SERVER ip46 NUMBER LB real_server_statements RB
 { 
   $$ = SubBlockArgs{Name: $1.lit, Args: []string{$2, $3.lit}, Stmts: $5}
 }
-| VIRTUALHOST STRING { }
-| ALPHA { }
-| OMEGA { }
-| QUORUM NUMBER { }
-| HYSTERESIS NUMBER { }
-| QUORUM_UP STRING { }
-| QUORUM_DOWN STRING { }
+| VIRTUALHOST STRING { $$ = Stmt{$1.lit, $2.lit} }
+| ALPHA { $$ = $1.lit }
+| OMEGA { $$ = $1.lit }
+| QUORUM NUMBER { $$ = Stmt{$1.lit, $2.lit} }
+| HYSTERESIS NUMBER { $$ = Stmt{$1.lit, $2.lit} }
+| QUORUM_UP STRING { $$ = Stmt{$1.lit, $2.lit} }
+| QUORUM_DOWN STRING { $$ = Stmt{$1.lit, $2.lit} }
 
 real_server_statements: real_server_statement real_server_statements { } | real_server_statement { }
 
@@ -367,28 +367,28 @@ misc_check_statement: { }
 | WARMUP NUMBER { }
 | MISC_DYNAMIC { }
 
-lb_algo: { }
-| RR   { }
-| WRR  { }
-| LC   { }
-| WLC  { }
-| FO   { }
-| OVF  { }
-| LBLC { }
-| LBLCR { }
-| SH   { }
-| DH   { }
-| SED   { }
-| NQ    { }
+lb_algo:
+    RR   { $$ = $1.lit }
+  | WRR  { $$ = $1.lit }
+  | LC   { $$ = $1.lit }
+  | WLC  { $$ = $1.lit }
+  | FO   { $$ = $1.lit }
+  | OVF  { $$ = $1.lit }
+  | LBLC { $$ = $1.lit }
+  | LBLCR { $$ = $1.lit }
+  | SH   { $$ = $1.lit }
+  | DH   { $$ = $1.lit }
+  | SED   { $$ = $1.lit }
+  | NQ    { $$ = $1.lit }
 
-lb_kind: { }
-| NAT	{ }
-| DR  { }
-| TUN	{ }
+lb_kind:
+    NAT	{ $$ = $1.lit }
+  | DR  { $$ = $1.lit }
+  | TUN	{ $$ = $1.lit }
 
-protocol: { }
-| TCP { }
-| UDP { }
+protocol:
+    TCP { $$ = $1.lit }
+  | UDP { $$ = $1.lit }
 
 vips:
   vip vips
