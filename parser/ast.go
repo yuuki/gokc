@@ -26,6 +26,8 @@ type BlockArgs struct { // virtual_server <IP ADDRESS> <PORT> { }
 	Stmts []StmtAny `json:"stmts"`
 }
 
+type SubBlockArgs BlockArgs // real_server <IP ADDRESS> <PORT> { ... }
+
 type StmtAny interface{} //FIXME
 
 type Stmt map[string]Value // state: MASTER

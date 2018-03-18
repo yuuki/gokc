@@ -9,6 +9,7 @@ package parser
   block   Block
   blocks_any  []BlockAny
   block_args  BlockArgs
+  subblock_args SubBlockArgs
   stmt_any    StmtAny
   stmts_any   []StmtAny
   stmt       Stmt
@@ -23,8 +24,8 @@ package parser
 %type<blocks_any> configuration main_blocks
 %type<block> global vrrp_instance_block static_ipaddress_block static_routes_block static_rules_block  vrrp_sync_group_block vrrp_instance_block vrrp_script_block virtual_server_group_block 
 %type<block_args> virtual_server_block 
-%type<stmts_any> global_statements vrrp_instance_statements vrrp_sync_group_statements vrrp_script_statements address_options route_options rule_options virtual_server_group_statements virtual_server_statements
-%type<stmt_any> vrrp_instance_statement vrrp_sync_group_statement vrrp_script_statement virtual_server_group_statement virtual_server_statement route_option rule_option
+%type<stmts_any> global_statements vrrp_instance_statements vrrp_sync_group_statements vrrp_script_statements address_options route_options rule_options virtual_server_group_statements virtual_server_statements real_server_statements
+%type<stmt_any> vrrp_instance_statement vrrp_sync_group_statement vrrp_script_statement virtual_server_group_statement virtual_server_statement route_option rule_option real_server_statement
 %type<values> vips vips_ex
 %type<vip_addr> vip vip_ex
 %type<strings> virtual_server_arg
@@ -273,8 +274,10 @@ virtual_server_statement:
 | PERSISTENCE_TIMEOUT NUMBER { }
 | PROTOCOL protocol { }
 | SORRY_SERVER ip46 NUMBER { }
-| REAL_SERVER ip46 ipport LB real_server_statements RB { }
-| REAL_SERVER ip46 NUMBER LB real_server_statements RB { }
+| REAL_SERVER ip46 NUMBER LB real_server_statements RB
+{ 
+  $$ = SubBlockArgs{Name: $1.lit, Args: []string{$2, $3.lit}, Stmts: $5}
+}
 | VIRTUALHOST STRING { }
 | ALPHA { }
 | OMEGA { }
@@ -283,7 +286,7 @@ virtual_server_statement:
 | QUORUM_UP STRING { }
 | QUORUM_DOWN STRING { }
 
-real_server_statements: real_server_statement real_server_statements | real_server_statement { }
+real_server_statements: real_server_statement real_server_statements { } | real_server_statement { }
 
 real_server_statement: { }
 | WEIGHT NUMBER { }
