@@ -26,8 +26,8 @@ package parser
 %type<block_args> virtual_server_block 
 %type<stmts_any> global_statements vrrp_instance_statements vrrp_sync_group_statements vrrp_script_statements address_options route_options rule_options virtual_server_group_statements virtual_server_statements real_server_statements
 %type<stmt_any> vrrp_instance_statement vrrp_sync_group_statement vrrp_script_statement virtual_server_group_statement virtual_server_statement route_option rule_option real_server_statement
-%type<values> vips vips_ex
-%type<vip_addr> vip vip_ex
+%type<values> vips
+%type<vip_addr> vip
 %type<strings> virtual_server_arg
 %type<string> ipaddr_literal ip46
 
@@ -159,7 +159,7 @@ vrrp_instance_statement: { }
   {
     $$ = StmtMulti{$1.lit: $3}
   }
-| VIRTUAL_IPADDRESS_EXCLUDED LB vips_ex RB
+| VIRTUAL_IPADDRESS_EXCLUDED LB vips RB
   {
     $$ = StmtMulti{$1.lit: $3}
   }
@@ -397,20 +397,9 @@ vips:
   }
   | vip { $$ = []Value{$1} }
 
-vips_ex:
-  vip_ex vips_ex
-  {
-    $$ = append([]Value{$1}, $2...)
-  }
-  | vip_ex { $$ = []Value{$1} }
-
 vip: 
   ipaddr_literal { $$ = VIPAddr{Addr: $1} }
 | LABEL STRING { }
-| DEV STRING { }
-| BRD ip46 { }
-
-vip_ex: ipaddr_literal { }
 | DEV STRING { }
 | BRD ip46 { }
 
