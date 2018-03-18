@@ -10,12 +10,20 @@ type Token struct {
 }
 
 type Configuration struct {
-	Blocks []Block
+	Blocks []BlockAny
 }
+
+type BlockAny interface{} //FIXME
 
 type Block struct {
 	name  string // <STRING>: vrrp_script <STRING> { ... }
 	stmts []StmtAny
+}
+
+type BlockArgs struct { // virtual_server <IP ADDRESS> <PORT> { }
+	Name  string    `json:"name"`
+	Args  []string  `json:"args"`
+	Stmts []StmtAny `json:"stmts"`
 }
 
 type StmtAny interface{} //FIXME

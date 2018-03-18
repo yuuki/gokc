@@ -4,7 +4,7 @@ import "encoding/json"
 
 func (conf Configuration) MarshalJSON() ([]byte, error) {
 	return json.Marshal(struct {
-		Blocks []Block `json:"blocks"`
+		Blocks []BlockAny `json:"blocks"`
 	}{
 		Blocks: conf.Blocks,
 	})

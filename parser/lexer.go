@@ -337,7 +337,7 @@ type Lexer struct {
 	tokens []*Token
 	pos    int
 	e      error
-	result []Block
+	result []BlockAny
 }
 
 type Error struct {

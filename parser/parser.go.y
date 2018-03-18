@@ -3,10 +3,12 @@ package parser
 %}
 
 %union {
-  string string
+  string  string
+  strings []string
   token   Token
   block   Block
-  blocks  []Block
+  blocks_any  []BlockAny
+  block_args  BlockArgs
   stmt_any    StmtAny
   stmts_any   []StmtAny
   stmt       Stmt
@@ -18,12 +20,14 @@ package parser
 
 %token<token> NUMBER ID STRING EMAIL IPV4 IPV6 IP_CIDR IPADDR_RANGE HEX32 PATHSTR LB RB GLOBALDEFS NOTIFICATION_EMAIL NOTIFICATION_EMAIL_FROM SMTP_SERVER SMTP_CONNECT_TIMEOUT ROUTER_ID LVS_ID VRRP_MCAST_GROUP4 VRRP_MCAST_GROUP6 VRRP_GARP_MASTER_DELAY VRRP_GARP_MASTER_REPEAT VRRP_GARP_MASTER_REFRESH VRRP_GARP_MASTER_REFRESH_REPEAT VRRP_VERSION STATIC_IPADDRESS STATIC_ROUTES STATIC_RULES VRRP_SYNC_GROUP GROUP VRRP_INSTANCE USE_VMAC VERSION VMAC_XMIT_BASE NATIVE_IPV6 INTERFACE MCAST_SRC_IP UNICAST_SRC_IP UNICAST_PEER LVS_SYNC_DAEMON_INTERFACE VIRTUAL_ROUTER_ID NOPREEMPT PREEMPT_DELAY PRIORITY ADVERT_INT VIRTUAL_IPADDRESS VIRTUAL_IPADDRESS_EXCLUDED VIRTUAL_ROUTES STATE MASTER BACKUP GARP_MASTER_DELAY SMTP_ALERT AUTHENTICATION AUTH_TYPE AUTH_PASS PASS AH LABEL DEV SCOPE SITE LINK HOST NOWHERE GLOBAL BRD SRC FROM TO VIA GW OR TABLE METRIC TRACK_INTERFACE TRACK_SCRIPT DONT_TRACK_PRIMARY NOTIFY_MASTER NOTIFY_BACKUP NOTIFY_FAULT NOTIFY_STOP NOTIFY BLACKHOLE VRRP_SCRIPT SCRIPT INTERVAL TIMEOUT WEIGHT FALL RISE VIRTUAL_SERVER_GROUP VIRTUAL_SERVER DELAY_LOOP LB_ALGO LB_KIND LVS_SCHED LVS_METHOD RR WRR LC WLC FO OVF LBLC LBLCR SH DH SED NQ NAT DR TUN PERSISTENCE_TIMEOUT PROTOCOL TCP UDP SORRY_SERVER REAL_SERVER FWMARK INHIBIT_ON_FAILURE TCP_CHECK HTTP_GET SSL_GET SMTP_CHECK DNS_CHECK MISC_CHECK URL PATH DIGEST STATUS_CODE CONNECT_TIMEOUT CONNECT_PORT CONNECT_IP BINDTO BIND_PORT RETRY HELO_NAME TYPE NAME MISC_PATH MISC_TIMEOUT WARMUP MISC_DYNAMIC NB_GET_RETRY DELAY_BEFORE_RETRY VIRTUALHOST ALPHA OMEGA QUORUM HYSTERESIS QUORUM_UP QUORUM_DOWN
 
-%type<blocks> configuration main_blocks
-%type<block> global vrrp_instance_block static_ipaddress_block static_routes_block static_rules_block  vrrp_sync_group_block vrrp_instance_block vrrp_script_block virtual_server_block virtual_server_group_block 
+%type<blocks_any> configuration main_blocks
+%type<block> global vrrp_instance_block static_ipaddress_block static_routes_block static_rules_block  vrrp_sync_group_block vrrp_instance_block vrrp_script_block virtual_server_group_block 
+%type<block_args> virtual_server_block 
 %type<stmts_any> global_statements vrrp_instance_statements vrrp_sync_group_statements vrrp_script_statements address_options route_options rule_options virtual_server_group_statements virtual_server_statements
 %type<stmt_any> vrrp_instance_statement vrrp_sync_group_statement vrrp_script_statement virtual_server_group_statement virtual_server_statement route_option rule_option
 %type<values> vips vips_ex
 %type<vip_addr> vip vip_ex
+%type<strings> virtual_server_arg
 %type<string> ipaddr_literal ip46
 
 %%
@@ -40,15 +44,15 @@ configuration: main_blocks configuration
   }
 
 main_blocks:
-    global { $$ = []Block{$1} }
-  | static_ipaddress_block { $$ = []Block{$1} }
-  | static_routes_block { $$ = []Block{$1} }
-  | static_rules_block { $$ = []Block{$1} }
-  | vrrp_sync_group_block { $$ = []Block{$1} }
-  | vrrp_instance_block { $$ = []Block{$1} }
-  | vrrp_script_block { $$ = []Block{$1} }
-  | virtual_server_block { $$ = []Block{$1} }
-  | virtual_server_group_block { $$ = []Block{$1} }
+    global { $$ = []BlockAny{$1} }
+  | static_ipaddress_block { $$ = []BlockAny{$1} }
+  | static_routes_block { $$ = []BlockAny{$1} }
+  | static_rules_block { $$ = []BlockAny{$1} }
+  | vrrp_sync_group_block { $$ = []BlockAny{$1} }
+  | vrrp_instance_block { $$ = []BlockAny{$1} }
+  | vrrp_script_block { $$ = []BlockAny{$1} }
+  | virtual_server_block { $$ = []BlockAny{$1} }
+  | virtual_server_group_block { $$ = []BlockAny{$1} }
 
 global:
 	GLOBALDEFS LB global_statements RB
@@ -245,7 +249,7 @@ virtual_server_group_statement: { }
 virtual_server_block:
   VIRTUAL_SERVER virtual_server_arg LB virtual_server_statements RB
   {
-    $$ = Block{name: $1.lit, stmts: $4}
+    $$ = BlockArgs{Name: $1.lit, Args: $2, Stmts: $4}
   }
 
 virtual_server_statements:
@@ -256,9 +260,9 @@ virtual_server_statements:
   | virtual_server_statement { $$ = []StmtAny{$1} }
 
 virtual_server_arg:
-| ipport
-| FWMARK NUMBER { }
-| GROUP STRING { }
+    ip46 NUMBER { $$ = []string{$1, $2.lit} }
+  | FWMARK NUMBER { $$ = []string{$1.lit, $2.lit} }
+  | GROUP STRING { $$ = []string{$1.lit, $2.lit} }
 
 virtual_server_statement:
   DELAY_LOOP NUMBER { }
@@ -458,7 +462,7 @@ ipaddr_literal:
   | IP_CIDR { $$ = $1.lit }
 
 ip46:
-  IPV4 { $$ = $1.lit }
+    IPV4 { $$ = $1.lit }
   | IPV6 { $$ = $1.lit }
 
 ipport: { }
