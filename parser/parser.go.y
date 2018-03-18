@@ -22,10 +22,10 @@ package parser
 %token<token> NUMBER ID STRING EMAIL IPV4 IPV6 IP_CIDR IPADDR_RANGE HEX32 PATHSTR LB RB GLOBALDEFS NOTIFICATION_EMAIL NOTIFICATION_EMAIL_FROM SMTP_SERVER SMTP_CONNECT_TIMEOUT ROUTER_ID LVS_ID VRRP_MCAST_GROUP4 VRRP_MCAST_GROUP6 VRRP_GARP_MASTER_DELAY VRRP_GARP_MASTER_REPEAT VRRP_GARP_MASTER_REFRESH VRRP_GARP_MASTER_REFRESH_REPEAT VRRP_VERSION STATIC_IPADDRESS STATIC_ROUTES STATIC_RULES VRRP_SYNC_GROUP GROUP VRRP_INSTANCE USE_VMAC VERSION VMAC_XMIT_BASE NATIVE_IPV6 INTERFACE MCAST_SRC_IP UNICAST_SRC_IP UNICAST_PEER LVS_SYNC_DAEMON_INTERFACE VIRTUAL_ROUTER_ID NOPREEMPT PREEMPT_DELAY PRIORITY ADVERT_INT VIRTUAL_IPADDRESS VIRTUAL_IPADDRESS_EXCLUDED VIRTUAL_ROUTES STATE MASTER BACKUP GARP_MASTER_DELAY SMTP_ALERT AUTHENTICATION AUTH_TYPE AUTH_PASS PASS AH LABEL DEV SCOPE SITE LINK HOST NOWHERE GLOBAL BRD SRC FROM TO VIA GW OR TABLE METRIC TRACK_INTERFACE TRACK_SCRIPT DONT_TRACK_PRIMARY NOTIFY_MASTER NOTIFY_BACKUP NOTIFY_FAULT NOTIFY_STOP NOTIFY BLACKHOLE VRRP_SCRIPT SCRIPT INTERVAL TIMEOUT WEIGHT FALL RISE VIRTUAL_SERVER_GROUP VIRTUAL_SERVER DELAY_LOOP LB_ALGO LB_KIND LVS_SCHED LVS_METHOD RR WRR LC WLC FO OVF LBLC LBLCR SH DH SED NQ NAT DR TUN PERSISTENCE_TIMEOUT PROTOCOL TCP UDP SORRY_SERVER REAL_SERVER FWMARK INHIBIT_ON_FAILURE TCP_CHECK HTTP_GET SSL_GET SMTP_CHECK DNS_CHECK MISC_CHECK URL PATH DIGEST STATUS_CODE CONNECT_TIMEOUT CONNECT_PORT CONNECT_IP BINDTO BIND_PORT RETRY HELO_NAME TYPE NAME MISC_PATH MISC_TIMEOUT WARMUP MISC_DYNAMIC NB_GET_RETRY DELAY_BEFORE_RETRY VIRTUALHOST ALPHA OMEGA QUORUM HYSTERESIS QUORUM_UP QUORUM_DOWN
 
 %type<blocks_any> configuration main_blocks
-%type<block> global vrrp_instance_block static_ipaddress_block static_routes_block static_rules_block  vrrp_sync_group_block vrrp_instance_block vrrp_script_block virtual_server_group_block 
+%type<block> global vrrp_instance_block static_ipaddress_block static_routes_block static_rules_block  vrrp_sync_group_block vrrp_instance_block vrrp_script_block virtual_server_group_block
 %type<block_args> virtual_server_block 
-%type<stmts_any> global_statements vrrp_instance_statements vrrp_sync_group_statements vrrp_script_statements address_options route_options rule_options virtual_server_group_statements virtual_server_statements real_server_statements
-%type<stmt_any> vrrp_instance_statement vrrp_sync_group_statement vrrp_script_statement virtual_server_group_statement virtual_server_statement route_option rule_option real_server_statement
+%type<stmts_any> global_statements vrrp_instance_statements vrrp_sync_group_statements vrrp_script_statements address_options route_options rule_options virtual_server_group_statements virtual_server_statements real_server_statements tcp_check_statements http_get_statements smtp_check_statements dns_check_statements misc_check_statements
+%type<stmt_any> vrrp_instance_statement vrrp_sync_group_statement vrrp_script_statement virtual_server_group_statement virtual_server_statement route_option rule_option real_server_statement tcp_check_statement http_get_statement smtp_check_statement dns_check_statement misc_check_statement
 %type<values> vips
 %type<vip_addr> vip
 %type<strings> virtual_server_arg
@@ -266,56 +266,70 @@ virtual_server_arg:
   | GROUP STRING { $$ = []string{$1.lit, $2.lit} }
 
 virtual_server_statement:
-  DELAY_LOOP NUMBER { $$ = Stmt{$1.lit, $2.lit} }
-| LB_ALGO lb_algo { $$ = Stmt{$1.lit, $2} }
-| LB_KIND lb_kind { $$ = Stmt{$1.lit, $2} }
-| LVS_SCHED lb_algo { $$ = Stmt{$1.lit, $2} }
-| LVS_METHOD lb_kind { $$ = Stmt{$1.lit, $2} }
-| PERSISTENCE_TIMEOUT NUMBER { $$ = Stmt{$1.lit, $2.lit} }
-| PROTOCOL protocol { $$ = Stmt{$1.lit, $2} }
-| SORRY_SERVER ip46 NUMBER { $$ = StmtMulti{$1.lit, []Value{$2, $3.lit}} }
-| REAL_SERVER ip46 NUMBER LB real_server_statements RB
-{ 
-  $$ = SubBlockArgs{Name: $1.lit, Args: []string{$2, $3.lit}, Stmts: $5}
-}
-| VIRTUALHOST STRING { $$ = Stmt{$1.lit, $2.lit} }
-| ALPHA { $$ = $1.lit }
-| OMEGA { $$ = $1.lit }
-| QUORUM NUMBER { $$ = Stmt{$1.lit, $2.lit} }
-| HYSTERESIS NUMBER { $$ = Stmt{$1.lit, $2.lit} }
-| QUORUM_UP STRING { $$ = Stmt{$1.lit, $2.lit} }
-| QUORUM_DOWN STRING { $$ = Stmt{$1.lit, $2.lit} }
+    DELAY_LOOP NUMBER { $$ = Stmt{$1.lit, $2.lit} }
+  | LB_ALGO lb_algo { $$ = Stmt{$1.lit, $2} }
+  | LB_KIND lb_kind { $$ = Stmt{$1.lit, $2} }
+  | LVS_SCHED lb_algo { $$ = Stmt{$1.lit, $2} }
+  | LVS_METHOD lb_kind { $$ = Stmt{$1.lit, $2} }
+  | PERSISTENCE_TIMEOUT NUMBER { $$ = Stmt{$1.lit, $2.lit} }
+  | PROTOCOL protocol { $$ = Stmt{$1.lit, $2} }
+  | SORRY_SERVER ip46 NUMBER { $$ = StmtMulti{$1.lit, []Value{$2, $3.lit}} }
+  | REAL_SERVER ip46 NUMBER LB real_server_statements RB
+  { 
+    $$ = SubBlockArgs{Name: $1.lit, Args: []string{$2, $3.lit}, Stmts: $5}
+  }
+  | VIRTUALHOST STRING { $$ = Stmt{$1.lit, $2.lit} }
+  | ALPHA { $$ = $1.lit }
+  | OMEGA { $$ = $1.lit }
+  | QUORUM NUMBER { $$ = Stmt{$1.lit, $2.lit} }
+  | HYSTERESIS NUMBER { $$ = Stmt{$1.lit, $2.lit} }
+  | QUORUM_UP STRING { $$ = Stmt{$1.lit, $2.lit} }
+  | QUORUM_DOWN STRING { $$ = Stmt{$1.lit, $2.lit} }
 
-real_server_statements: real_server_statement real_server_statements { } | real_server_statement { }
+real_server_statements:
+  real_server_statement real_server_statements
+  {
+    $$ = append([]StmtAny{$1}, $2...)
+  }
+  | real_server_statement { $$ = []StmtAny{$1} }
 
-real_server_statement: { }
-| WEIGHT NUMBER { }
-| INHIBIT_ON_FAILURE { }
-| TCP_CHECK LB tcp_check_statements RB { }
-| HTTP_GET LB http_get_statements RB { }
-| SSL_GET LB http_get_statements RB { }
-| SMTP_CHECK LB smtp_check_statements RB { }
-| DNS_CHECK LB dns_check_statements RB { }
-| MISC_CHECK LB misc_check_statements RB { }
+real_server_statement:
+    WEIGHT NUMBER { $$ = Stmt{$1.lit, $2.lit} }
+  | INHIBIT_ON_FAILURE { $$ = $1.lit }
+  | TCP_CHECK LB tcp_check_statements RB { $$ = Block{name: $1.lit, stmts: $3} }
+  | HTTP_GET LB http_get_statements RB { $$ = Block{name: $1.lit, stmts: $3} }
+  | SSL_GET LB http_get_statements RB { $$ = Block{name: $1.lit, stmts: $3} }
+  | SMTP_CHECK LB smtp_check_statements RB { $$ = Block{name: $1.lit, stmts: $3} }
+  | DNS_CHECK LB dns_check_statements RB { $$ = Block{name: $1.lit, stmts: $3} }
+  | MISC_CHECK LB misc_check_statements RB { $$ = Block{name: $1.lit, stmts: $3} }
 
-tcp_check_statements: tcp_check_statement tcp_check_statements | tcp_check_statement { }
+tcp_check_statements:
+  tcp_check_statement tcp_check_statements
+  { 
+    $$ = append([]StmtAny{$1}, $2...)
+  }
+  | tcp_check_statement { $$ = []StmtAny{$1} }
 
-tcp_check_statement: { }
-| CONNECT_PORT NUMBER { }
-| CONNECT_TIMEOUT NUMBER { }
-| RETRY NUMBER { }
-| WARMUP NUMBER { }
-| DELAY_BEFORE_RETRY NUMBER { }
+tcp_check_statement:
+    CONNECT_PORT NUMBER { $$ = Stmt{$1.lit, $2.lit} }
+  | CONNECT_TIMEOUT NUMBER { $$ = Stmt{$1.lit, $2.lit} }
+  | RETRY NUMBER { $$ = Stmt{$1.lit, $2.lit} }
+  | WARMUP NUMBER { $$ = Stmt{$1.lit, $2.lit} }
+  | DELAY_BEFORE_RETRY NUMBER { $$ = Stmt{$1.lit, $2.lit} }
 
-http_get_statements: http_get_statement http_get_statements | http_get_statement { }
+http_get_statements: http_get_statement http_get_statements
+  {
+    $$ = append([]StmtAny{$1}, $2...)
+  }
+  | http_get_statement { $$ = []StmtAny{$1} }
 
-http_get_statement: { }
-| URL LB url_statements RB { }
-| CONNECT_TIMEOUT NUMBER { }
-| CONNECT_PORT NUMBER { }
-| NB_GET_RETRY NUMBER { }
-| DELAY_BEFORE_RETRY NUMBER { }
-| WARMUP NUMBER { }
+http_get_statement:
+    URL LB url_statements RB { }
+  | CONNECT_TIMEOUT NUMBER { }
+  | CONNECT_PORT NUMBER { }
+  | NB_GET_RETRY NUMBER { }
+  | DELAY_BEFORE_RETRY NUMBER { }
+  | WARMUP NUMBER { }
 
 url_statements: url_statement url_statements | url_statement { }
 
@@ -325,15 +339,15 @@ url_statement: { }
 | DIGEST HEX32 { }
 | STATUS_CODE NUMBER { }
 
-smtp_check_statements: smtp_check_statement smtp_check_statements | smtp_check_statement { }
+smtp_check_statements: smtp_check_statement smtp_check_statements { } | smtp_check_statement { }
 
 smtp_check_statement: { }
 | host_statement { }
-| HOST LB host_statements RB
-| WARMUP NUMBER
-| RETRY NUMBER
-| DELAY_BEFORE_RETRY NUMBER
-| HELO_NAME STRING
+| HOST LB host_statements RB { }
+| WARMUP NUMBER { }
+| RETRY NUMBER { }
+| DELAY_BEFORE_RETRY NUMBER { }
+| HELO_NAME STRING { }
 
 host_statements: host_statement host_statements | host_statement { }
 
@@ -345,7 +359,7 @@ host_statement: { }
 | CONNECT_TIMEOUT NUMBER { }
 | FWMARK NUMBER { }
 
-dns_check_statements: dns_check_statement dns_check_statements | dns_check_statement { }
+dns_check_statements: dns_check_statement dns_check_statements { } | dns_check_statement { }
 
 dns_check_statement: { }
 | CONNECT_IP ip46 { }
@@ -358,7 +372,7 @@ dns_check_statement: { }
 | TYPE STRING { }
 | NAME STRING { }
 
-misc_check_statements: misc_check_statement misc_check_statements | misc_check_statement { }
+misc_check_statements: misc_check_statement misc_check_statements { } | misc_check_statement { }
 
 misc_check_statement: { }
 | MISC_PATH STRING { }
