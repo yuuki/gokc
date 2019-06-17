@@ -1,8 +1,9 @@
-FROM golang:1.10
+FROM golang:1.12
 
-RUN go get github.com/laher/goxc
+RUN mkdir -p /src
+WORKDIR /src
+COPY go.mod .
+COPY go.sum .
 
-ENV USER root
-WORKDIR /go/src/github.com/yuuki/gokc
-
-ADD . /go/src/github.com/yuuki/gokc
+RUN go mod download
+COPY . .

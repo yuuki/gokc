@@ -1,3 +1,13 @@
 package main
 
-var Version string = "0.4.2"
+// name is application name.
+const name = "gokc"
+
+// version is application version.
+const version = "0.4.2"
+
+// commit describes latest git commit hash.
+// This is automatically extracted by git describe --always.
+var commit string
+
+var date string

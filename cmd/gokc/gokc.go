@@ -43,7 +43,7 @@ func main() {
 	flag.Parse()
 
 	if isVersion {
-		log.Infof("gokc version %s", Version)
+		log.Infof("gokc version %s", version)
 		os.Exit(0)
 	}
 
