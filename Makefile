@@ -12,7 +12,6 @@ yacc: deps
 	goyacc -o parser/parser.go -v parser/parser.output parser/parser.go.y
 
 build: yacc
-	go build -o $(BIN) 
 	go build -ldflags="$(BUILD_LDFLAGS)" $(PKG)/cmd/...
 
 test: yacc
