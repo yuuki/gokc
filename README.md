@@ -27,7 +27,7 @@ $ brew install gokc
 ### Build from source
 ```bash
  $ go get github.com/yuuki/gokc
- $ go install github.com/yuuki/gokc/...
+ $ go install github.com/yuuki/gokc
 ```
 
 ## Contribution

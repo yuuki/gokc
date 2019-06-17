@@ -12,7 +12,7 @@ yacc: deps
 	goyacc -o parser/parser.go -v parser/parser.output parser/parser.go.y
 
 build: yacc
-	go build -ldflags="$(BUILD_LDFLAGS)" $(PKG)/cmd/...
+	go build -ldflags="$(BUILD_LDFLAGS)" $(PKG)
 
 test: yacc
 	go test -v $$(go list ./... | grep -v vendor)

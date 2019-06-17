@@ -27,3 +27,4 @@ _testmain.go
 /parser/*.output
 
 /snapshot
+/dist
