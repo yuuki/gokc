@@ -1,0 +1,5122 @@
+
+0: shift/reduce conflict (shift 12(0), red'n 3(0)) on GLOBALDEFS
+0: shift/reduce conflict (shift 13(0), red'n 3(0)) on STATIC_IPADDRESS
+0: shift/reduce conflict (shift 14(0), red'n 3(0)) on STATIC_ROUTES
+0: shift/reduce conflict (shift 15(0), red'n 3(0)) on STATIC_RULES
+0: shift/reduce conflict (shift 16(0), red'n 3(0)) on VRRP_SYNC_GROUP
+0: shift/reduce conflict (shift 17(0), red'n 3(0)) on VRRP_INSTANCE
+0: shift/reduce conflict (shift 18(0), red'n 3(0)) on VRRP_SCRIPT
+0: shift/reduce conflict (shift 20(0), red'n 3(0)) on VIRTUAL_SERVER_GROUP
+0: shift/reduce conflict (shift 19(0), red'n 3(0)) on VIRTUAL_SERVER
+state 0
+	$accept: .configuration $end 
+	main_statements: .    (3)
+
+	GLOBALDEFS  shift 12
+	STATIC_IPADDRESS  shift 13
+	STATIC_ROUTES  shift 14
+	STATIC_RULES  shift 15
+	VRRP_SYNC_GROUP  shift 16
+	VRRP_INSTANCE  shift 17
+	VRRP_SCRIPT  shift 18
+	VIRTUAL_SERVER_GROUP  shift 20
+	VIRTUAL_SERVER  shift 19
+	.  reduce 3 (src line 31)
+
+	configuration  goto 1
+	main_statements  goto 2
+	global  goto 3
+	static_ipaddress_block  goto 4
+	static_routes_block  goto 5
+	static_rules_block  goto 6
+	vrrp_sync_group_block  goto 7
+	vrrp_instance_block  goto 8
+	vrrp_script_block  goto 9
+	virtual_server_block  goto 10
+	virtual_server_group_block  goto 11
+
+state 1
+	$accept:  configuration.$end 
+
+	$end  accept
+	.  error
+
+
+ 2: reduce/reduce conflict  (red'ns 2 and 3) on $end
+2: shift/reduce conflict (shift 12(0), red'n 3(0)) on GLOBALDEFS
+2: shift/reduce conflict (shift 13(0), red'n 3(0)) on STATIC_IPADDRESS
+2: shift/reduce conflict (shift 14(0), red'n 3(0)) on STATIC_ROUTES
+2: shift/reduce conflict (shift 15(0), red'n 3(0)) on STATIC_RULES
+2: shift/reduce conflict (shift 16(0), red'n 3(0)) on VRRP_SYNC_GROUP
+2: shift/reduce conflict (shift 17(0), red'n 3(0)) on VRRP_INSTANCE
+2: shift/reduce conflict (shift 18(0), red'n 3(0)) on VRRP_SCRIPT
+2: shift/reduce conflict (shift 20(0), red'n 3(0)) on VIRTUAL_SERVER_GROUP
+2: shift/reduce conflict (shift 19(0), red'n 3(0)) on VIRTUAL_SERVER
+state 2
+	configuration:  main_statements.configuration 
+	configuration:  main_statements.    (2)
+	main_statements: .    (3)
+
+	GLOBALDEFS  shift 12
+	STATIC_IPADDRESS  shift 13
+	STATIC_ROUTES  shift 14
+	STATIC_RULES  shift 15
+	VRRP_SYNC_GROUP  shift 16
+	VRRP_INSTANCE  shift 17
+	VRRP_SCRIPT  shift 18
+	VIRTUAL_SERVER_GROUP  shift 20
+	VIRTUAL_SERVER  shift 19
+	.  reduce 2 (src line 29)
+
+	configuration  goto 21
+	main_statements  goto 2
+	global  goto 3
+	static_ipaddress_block  goto 4
+	static_routes_block  goto 5
+	static_rules_block  goto 6
+	vrrp_sync_group_block  goto 7
+	vrrp_instance_block  goto 8
+	vrrp_script_block  goto 9
+	virtual_server_block  goto 10
+	virtual_server_group_block  goto 11
+
+state 3
+	main_statements:  global.    (4)
+
+	.  reduce 4 (src line 32)
+
+
+state 4
+	main_statements:  static_ipaddress_block.    (5)
+
+	.  reduce 5 (src line 33)
+
+
+state 5
+	main_statements:  static_routes_block.    (6)
+
+	.  reduce 6 (src line 34)
+
+
+state 6
+	main_statements:  static_rules_block.    (7)
+
+	.  reduce 7 (src line 35)
+
+
+state 7
+	main_statements:  vrrp_sync_group_block.    (8)
+
+	.  reduce 8 (src line 36)
+
+
+state 8
+	main_statements:  vrrp_instance_block.    (9)
+
+	.  reduce 9 (src line 37)
+
+
+state 9
+	main_statements:  vrrp_script_block.    (10)
+
+	.  reduce 10 (src line 38)
+
+
+state 10
+	main_statements:  virtual_server_block.    (11)
+
+	.  reduce 11 (src line 39)
+
+
+state 11
+	main_statements:  virtual_server_group_block.    (12)
+
+	.  reduce 12 (src line 40)
+
+
+state 12
+	global:  GLOBALDEFS.LB global_statements RB 
+
+	LB  shift 22
+	.  error
+
+
+state 13
+	static_ipaddress_block:  STATIC_IPADDRESS.LB address_options RB 
+
+	LB  shift 23
+	.  error
+
+
+state 14
+	static_routes_block:  STATIC_ROUTES.LB route_options RB 
+
+	LB  shift 24
+	.  error
+
+
+state 15
+	static_rules_block:  STATIC_RULES.LB rule_options RB 
+
+	LB  shift 25
+	.  error
+
+
+state 16
+	vrrp_sync_group_block:  VRRP_SYNC_GROUP.STRING LB vrrp_sync_group_statements RB 
+
+	STRING  shift 26
+	.  error
+
+
+state 17
+	vrrp_instance_block:  VRRP_INSTANCE.STRING LB vrrp_instance_statements RB 
+
+	STRING  shift 27
+	.  error
+
+
+state 18
+	vrrp_script_block:  VRRP_SCRIPT.STRING LB vrrp_script_statements RB 
+
+	STRING  shift 28
+	.  error
+
+
+ 19: reduce/reduce conflict  (red'ns 128 and 301) on LB
+ 19: reduce/reduce conflict  (red'ns 128 and 298) on LB
+state 19
+	virtual_server_block:  VIRTUAL_SERVER.virtual_server_arg LB virtual_server_statements RB 
+	virtual_server_arg: .    (128)
+	ipport: .    (301)
+	ip46: .    (298)
+
+	IPV4  shift 34
+	IPV6  shift 35
+	LB  reduce 128 (src line 175)
+	GROUP  shift 32
+	FWMARK  shift 31
+	.  reduce 298 (src line 366)
+
+	ip46  goto 33
+	virtual_server_arg  goto 29
+	ipport  goto 30
+
+state 20
+	virtual_server_group_block:  VIRTUAL_SERVER_GROUP.STRING LB virtual_server_group_statements RB 
+
+	STRING  shift 36
+	.  error
+
+
+state 21
+	configuration:  main_statements configuration.    (1)
+
+	.  reduce 1 (src line 29)
+
+
+22: shift/reduce conflict (shift 39(0), red'n 16(0)) on NOTIFICATION_EMAIL
+22: shift/reduce conflict (shift 40(0), red'n 16(0)) on NOTIFICATION_EMAIL_FROM
+22: shift/reduce conflict (shift 45(0), red'n 16(0)) on SMTP_SERVER
+22: shift/reduce conflict (shift 46(0), red'n 16(0)) on SMTP_CONNECT_TIMEOUT
+22: shift/reduce conflict (shift 47(0), red'n 16(0)) on ROUTER_ID
+22: shift/reduce conflict (shift 48(0), red'n 16(0)) on LVS_ID
+22: shift/reduce conflict (shift 49(0), red'n 16(0)) on VRRP_MCAST_GROUP4
+22: shift/reduce conflict (shift 50(0), red'n 16(0)) on VRRP_MCAST_GROUP6
+22: shift/reduce conflict (shift 41(0), red'n 16(0)) on VRRP_GARP_MASTER_DELAY
+22: shift/reduce conflict (shift 42(0), red'n 16(0)) on VRRP_GARP_MASTER_REPEAT
+22: shift/reduce conflict (shift 43(0), red'n 16(0)) on VRRP_GARP_MASTER_REFRESH
+22: shift/reduce conflict (shift 44(0), red'n 16(0)) on VRRP_GARP_MASTER_REFRESH_REPEAT
+22: shift/reduce conflict (shift 51(0), red'n 16(0)) on VRRP_VERSION
+22: shift/reduce conflict (shift 52(0), red'n 16(0)) on ENABLE_SCRIPT_SECURITY
+state 22
+	global:  GLOBALDEFS LB.global_statements RB 
+	global_statement: .    (16)
+
+	NOTIFICATION_EMAIL  shift 39
+	NOTIFICATION_EMAIL_FROM  shift 40
+	SMTP_SERVER  shift 45
+	SMTP_CONNECT_TIMEOUT  shift 46
+	ROUTER_ID  shift 47
+	LVS_ID  shift 48
+	VRRP_MCAST_GROUP4  shift 49
+	VRRP_MCAST_GROUP6  shift 50
+	VRRP_GARP_MASTER_DELAY  shift 41
+	VRRP_GARP_MASTER_REPEAT  shift 42
+	VRRP_GARP_MASTER_REFRESH  shift 43
+	VRRP_GARP_MASTER_REFRESH_REPEAT  shift 44
+	VRRP_VERSION  shift 51
+	ENABLE_SCRIPT_SECURITY  shift 52
+	.  reduce 16 (src line 46)
+
+	global_statements  goto 37
+	global_statement  goto 38
+
+23: shift/reduce conflict (shift 34(0), red'n 259(0)) on IPV4
+23: shift/reduce conflict (shift 35(0), red'n 259(0)) on IPV6
+23: shift/reduce conflict (shift 56(0), red'n 259(0)) on IP_CIDR
+23: shift/reduce conflict (shift 58(0), red'n 259(0)) on DEV
+23: shift/reduce conflict (shift 59(0), red'n 259(0)) on SCOPE
+23: shift/reduce conflict (shift 57(0), red'n 259(0)) on BRD
+23: shift/reduce conflict (shift 34(0), red'n 298(0)) on IPV4
+23: shift/reduce conflict (shift 35(0), red'n 298(0)) on IPV6
+23: shift/reduce conflict (shift 56(0), red'n 298(0)) on IP_CIDR
+ 23: reduce/reduce conflict  (red'ns 259 and 298) on RB
+23: shift/reduce conflict (shift 58(0), red'n 298(0)) on DEV
+23: shift/reduce conflict (shift 59(0), red'n 298(0)) on SCOPE
+23: shift/reduce conflict (shift 57(0), red'n 298(0)) on BRD
+state 23
+	static_ipaddress_block:  STATIC_IPADDRESS LB.address_options RB 
+	address_option: .    (259)
+	ip46: .    (298)
+
+	IPV4  shift 34
+	IPV6  shift 35
+	IP_CIDR  shift 56
+	DEV  shift 58
+	SCOPE  shift 59
+	BRD  shift 57
+	.  reduce 259 (src line 322)
+
+	ip46  goto 55
+	address_options  goto 53
+	address_option  goto 54
+
+24: shift/reduce conflict (shift 34(0), red'n 267(0)) on IPV4
+24: shift/reduce conflict (shift 35(0), red'n 267(0)) on IPV6
+24: shift/reduce conflict (shift 65(0), red'n 267(0)) on IP_CIDR
+24: shift/reduce conflict (shift 70(0), red'n 267(0)) on LABEL
+24: shift/reduce conflict (shift 69(0), red'n 267(0)) on DEV
+24: shift/reduce conflict (shift 73(0), red'n 267(0)) on SCOPE
+24: shift/reduce conflict (shift 62(0), red'n 267(0)) on SRC
+24: shift/reduce conflict (shift 63(0), red'n 267(0)) on TO
+24: shift/reduce conflict (shift 66(0), red'n 267(0)) on VIA
+24: shift/reduce conflict (shift 67(0), red'n 267(0)) on GW
+24: shift/reduce conflict (shift 68(0), red'n 267(0)) on OR
+24: shift/reduce conflict (shift 71(0), red'n 267(0)) on TABLE
+24: shift/reduce conflict (shift 72(0), red'n 267(0)) on METRIC
+24: shift/reduce conflict (shift 74(0), red'n 267(0)) on BLACKHOLE
+24: shift/reduce conflict (shift 34(0), red'n 298(0)) on IPV4
+24: shift/reduce conflict (shift 35(0), red'n 298(0)) on IPV6
+24: shift/reduce conflict (shift 65(0), red'n 298(0)) on IP_CIDR
+ 24: reduce/reduce conflict  (red'ns 267 and 298) on RB
+24: shift/reduce conflict (shift 70(0), red'n 298(0)) on LABEL
+24: shift/reduce conflict (shift 69(0), red'n 298(0)) on DEV
+24: shift/reduce conflict (shift 73(0), red'n 298(0)) on SCOPE
+24: shift/reduce conflict (shift 62(0), red'n 298(0)) on SRC
+24: shift/reduce conflict (shift 63(0), red'n 298(0)) on TO
+24: shift/reduce conflict (shift 66(0), red'n 298(0)) on VIA
+24: shift/reduce conflict (shift 67(0), red'n 298(0)) on GW
+24: shift/reduce conflict (shift 68(0), red'n 298(0)) on OR
+24: shift/reduce conflict (shift 71(0), red'n 298(0)) on TABLE
+24: shift/reduce conflict (shift 72(0), red'n 298(0)) on METRIC
+24: shift/reduce conflict (shift 74(0), red'n 298(0)) on BLACKHOLE
+state 24
+	static_routes_block:  STATIC_ROUTES LB.route_options RB 
+	route_option: .    (267)
+	ip46: .    (298)
+
+	IPV4  shift 34
+	IPV6  shift 35
+	IP_CIDR  shift 65
+	LABEL  shift 70
+	DEV  shift 69
+	SCOPE  shift 73
+	SRC  shift 62
+	TO  shift 63
+	VIA  shift 66
+	GW  shift 67
+	OR  shift 68
+	TABLE  shift 71
+	METRIC  shift 72
+	BLACKHOLE  shift 74
+	.  reduce 267 (src line 331)
+
+	ip46  goto 64
+	route_options  goto 60
+	route_option  goto 61
+
+25: shift/reduce conflict (shift 77(0), red'n 284(0)) on FROM
+25: shift/reduce conflict (shift 78(0), red'n 284(0)) on TO
+state 25
+	static_rules_block:  STATIC_RULES LB.rule_options RB 
+	rule_option: .    (284)
+
+	FROM  shift 77
+	TO  shift 78
+	.  reduce 284 (src line 349)
+
+	rule_options  goto 75
+	rule_option  goto 76
+
+state 26
+	vrrp_sync_group_block:  VRRP_SYNC_GROUP STRING.LB vrrp_sync_group_statements RB 
+
+	LB  shift 79
+	.  error
+
+
+state 27
+	vrrp_instance_block:  VRRP_INSTANCE STRING.LB vrrp_instance_statements RB 
+
+	LB  shift 80
+	.  error
+
+
+state 28
+	vrrp_script_block:  VRRP_SCRIPT STRING.LB vrrp_script_statements RB 
+
+	LB  shift 81
+	.  error
+
+
+state 29
+	virtual_server_block:  VIRTUAL_SERVER virtual_server_arg.LB virtual_server_statements RB 
+
+	LB  shift 82
+	.  error
+
+
+state 30
+	virtual_server_arg:  ipport.    (129)
+
+	.  reduce 129 (src line 176)
+
+
+state 31
+	virtual_server_arg:  FWMARK.NUMBER 
+
+	NUMBER  shift 83
+	.  error
+
+
+state 32
+	virtual_server_arg:  GROUP.STRING 
+
+	STRING  shift 84
+	.  error
+
+
+state 33
+	ipport:  ip46.    (302)
+	ipport:  ip46.NUMBER 
+
+	NUMBER  shift 85
+	.  reduce 302 (src line 371)
+
+
+state 34
+	ip46:  IPV4.    (299)
+
+	.  reduce 299 (src line 367)
+
+
+state 35
+	ip46:  IPV6.    (300)
+
+	.  reduce 300 (src line 368)
+
+
+state 36
+	virtual_server_group_block:  VIRTUAL_SERVER_GROUP STRING.LB virtual_server_group_statements RB 
+
+	LB  shift 86
+	.  error
+
+
+state 37
+	global:  GLOBALDEFS LB global_statements.RB 
+
+	RB  shift 87
+	.  error
+
+
+ 38: reduce/reduce conflict  (red'ns 15 and 16) on RB
+38: shift/reduce conflict (shift 39(0), red'n 16(0)) on NOTIFICATION_EMAIL
+38: shift/reduce conflict (shift 40(0), red'n 16(0)) on NOTIFICATION_EMAIL_FROM
+38: shift/reduce conflict (shift 45(0), red'n 16(0)) on SMTP_SERVER
+38: shift/reduce conflict (shift 46(0), red'n 16(0)) on SMTP_CONNECT_TIMEOUT
+38: shift/reduce conflict (shift 47(0), red'n 16(0)) on ROUTER_ID
+38: shift/reduce conflict (shift 48(0), red'n 16(0)) on LVS_ID
+38: shift/reduce conflict (shift 49(0), red'n 16(0)) on VRRP_MCAST_GROUP4
+38: shift/reduce conflict (shift 50(0), red'n 16(0)) on VRRP_MCAST_GROUP6
+38: shift/reduce conflict (shift 41(0), red'n 16(0)) on VRRP_GARP_MASTER_DELAY
+38: shift/reduce conflict (shift 42(0), red'n 16(0)) on VRRP_GARP_MASTER_REPEAT
+38: shift/reduce conflict (shift 43(0), red'n 16(0)) on VRRP_GARP_MASTER_REFRESH
+38: shift/reduce conflict (shift 44(0), red'n 16(0)) on VRRP_GARP_MASTER_REFRESH_REPEAT
+38: shift/reduce conflict (shift 51(0), red'n 16(0)) on VRRP_VERSION
+38: shift/reduce conflict (shift 52(0), red'n 16(0)) on ENABLE_SCRIPT_SECURITY
+state 38
+	global_statements:  global_statement.global_statements 
+	global_statements:  global_statement.    (15)
+	global_statement: .    (16)
+
+	NOTIFICATION_EMAIL  shift 39
+	NOTIFICATION_EMAIL_FROM  shift 40
+	SMTP_SERVER  shift 45
+	SMTP_CONNECT_TIMEOUT  shift 46
+	ROUTER_ID  shift 47
+	LVS_ID  shift 48
+	VRRP_MCAST_GROUP4  shift 49
+	VRRP_MCAST_GROUP6  shift 50
+	VRRP_GARP_MASTER_DELAY  shift 41
+	VRRP_GARP_MASTER_REPEAT  shift 42
+	VRRP_GARP_MASTER_REFRESH  shift 43
+	VRRP_GARP_MASTER_REFRESH_REPEAT  shift 44
+	VRRP_VERSION  shift 51
+	ENABLE_SCRIPT_SECURITY  shift 52
+	.  reduce 15 (src line 44)
+
+	global_statements  goto 88
+	global_statement  goto 38
+
+state 39
+	global_statement:  NOTIFICATION_EMAIL.LB mail_statements RB 
+	global_statement:  NOTIFICATION_EMAIL.STRING 
+
+	STRING  shift 90
+	LB  shift 89
+	.  error
+
+
+state 40
+	global_statement:  NOTIFICATION_EMAIL_FROM.EMAIL 
+
+	EMAIL  shift 91
+	.  error
+
+
+state 41
+	global_statement:  VRRP_GARP_MASTER_DELAY.NUMBER 
+
+	NUMBER  shift 92
+	.  error
+
+
+state 42
+	global_statement:  VRRP_GARP_MASTER_REPEAT.NUMBER 
+
+	NUMBER  shift 93
+	.  error
+
+
+state 43
+	global_statement:  VRRP_GARP_MASTER_REFRESH.NUMBER 
+
+	NUMBER  shift 94
+	.  error
+
+
+state 44
+	global_statement:  VRRP_GARP_MASTER_REFRESH_REPEAT.NUMBER 
+
+	NUMBER  shift 95
+	.  error
+
+
+state 45
+	global_statement:  SMTP_SERVER.ip46 
+	global_statement:  SMTP_SERVER.STRING 
+	ip46: .    (298)
+
+	STRING  shift 97
+	IPV4  shift 34
+	IPV6  shift 35
+	.  reduce 298 (src line 366)
+
+	ip46  goto 96
+
+state 46
+	global_statement:  SMTP_CONNECT_TIMEOUT.NUMBER 
+
+	NUMBER  shift 98
+	.  error
+
+
+state 47
+	global_statement:  ROUTER_ID.STRING 
+
+	STRING  shift 99
+	.  error
+
+
+state 48
+	global_statement:  LVS_ID.STRING 
+
+	STRING  shift 100
+	.  error
+
+
+state 49
+	global_statement:  VRRP_MCAST_GROUP4.IPV4 
+
+	IPV4  shift 101
+	.  error
+
+
+state 50
+	global_statement:  VRRP_MCAST_GROUP6.IPV6 
+
+	IPV6  shift 102
+	.  error
+
+
+state 51
+	global_statement:  VRRP_VERSION.NUMBER 
+
+	NUMBER  shift 103
+	.  error
+
+
+state 52
+	global_statement:  ENABLE_SCRIPT_SECURITY.    (32)
+
+	.  reduce 32 (src line 62)
+
+
+state 53
+	static_ipaddress_block:  STATIC_IPADDRESS LB address_options.RB 
+
+	RB  shift 104
+	.  error
+
+
+54: shift/reduce conflict (shift 34(0), red'n 259(0)) on IPV4
+54: shift/reduce conflict (shift 35(0), red'n 259(0)) on IPV6
+54: shift/reduce conflict (shift 56(0), red'n 259(0)) on IP_CIDR
+ 54: reduce/reduce conflict  (red'ns 258 and 259) on RB
+54: shift/reduce conflict (shift 58(0), red'n 259(0)) on DEV
+54: shift/reduce conflict (shift 59(0), red'n 259(0)) on SCOPE
+54: shift/reduce conflict (shift 57(0), red'n 259(0)) on BRD
+54: shift/reduce conflict (shift 34(0), red'n 298(0)) on IPV4
+54: shift/reduce conflict (shift 35(0), red'n 298(0)) on IPV6
+54: shift/reduce conflict (shift 56(0), red'n 298(0)) on IP_CIDR
+ 54: reduce/reduce conflict  (red'ns 258 and 298) on RB
+54: shift/reduce conflict (shift 58(0), red'n 298(0)) on DEV
+54: shift/reduce conflict (shift 59(0), red'n 298(0)) on SCOPE
+54: shift/reduce conflict (shift 57(0), red'n 298(0)) on BRD
+state 54
+	address_options:  address_option.address_options 
+	address_options:  address_option.    (258)
+	address_option: .    (259)
+	ip46: .    (298)
+
+	IPV4  shift 34
+	IPV6  shift 35
+	IP_CIDR  shift 56
+	DEV  shift 58
+	SCOPE  shift 59
+	BRD  shift 57
+	.  reduce 258 (src line 320)
+
+	ip46  goto 55
+	address_options  goto 105
+	address_option  goto 54
+
+state 55
+	address_option:  ip46.    (260)
+
+	.  reduce 260 (src line 323)
+
+
+state 56
+	address_option:  IP_CIDR.    (261)
+
+	.  reduce 261 (src line 324)
+
+
+57: shift/reduce conflict (shift 34(0), red'n 298(0)) on IPV4
+57: shift/reduce conflict (shift 35(0), red'n 298(0)) on IPV6
+state 57
+	address_option:  BRD.ip46 
+	ip46: .    (298)
+
+	IPV4  shift 34
+	IPV6  shift 35
+	.  reduce 298 (src line 366)
+
+	ip46  goto 106
+
+state 58
+	address_option:  DEV.STRING 
+
+	STRING  shift 107
+	.  error
+
+
+state 59
+	address_option:  SCOPE.scope_val 
+	scope_val: .    (289)
+
+	SITE  shift 109
+	LINK  shift 110
+	HOST  shift 111
+	NOWHERE  shift 112
+	GLOBAL  shift 113
+	.  reduce 289 (src line 355)
+
+	scope_val  goto 108
+
+state 60
+	static_routes_block:  STATIC_ROUTES LB route_options.RB 
+
+	RB  shift 114
+	.  error
+
+
+61: shift/reduce conflict (shift 34(0), red'n 266(0)) on IPV4
+61: shift/reduce conflict (shift 35(0), red'n 266(0)) on IPV6
+61: shift/reduce conflict (shift 65(0), red'n 266(0)) on IP_CIDR
+61: shift/reduce conflict (shift 70(0), red'n 266(0)) on LABEL
+61: shift/reduce conflict (shift 69(0), red'n 266(0)) on DEV
+61: shift/reduce conflict (shift 73(0), red'n 266(0)) on SCOPE
+61: shift/reduce conflict (shift 62(0), red'n 266(0)) on SRC
+61: shift/reduce conflict (shift 63(0), red'n 266(0)) on TO
+61: shift/reduce conflict (shift 66(0), red'n 266(0)) on VIA
+61: shift/reduce conflict (shift 67(0), red'n 266(0)) on GW
+61: shift/reduce conflict (shift 68(0), red'n 266(0)) on OR
+61: shift/reduce conflict (shift 71(0), red'n 266(0)) on TABLE
+61: shift/reduce conflict (shift 72(0), red'n 266(0)) on METRIC
+61: shift/reduce conflict (shift 74(0), red'n 266(0)) on BLACKHOLE
+61: shift/reduce conflict (shift 34(0), red'n 267(0)) on IPV4
+61: shift/reduce conflict (shift 35(0), red'n 267(0)) on IPV6
+61: shift/reduce conflict (shift 65(0), red'n 267(0)) on IP_CIDR
+ 61: reduce/reduce conflict  (red'ns 266 and 267) on RB
+61: shift/reduce conflict (shift 70(0), red'n 267(0)) on LABEL
+61: shift/reduce conflict (shift 69(0), red'n 267(0)) on DEV
+61: shift/reduce conflict (shift 73(0), red'n 267(0)) on SCOPE
+61: shift/reduce conflict (shift 62(0), red'n 267(0)) on SRC
+61: shift/reduce conflict (shift 63(0), red'n 267(0)) on TO
+61: shift/reduce conflict (shift 66(0), red'n 267(0)) on VIA
+61: shift/reduce conflict (shift 67(0), red'n 267(0)) on GW
+61: shift/reduce conflict (shift 68(0), red'n 267(0)) on OR
+61: shift/reduce conflict (shift 71(0), red'n 267(0)) on TABLE
+61: shift/reduce conflict (shift 72(0), red'n 267(0)) on METRIC
+61: shift/reduce conflict (shift 74(0), red'n 267(0)) on BLACKHOLE
+ 61: reduce/reduce conflict  (red'ns 266 and 267) on DELAY_LOOP
+ 61: reduce/reduce conflict  (red'ns 266 and 267) on LB_ALGO
+ 61: reduce/reduce conflict  (red'ns 266 and 267) on LB_KIND
+ 61: reduce/reduce conflict  (red'ns 266 and 267) on LVS_SCHED
+ 61: reduce/reduce conflict  (red'ns 266 and 267) on LVS_METHOD
+ 61: reduce/reduce conflict  (red'ns 266 and 267) on PERSISTENCE_TIMEOUT
+ 61: reduce/reduce conflict  (red'ns 266 and 267) on PROTOCOL
+ 61: reduce/reduce conflict  (red'ns 266 and 267) on SORRY_SERVER
+ 61: reduce/reduce conflict  (red'ns 266 and 267) on REAL_SERVER
+ 61: reduce/reduce conflict  (red'ns 266 and 267) on VIRTUALHOST
+ 61: reduce/reduce conflict  (red'ns 266 and 267) on ALPHA
+ 61: reduce/reduce conflict  (red'ns 266 and 267) on OMEGA
+ 61: reduce/reduce conflict  (red'ns 266 and 267) on QUORUM
+ 61: reduce/reduce conflict  (red'ns 266 and 267) on HYSTERESIS
+ 61: reduce/reduce conflict  (red'ns 266 and 267) on QUORUM_UP
+ 61: reduce/reduce conflict  (red'ns 266 and 267) on QUORUM_DOWN
+61: shift/reduce conflict (shift 34(0), red'n 298(0)) on IPV4
+61: shift/reduce conflict (shift 35(0), red'n 298(0)) on IPV6
+61: shift/reduce conflict (shift 65(0), red'n 298(0)) on IP_CIDR
+ 61: reduce/reduce conflict  (red'ns 266 and 298) on RB
+61: shift/reduce conflict (shift 70(0), red'n 298(0)) on LABEL
+61: shift/reduce conflict (shift 69(0), red'n 298(0)) on DEV
+61: shift/reduce conflict (shift 73(0), red'n 298(0)) on SCOPE
+61: shift/reduce conflict (shift 62(0), red'n 298(0)) on SRC
+61: shift/reduce conflict (shift 63(0), red'n 298(0)) on TO
+61: shift/reduce conflict (shift 66(0), red'n 298(0)) on VIA
+61: shift/reduce conflict (shift 67(0), red'n 298(0)) on GW
+61: shift/reduce conflict (shift 68(0), red'n 298(0)) on OR
+61: shift/reduce conflict (shift 71(0), red'n 298(0)) on TABLE
+61: shift/reduce conflict (shift 72(0), red'n 298(0)) on METRIC
+61: shift/reduce conflict (shift 74(0), red'n 298(0)) on BLACKHOLE
+ 61: reduce/reduce conflict  (red'ns 266 and 298) on DELAY_LOOP
+ 61: reduce/reduce conflict  (red'ns 266 and 298) on LB_ALGO
+ 61: reduce/reduce conflict  (red'ns 266 and 298) on LB_KIND
+ 61: reduce/reduce conflict  (red'ns 266 and 298) on LVS_SCHED
+ 61: reduce/reduce conflict  (red'ns 266 and 298) on LVS_METHOD
+ 61: reduce/reduce conflict  (red'ns 266 and 298) on PERSISTENCE_TIMEOUT
+ 61: reduce/reduce conflict  (red'ns 266 and 298) on PROTOCOL
+ 61: reduce/reduce conflict  (red'ns 266 and 298) on SORRY_SERVER
+ 61: reduce/reduce conflict  (red'ns 266 and 298) on REAL_SERVER
+ 61: reduce/reduce conflict  (red'ns 266 and 298) on VIRTUALHOST
+ 61: reduce/reduce conflict  (red'ns 266 and 298) on ALPHA
+ 61: reduce/reduce conflict  (red'ns 266 and 298) on OMEGA
+ 61: reduce/reduce conflict  (red'ns 266 and 298) on QUORUM
+ 61: reduce/reduce conflict  (red'ns 266 and 298) on HYSTERESIS
+ 61: reduce/reduce conflict  (red'ns 266 and 298) on QUORUM_UP
+ 61: reduce/reduce conflict  (red'ns 266 and 298) on QUORUM_DOWN
+state 61
+	route_options:  route_option.route_options 
+	route_options:  route_option.    (266)
+	route_option: .    (267)
+	ip46: .    (298)
+
+	IPV4  shift 34
+	IPV6  shift 35
+	IP_CIDR  shift 65
+	LABEL  shift 70
+	DEV  shift 69
+	SCOPE  shift 73
+	SRC  shift 62
+	TO  shift 63
+	VIA  shift 66
+	GW  shift 67
+	OR  shift 68
+	TABLE  shift 71
+	METRIC  shift 72
+	BLACKHOLE  shift 74
+	.  reduce 266 (src line 329)
+
+	ip46  goto 64
+	route_options  goto 115
+	route_option  goto 61
+
+62: shift/reduce conflict (shift 34(0), red'n 298(0)) on IPV4
+62: shift/reduce conflict (shift 35(0), red'n 298(0)) on IPV6
+state 62
+	route_option:  SRC.ip46 
+	ip46: .    (298)
+
+	IPV4  shift 34
+	IPV6  shift 35
+	.  reduce 298 (src line 366)
+
+	ip46  goto 116
+
+63: shift/reduce conflict (shift 34(0), red'n 298(0)) on IPV4
+63: shift/reduce conflict (shift 35(0), red'n 298(0)) on IPV6
+63: shift/reduce conflict (shift 118(0), red'n 298(0)) on IP_CIDR
+state 63
+	route_option:  TO.ip46 
+	route_option:  TO.IP_CIDR 
+	ip46: .    (298)
+
+	IPV4  shift 34
+	IPV6  shift 35
+	IP_CIDR  shift 118
+	.  reduce 298 (src line 366)
+
+	ip46  goto 117
+
+state 64
+	route_option:  ip46.    (271)
+
+	.  reduce 271 (src line 335)
+
+
+state 65
+	route_option:  IP_CIDR.    (272)
+
+	.  reduce 272 (src line 336)
+
+
+66: shift/reduce conflict (shift 34(0), red'n 298(0)) on IPV4
+66: shift/reduce conflict (shift 35(0), red'n 298(0)) on IPV6
+state 66
+	route_option:  VIA.ip46 
+	ip46: .    (298)
+
+	IPV4  shift 34
+	IPV6  shift 35
+	.  reduce 298 (src line 366)
+
+	ip46  goto 119
+
+67: shift/reduce conflict (shift 34(0), red'n 298(0)) on IPV4
+67: shift/reduce conflict (shift 35(0), red'n 298(0)) on IPV6
+state 67
+	route_option:  GW.ip46 
+	ip46: .    (298)
+
+	IPV4  shift 34
+	IPV6  shift 35
+	.  reduce 298 (src line 366)
+
+	ip46  goto 120
+
+68: shift/reduce conflict (shift 34(0), red'n 298(0)) on IPV4
+68: shift/reduce conflict (shift 35(0), red'n 298(0)) on IPV6
+state 68
+	route_option:  OR.ip46 
+	ip46: .    (298)
+
+	IPV4  shift 34
+	IPV6  shift 35
+	.  reduce 298 (src line 366)
+
+	ip46  goto 121
+
+state 69
+	route_option:  DEV.STRING 
+
+	STRING  shift 122
+	.  error
+
+
+state 70
+	route_option:  LABEL.STRING 
+
+	STRING  shift 123
+	.  error
+
+
+state 71
+	route_option:  TABLE.NUMBER 
+	route_option:  TABLE.STRING 
+
+	NUMBER  shift 124
+	STRING  shift 125
+	.  error
+
+
+state 72
+	route_option:  METRIC.NUMBER 
+
+	NUMBER  shift 126
+	.  error
+
+
+state 73
+	route_option:  SCOPE.scope_val 
+	scope_val: .    (289)
+
+	SITE  shift 109
+	LINK  shift 110
+	HOST  shift 111
+	NOWHERE  shift 112
+	GLOBAL  shift 113
+	.  reduce 289 (src line 355)
+
+	scope_val  goto 127
+
+74: shift/reduce conflict (shift 34(0), red'n 298(0)) on IPV4
+74: shift/reduce conflict (shift 35(0), red'n 298(0)) on IPV6
+74: shift/reduce conflict (shift 129(0), red'n 298(0)) on IP_CIDR
+state 74
+	route_option:  BLACKHOLE.ip46 
+	route_option:  BLACKHOLE.IP_CIDR 
+	ip46: .    (298)
+
+	IPV4  shift 34
+	IPV6  shift 35
+	IP_CIDR  shift 129
+	.  reduce 298 (src line 366)
+
+	ip46  goto 128
+
+state 75
+	static_rules_block:  STATIC_RULES LB rule_options.RB 
+
+	RB  shift 130
+	.  error
+
+
+ 76: reduce/reduce conflict  (red'ns 37 and 284) on RB
+76: shift/reduce conflict (shift 77(0), red'n 284(0)) on FROM
+76: shift/reduce conflict (shift 78(0), red'n 284(0)) on TO
+state 76
+	rule_options:  rule_option.rule_options 
+	rule_options:  rule_option.    (37)
+	rule_option: .    (284)
+
+	FROM  shift 77
+	TO  shift 78
+	.  reduce 37 (src line 70)
+
+	rule_options  goto 131
+	rule_option  goto 76
+
+state 77
+	rule_option:  FROM.ip46 TABLE NUMBER 
+	rule_option:  FROM.IP_CIDR TABLE NUMBER 
+	ip46: .    (298)
+
+	IPV4  shift 34
+	IPV6  shift 35
+	IP_CIDR  shift 133
+	.  reduce 298 (src line 366)
+
+	ip46  goto 132
+
+state 78
+	rule_option:  TO.ip46 TABLE NUMBER 
+	rule_option:  TO.IP_CIDR TABLE NUMBER 
+	ip46: .    (298)
+
+	IPV4  shift 34
+	IPV6  shift 35
+	IP_CIDR  shift 135
+	.  reduce 298 (src line 366)
+
+	ip46  goto 134
+
+79: shift/reduce conflict (shift 138(0), red'n 41(0)) on STRING
+79: shift/reduce conflict (shift 139(0), red'n 41(0)) on GROUP
+79: shift/reduce conflict (shift 140(0), red'n 41(0)) on NOTIFY_MASTER
+79: shift/reduce conflict (shift 141(0), red'n 41(0)) on NOTIFY_BACKUP
+79: shift/reduce conflict (shift 142(0), red'n 41(0)) on NOTIFY_FAULT
+79: shift/reduce conflict (shift 143(0), red'n 41(0)) on NOTIFY
+state 79
+	vrrp_sync_group_block:  VRRP_SYNC_GROUP STRING LB.vrrp_sync_group_statements RB 
+	vrrp_sync_group_statement: .    (41)
+
+	STRING  shift 138
+	GROUP  shift 139
+	NOTIFY_MASTER  shift 140
+	NOTIFY_BACKUP  shift 141
+	NOTIFY_FAULT  shift 142
+	NOTIFY  shift 143
+	.  reduce 41 (src line 76)
+
+	vrrp_sync_group_statements  goto 136
+	vrrp_sync_group_statement  goto 137
+
+80: shift/reduce conflict (shift 146(0), red'n 54(0)) on USE_VMAC
+80: shift/reduce conflict (shift 147(0), red'n 54(0)) on VERSION
+80: shift/reduce conflict (shift 148(0), red'n 54(0)) on VMAC_XMIT_BASE
+80: shift/reduce conflict (shift 149(0), red'n 54(0)) on NATIVE_IPV6
+80: shift/reduce conflict (shift 150(0), red'n 54(0)) on INTERFACE
+80: shift/reduce conflict (shift 151(0), red'n 54(0)) on MCAST_SRC_IP
+80: shift/reduce conflict (shift 152(0), red'n 54(0)) on UNICAST_SRC_IP
+80: shift/reduce conflict (shift 153(0), red'n 54(0)) on UNICAST_PEER
+80: shift/reduce conflict (shift 154(0), red'n 54(0)) on LVS_SYNC_DAEMON_INTERFACE
+80: shift/reduce conflict (shift 155(0), red'n 54(0)) on VIRTUAL_ROUTER_ID
+80: shift/reduce conflict (shift 156(0), red'n 54(0)) on NOPREEMPT
+80: shift/reduce conflict (shift 157(0), red'n 54(0)) on PREEMPT_DELAY
+80: shift/reduce conflict (shift 158(0), red'n 54(0)) on PRIORITY
+80: shift/reduce conflict (shift 159(0), red'n 54(0)) on ADVERT_INT
+80: shift/reduce conflict (shift 160(0), red'n 54(0)) on VIRTUAL_IPADDRESS
+80: shift/reduce conflict (shift 161(0), red'n 54(0)) on VIRTUAL_IPADDRESS_EXCLUDED
+80: shift/reduce conflict (shift 162(0), red'n 54(0)) on VIRTUAL_ROUTES
+80: shift/reduce conflict (shift 163(0), red'n 54(0)) on STATE
+80: shift/reduce conflict (shift 164(0), red'n 54(0)) on GARP_MASTER_DELAY
+80: shift/reduce conflict (shift 165(0), red'n 54(0)) on SMTP_ALERT
+80: shift/reduce conflict (shift 166(0), red'n 54(0)) on AUTHENTICATION
+80: shift/reduce conflict (shift 167(0), red'n 54(0)) on TRACK_INTERFACE
+80: shift/reduce conflict (shift 168(0), red'n 54(0)) on TRACK_SCRIPT
+80: shift/reduce conflict (shift 169(0), red'n 54(0)) on DONT_TRACK_PRIMARY
+80: shift/reduce conflict (shift 170(0), red'n 54(0)) on NOTIFY_MASTER
+80: shift/reduce conflict (shift 171(0), red'n 54(0)) on NOTIFY_BACKUP
+80: shift/reduce conflict (shift 172(0), red'n 54(0)) on NOTIFY_FAULT
+80: shift/reduce conflict (shift 173(0), red'n 54(0)) on NOTIFY_STOP
+80: shift/reduce conflict (shift 174(0), red'n 54(0)) on NOTIFY
+state 80
+	vrrp_instance_block:  VRRP_INSTANCE STRING LB.vrrp_instance_statements RB 
+	vrrp_instance_statement: .    (54)
+
+	USE_VMAC  shift 146
+	VERSION  shift 147
+	VMAC_XMIT_BASE  shift 148
+	NATIVE_IPV6  shift 149
+	INTERFACE  shift 150
+	MCAST_SRC_IP  shift 151
+	UNICAST_SRC_IP  shift 152
+	UNICAST_PEER  shift 153
+	LVS_SYNC_DAEMON_INTERFACE  shift 154
+	VIRTUAL_ROUTER_ID  shift 155
+	NOPREEMPT  shift 156
+	PREEMPT_DELAY  shift 157
+	PRIORITY  shift 158
+	ADVERT_INT  shift 159
+	VIRTUAL_IPADDRESS  shift 160
+	VIRTUAL_IPADDRESS_EXCLUDED  shift 161
+	VIRTUAL_ROUTES  shift 162
+	STATE  shift 163
+	GARP_MASTER_DELAY  shift 164
+	SMTP_ALERT  shift 165
+	AUTHENTICATION  shift 166
+	TRACK_INTERFACE  shift 167
+	TRACK_SCRIPT  shift 168
+	DONT_TRACK_PRIMARY  shift 169
+	NOTIFY_MASTER  shift 170
+	NOTIFY_BACKUP  shift 171
+	NOTIFY_FAULT  shift 172
+	NOTIFY_STOP  shift 173
+	NOTIFY  shift 174
+	.  reduce 54 (src line 92)
+
+	vrrp_instance_statements  goto 144
+	vrrp_instance_statement  goto 145
+
+81: shift/reduce conflict (shift 177(0), red'n 107(0)) on SCRIPT
+81: shift/reduce conflict (shift 178(0), red'n 107(0)) on INTERVAL
+81: shift/reduce conflict (shift 179(0), red'n 107(0)) on TIMEOUT
+81: shift/reduce conflict (shift 180(0), red'n 107(0)) on WEIGHT
+81: shift/reduce conflict (shift 181(0), red'n 107(0)) on FALL
+81: shift/reduce conflict (shift 182(0), red'n 107(0)) on RISE
+state 81
+	vrrp_script_block:  VRRP_SCRIPT STRING LB.vrrp_script_statements RB 
+	vrrp_script_statement: .    (107)
+
+	SCRIPT  shift 177
+	INTERVAL  shift 178
+	TIMEOUT  shift 179
+	WEIGHT  shift 180
+	FALL  shift 181
+	RISE  shift 182
+	.  reduce 107 (src line 150)
+
+	vrrp_script_statements  goto 175
+	vrrp_script_statement  goto 176
+
+82: shift/reduce conflict (shift 34(0), red'n 132(0)) on IPV4
+82: shift/reduce conflict (shift 35(0), red'n 132(0)) on IPV6
+82: shift/reduce conflict (shift 65(0), red'n 132(0)) on IP_CIDR
+82: shift/reduce conflict (shift 70(0), red'n 132(0)) on LABEL
+82: shift/reduce conflict (shift 69(0), red'n 132(0)) on DEV
+82: shift/reduce conflict (shift 73(0), red'n 132(0)) on SCOPE
+82: shift/reduce conflict (shift 62(0), red'n 132(0)) on SRC
+82: shift/reduce conflict (shift 63(0), red'n 132(0)) on TO
+82: shift/reduce conflict (shift 66(0), red'n 132(0)) on VIA
+82: shift/reduce conflict (shift 67(0), red'n 132(0)) on GW
+82: shift/reduce conflict (shift 68(0), red'n 132(0)) on OR
+82: shift/reduce conflict (shift 71(0), red'n 132(0)) on TABLE
+82: shift/reduce conflict (shift 72(0), red'n 132(0)) on METRIC
+82: shift/reduce conflict (shift 74(0), red'n 132(0)) on BLACKHOLE
+82: shift/reduce conflict (shift 186(0), red'n 132(0)) on DELAY_LOOP
+82: shift/reduce conflict (shift 187(0), red'n 132(0)) on LB_ALGO
+82: shift/reduce conflict (shift 188(0), red'n 132(0)) on LB_KIND
+82: shift/reduce conflict (shift 189(0), red'n 132(0)) on LVS_SCHED
+82: shift/reduce conflict (shift 190(0), red'n 132(0)) on LVS_METHOD
+82: shift/reduce conflict (shift 191(0), red'n 132(0)) on PERSISTENCE_TIMEOUT
+82: shift/reduce conflict (shift 192(0), red'n 132(0)) on PROTOCOL
+82: shift/reduce conflict (shift 193(0), red'n 132(0)) on SORRY_SERVER
+82: shift/reduce conflict (shift 194(0), red'n 132(0)) on REAL_SERVER
+82: shift/reduce conflict (shift 195(0), red'n 132(0)) on VIRTUALHOST
+82: shift/reduce conflict (shift 196(0), red'n 132(0)) on ALPHA
+82: shift/reduce conflict (shift 197(0), red'n 132(0)) on OMEGA
+82: shift/reduce conflict (shift 198(0), red'n 132(0)) on QUORUM
+82: shift/reduce conflict (shift 199(0), red'n 132(0)) on HYSTERESIS
+82: shift/reduce conflict (shift 200(0), red'n 132(0)) on QUORUM_UP
+82: shift/reduce conflict (shift 201(0), red'n 132(0)) on QUORUM_DOWN
+82: shift/reduce conflict (shift 34(0), red'n 267(0)) on IPV4
+82: shift/reduce conflict (shift 35(0), red'n 267(0)) on IPV6
+82: shift/reduce conflict (shift 65(0), red'n 267(0)) on IP_CIDR
+ 82: reduce/reduce conflict  (red'ns 132 and 267) on RB
+82: shift/reduce conflict (shift 70(0), red'n 267(0)) on LABEL
+82: shift/reduce conflict (shift 69(0), red'n 267(0)) on DEV
+82: shift/reduce conflict (shift 73(0), red'n 267(0)) on SCOPE
+82: shift/reduce conflict (shift 62(0), red'n 267(0)) on SRC
+82: shift/reduce conflict (shift 63(0), red'n 267(0)) on TO
+82: shift/reduce conflict (shift 66(0), red'n 267(0)) on VIA
+82: shift/reduce conflict (shift 67(0), red'n 267(0)) on GW
+82: shift/reduce conflict (shift 68(0), red'n 267(0)) on OR
+82: shift/reduce conflict (shift 71(0), red'n 267(0)) on TABLE
+82: shift/reduce conflict (shift 72(0), red'n 267(0)) on METRIC
+82: shift/reduce conflict (shift 74(0), red'n 267(0)) on BLACKHOLE
+82: shift/reduce conflict (shift 186(0), red'n 267(0)) on DELAY_LOOP
+82: shift/reduce conflict (shift 187(0), red'n 267(0)) on LB_ALGO
+82: shift/reduce conflict (shift 188(0), red'n 267(0)) on LB_KIND
+82: shift/reduce conflict (shift 189(0), red'n 267(0)) on LVS_SCHED
+82: shift/reduce conflict (shift 190(0), red'n 267(0)) on LVS_METHOD
+82: shift/reduce conflict (shift 191(0), red'n 267(0)) on PERSISTENCE_TIMEOUT
+82: shift/reduce conflict (shift 192(0), red'n 267(0)) on PROTOCOL
+82: shift/reduce conflict (shift 193(0), red'n 267(0)) on SORRY_SERVER
+82: shift/reduce conflict (shift 194(0), red'n 267(0)) on REAL_SERVER
+82: shift/reduce conflict (shift 195(0), red'n 267(0)) on VIRTUALHOST
+82: shift/reduce conflict (shift 196(0), red'n 267(0)) on ALPHA
+82: shift/reduce conflict (shift 197(0), red'n 267(0)) on OMEGA
+82: shift/reduce conflict (shift 198(0), red'n 267(0)) on QUORUM
+82: shift/reduce conflict (shift 199(0), red'n 267(0)) on HYSTERESIS
+82: shift/reduce conflict (shift 200(0), red'n 267(0)) on QUORUM_UP
+82: shift/reduce conflict (shift 201(0), red'n 267(0)) on QUORUM_DOWN
+82: shift/reduce conflict (shift 34(0), red'n 298(0)) on IPV4
+82: shift/reduce conflict (shift 35(0), red'n 298(0)) on IPV6
+82: shift/reduce conflict (shift 65(0), red'n 298(0)) on IP_CIDR
+ 82: reduce/reduce conflict  (red'ns 132 and 298) on RB
+82: shift/reduce conflict (shift 70(0), red'n 298(0)) on LABEL
+82: shift/reduce conflict (shift 69(0), red'n 298(0)) on DEV
+82: shift/reduce conflict (shift 73(0), red'n 298(0)) on SCOPE
+82: shift/reduce conflict (shift 62(0), red'n 298(0)) on SRC
+82: shift/reduce conflict (shift 63(0), red'n 298(0)) on TO
+82: shift/reduce conflict (shift 66(0), red'n 298(0)) on VIA
+82: shift/reduce conflict (shift 67(0), red'n 298(0)) on GW
+82: shift/reduce conflict (shift 68(0), red'n 298(0)) on OR
+82: shift/reduce conflict (shift 71(0), red'n 298(0)) on TABLE
+82: shift/reduce conflict (shift 72(0), red'n 298(0)) on METRIC
+82: shift/reduce conflict (shift 74(0), red'n 298(0)) on BLACKHOLE
+82: shift/reduce conflict (shift 186(0), red'n 298(0)) on DELAY_LOOP
+82: shift/reduce conflict (shift 187(0), red'n 298(0)) on LB_ALGO
+82: shift/reduce conflict (shift 188(0), red'n 298(0)) on LB_KIND
+82: shift/reduce conflict (shift 189(0), red'n 298(0)) on LVS_SCHED
+82: shift/reduce conflict (shift 190(0), red'n 298(0)) on LVS_METHOD
+82: shift/reduce conflict (shift 191(0), red'n 298(0)) on PERSISTENCE_TIMEOUT
+82: shift/reduce conflict (shift 192(0), red'n 298(0)) on PROTOCOL
+82: shift/reduce conflict (shift 193(0), red'n 298(0)) on SORRY_SERVER
+82: shift/reduce conflict (shift 194(0), red'n 298(0)) on REAL_SERVER
+82: shift/reduce conflict (shift 195(0), red'n 298(0)) on VIRTUALHOST
+82: shift/reduce conflict (shift 196(0), red'n 298(0)) on ALPHA
+82: shift/reduce conflict (shift 197(0), red'n 298(0)) on OMEGA
+82: shift/reduce conflict (shift 198(0), red'n 298(0)) on QUORUM
+82: shift/reduce conflict (shift 199(0), red'n 298(0)) on HYSTERESIS
+82: shift/reduce conflict (shift 200(0), red'n 298(0)) on QUORUM_UP
+82: shift/reduce conflict (shift 201(0), red'n 298(0)) on QUORUM_DOWN
+state 82
+	virtual_server_block:  VIRTUAL_SERVER virtual_server_arg LB.virtual_server_statements RB 
+	virtual_server_statement: .    (132)
+	route_option: .    (267)
+	ip46: .    (298)
+
+	IPV4  shift 34
+	IPV6  shift 35
+	IP_CIDR  shift 65
+	LABEL  shift 70
+	DEV  shift 69
+	SCOPE  shift 73
+	SRC  shift 62
+	TO  shift 63
+	VIA  shift 66
+	GW  shift 67
+	OR  shift 68
+	TABLE  shift 71
+	METRIC  shift 72
+	BLACKHOLE  shift 74
+	DELAY_LOOP  shift 186
+	LB_ALGO  shift 187
+	LB_KIND  shift 188
+	LVS_SCHED  shift 189
+	LVS_METHOD  shift 190
+	PERSISTENCE_TIMEOUT  shift 191
+	PROTOCOL  shift 192
+	SORRY_SERVER  shift 193
+	REAL_SERVER  shift 194
+	VIRTUALHOST  shift 195
+	ALPHA  shift 196
+	OMEGA  shift 197
+	QUORUM  shift 198
+	HYSTERESIS  shift 199
+	QUORUM_UP  shift 200
+	QUORUM_DOWN  shift 201
+	.  reduce 132 (src line 180)
+
+	ip46  goto 64
+	virtual_server_statement  goto 184
+	virtual_server_statements  goto 183
+	route_option  goto 185
+
+state 83
+	virtual_server_arg:  FWMARK NUMBER.    (130)
+
+	.  reduce 130 (src line 177)
+
+
+state 84
+	virtual_server_arg:  GROUP STRING.    (131)
+
+	.  reduce 131 (src line 178)
+
+
+state 85
+	ipport:  ip46 NUMBER.    (303)
+
+	.  reduce 303 (src line 372)
+
+
+86: shift/reduce conflict (shift 34(0), red'n 121(0)) on IPV4
+86: shift/reduce conflict (shift 35(0), red'n 121(0)) on IPV6
+86: shift/reduce conflict (shift 205(0), red'n 121(0)) on IPADDR_RANGE
+86: shift/reduce conflict (shift 206(0), red'n 121(0)) on FWMARK
+ 86: reduce/reduce conflict  (red'ns 121 and 298) on NUMBER
+state 86
+	virtual_server_group_block:  VIRTUAL_SERVER_GROUP STRING LB.virtual_server_group_statements RB 
+	virtual_server_group_statement: .    (121)
+	ip46: .    (298)
+
+	IPV4  shift 34
+	IPV6  shift 35
+	IPADDR_RANGE  shift 205
+	FWMARK  shift 206
+	.  reduce 121 (src line 166)
+
+	ip46  goto 204
+	virtual_server_group_statements  goto 202
+	virtual_server_group_statement  goto 203
+
+state 87
+	global:  GLOBALDEFS LB global_statements RB.    (13)
+
+	.  reduce 13 (src line 42)
+
+
+state 88
+	global_statements:  global_statement global_statements.    (14)
+
+	.  reduce 14 (src line 44)
+
+
+89: shift/reduce conflict (shift 210(0), red'n 304(0)) on NUMBER
+89: shift/reduce conflict (shift 211(0), red'n 304(0)) on STRING
+89: shift/reduce conflict (shift 212(0), red'n 304(0)) on EMAIL
+89: shift/reduce conflict (shift 34(0), red'n 304(0)) on IPV4
+89: shift/reduce conflict (shift 35(0), red'n 304(0)) on IPV6
+89: shift/reduce conflict (shift 215(0), red'n 304(0)) on IP_CIDR
+89: shift/reduce conflict (shift 213(0), red'n 304(0)) on HEX32
+89: shift/reduce conflict (shift 210(0), red'n 298(0)) on NUMBER
+89: shift/reduce conflict (shift 211(0), red'n 298(0)) on STRING
+89: shift/reduce conflict (shift 212(0), red'n 298(0)) on EMAIL
+89: shift/reduce conflict (shift 34(0), red'n 298(0)) on IPV4
+89: shift/reduce conflict (shift 35(0), red'n 298(0)) on IPV6
+89: shift/reduce conflict (shift 215(0), red'n 298(0)) on IP_CIDR
+89: shift/reduce conflict (shift 213(0), red'n 298(0)) on HEX32
+ 89: reduce/reduce conflict  (red'ns 304 and 298) on RB
+state 89
+	global_statement:  NOTIFICATION_EMAIL LB.mail_statements RB 
+	any_literal: .    (304)
+	ip46: .    (298)
+
+	NUMBER  shift 210
+	STRING  shift 211
+	EMAIL  shift 212
+	IPV4  shift 34
+	IPV6  shift 35
+	IP_CIDR  shift 215
+	HEX32  shift 213
+	.  reduce 298 (src line 366)
+
+	mail_statements  goto 207
+	ip46  goto 214
+	any_literal  goto 209
+	mail_statement  goto 208
+
+state 90
+	global_statement:  NOTIFICATION_EMAIL STRING.    (18)
+
+	.  reduce 18 (src line 48)
+
+
+state 91
+	global_statement:  NOTIFICATION_EMAIL_FROM EMAIL.    (19)
+
+	.  reduce 19 (src line 49)
+
+
+state 92
+	global_statement:  VRRP_GARP_MASTER_DELAY NUMBER.    (20)
+
+	.  reduce 20 (src line 50)
+
+
+state 93
+	global_statement:  VRRP_GARP_MASTER_REPEAT NUMBER.    (21)
+
+	.  reduce 21 (src line 51)
+
+
+state 94
+	global_statement:  VRRP_GARP_MASTER_REFRESH NUMBER.    (22)
+
+	.  reduce 22 (src line 52)
+
+
+state 95
+	global_statement:  VRRP_GARP_MASTER_REFRESH_REPEAT NUMBER.    (23)
+
+	.  reduce 23 (src line 53)
+
+
+state 96
+	global_statement:  SMTP_SERVER ip46.    (24)
+
+	.  reduce 24 (src line 54)
+
+
+state 97
+	global_statement:  SMTP_SERVER STRING.    (25)
+
+	.  reduce 25 (src line 55)
+
+
+state 98
+	global_statement:  SMTP_CONNECT_TIMEOUT NUMBER.    (26)
+
+	.  reduce 26 (src line 56)
+
+
+state 99
+	global_statement:  ROUTER_ID STRING.    (27)
+
+	.  reduce 27 (src line 57)
+
+
+state 100
+	global_statement:  LVS_ID STRING.    (28)
+
+	.  reduce 28 (src line 58)
+
+
+state 101
+	global_statement:  VRRP_MCAST_GROUP4 IPV4.    (29)
+
+	.  reduce 29 (src line 59)
+
+
+state 102
+	global_statement:  VRRP_MCAST_GROUP6 IPV6.    (30)
+
+	.  reduce 30 (src line 60)
+
+
+state 103
+	global_statement:  VRRP_VERSION NUMBER.    (31)
+
+	.  reduce 31 (src line 61)
+
+
+state 104
+	static_ipaddress_block:  STATIC_IPADDRESS LB address_options RB.    (33)
+
+	.  reduce 33 (src line 64)
+
+
+state 105
+	address_options:  address_option address_options.    (257)
+
+	.  reduce 257 (src line 320)
+
+
+state 106
+	address_option:  BRD ip46.    (262)
+
+	.  reduce 262 (src line 325)
+
+
+state 107
+	address_option:  DEV STRING.    (263)
+
+	.  reduce 263 (src line 326)
+
+
+state 108
+	address_option:  SCOPE scope_val.    (264)
+
+	.  reduce 264 (src line 327)
+
+
+state 109
+	scope_val:  SITE.    (290)
+
+	.  reduce 290 (src line 356)
+
+
+state 110
+	scope_val:  LINK.    (291)
+
+	.  reduce 291 (src line 357)
+
+
+state 111
+	scope_val:  HOST.    (292)
+
+	.  reduce 292 (src line 358)
+
+
+state 112
+	scope_val:  NOWHERE.    (293)
+
+	.  reduce 293 (src line 359)
+
+
+state 113
+	scope_val:  GLOBAL.    (294)
+
+	.  reduce 294 (src line 360)
+
+
+state 114
+	static_routes_block:  STATIC_ROUTES LB route_options RB.    (34)
+
+	.  reduce 34 (src line 66)
+
+
+state 115
+	route_options:  route_option route_options.    (265)
+
+	.  reduce 265 (src line 329)
+
+
+state 116
+	route_option:  SRC ip46.    (268)
+
+	.  reduce 268 (src line 332)
+
+
+state 117
+	route_option:  TO ip46.    (269)
+
+	.  reduce 269 (src line 333)
+
+
+state 118
+	route_option:  TO IP_CIDR.    (270)
+
+	.  reduce 270 (src line 334)
+
+
+state 119
+	route_option:  VIA ip46.    (273)
+
+	.  reduce 273 (src line 337)
+
+
+state 120
+	route_option:  GW ip46.    (274)
+
+	.  reduce 274 (src line 338)
+
+
+state 121
+	route_option:  OR ip46.    (275)
+
+	.  reduce 275 (src line 339)
+
+
+state 122
+	route_option:  DEV STRING.    (276)
+
+	.  reduce 276 (src line 340)
+
+
+state 123
+	route_option:  LABEL STRING.    (277)
+
+	.  reduce 277 (src line 341)
+
+
+state 124
+	route_option:  TABLE NUMBER.    (278)
+
+	.  reduce 278 (src line 342)
+
+
+state 125
+	route_option:  TABLE STRING.    (279)
+
+	.  reduce 279 (src line 343)
+
+
+state 126
+	route_option:  METRIC NUMBER.    (280)
+
+	.  reduce 280 (src line 344)
+
+
+state 127
+	route_option:  SCOPE scope_val.    (281)
+
+	.  reduce 281 (src line 345)
+
+
+state 128
+	route_option:  BLACKHOLE ip46.    (282)
+
+	.  reduce 282 (src line 346)
+
+
+state 129
+	route_option:  BLACKHOLE IP_CIDR.    (283)
+
+	.  reduce 283 (src line 347)
+
+
+state 130
+	static_rules_block:  STATIC_RULES LB rule_options RB.    (35)
+
+	.  reduce 35 (src line 68)
+
+
+state 131
+	rule_options:  rule_option rule_options.    (36)
+
+	.  reduce 36 (src line 70)
+
+
+state 132
+	rule_option:  FROM ip46.TABLE NUMBER 
+
+	TABLE  shift 216
+	.  error
+
+
+state 133
+	rule_option:  FROM IP_CIDR.TABLE NUMBER 
+
+	TABLE  shift 217
+	.  error
+
+
+state 134
+	rule_option:  TO ip46.TABLE NUMBER 
+
+	TABLE  shift 218
+	.  error
+
+
+state 135
+	rule_option:  TO IP_CIDR.TABLE NUMBER 
+
+	TABLE  shift 219
+	.  error
+
+
+state 136
+	vrrp_sync_group_block:  VRRP_SYNC_GROUP STRING LB vrrp_sync_group_statements.RB 
+
+	RB  shift 220
+	.  error
+
+
+137: shift/reduce conflict (shift 138(0), red'n 41(0)) on STRING
+ 137: reduce/reduce conflict  (red'ns 40 and 41) on RB
+137: shift/reduce conflict (shift 139(0), red'n 41(0)) on GROUP
+137: shift/reduce conflict (shift 140(0), red'n 41(0)) on NOTIFY_MASTER
+137: shift/reduce conflict (shift 141(0), red'n 41(0)) on NOTIFY_BACKUP
+137: shift/reduce conflict (shift 142(0), red'n 41(0)) on NOTIFY_FAULT
+137: shift/reduce conflict (shift 143(0), red'n 41(0)) on NOTIFY
+state 137
+	vrrp_sync_group_statements:  vrrp_sync_group_statement.vrrp_sync_group_statements 
+	vrrp_sync_group_statements:  vrrp_sync_group_statement.    (40)
+	vrrp_sync_group_statement: .    (41)
+
+	STRING  shift 138
+	GROUP  shift 139
+	NOTIFY_MASTER  shift 140
+	NOTIFY_BACKUP  shift 141
+	NOTIFY_FAULT  shift 142
+	NOTIFY  shift 143
+	.  reduce 40 (src line 74)
+
+	vrrp_sync_group_statements  goto 221
+	vrrp_sync_group_statement  goto 137
+
+state 138
+	vrrp_sync_group_statement:  STRING.    (42)
+
+	.  reduce 42 (src line 77)
+
+
+state 139
+	vrrp_sync_group_statement:  GROUP.LB vrrp_group_ids RB 
+
+	LB  shift 222
+	.  error
+
+
+state 140
+	vrrp_sync_group_statement:  NOTIFY_MASTER.STRING 
+
+	STRING  shift 223
+	.  error
+
+
+state 141
+	vrrp_sync_group_statement:  NOTIFY_BACKUP.STRING 
+
+	STRING  shift 224
+	.  error
+
+
+state 142
+	vrrp_sync_group_statement:  NOTIFY_FAULT.STRING 
+
+	STRING  shift 225
+	.  error
+
+
+state 143
+	vrrp_sync_group_statement:  NOTIFY.STRING 
+
+	STRING  shift 226
+	.  error
+
+
+state 144
+	vrrp_instance_block:  VRRP_INSTANCE STRING LB vrrp_instance_statements.RB 
+
+	RB  shift 227
+	.  error
+
+
+ 145: reduce/reduce conflict  (red'ns 53 and 54) on RB
+145: shift/reduce conflict (shift 146(0), red'n 54(0)) on USE_VMAC
+145: shift/reduce conflict (shift 147(0), red'n 54(0)) on VERSION
+145: shift/reduce conflict (shift 148(0), red'n 54(0)) on VMAC_XMIT_BASE
+145: shift/reduce conflict (shift 149(0), red'n 54(0)) on NATIVE_IPV6
+145: shift/reduce conflict (shift 150(0), red'n 54(0)) on INTERFACE
+145: shift/reduce conflict (shift 151(0), red'n 54(0)) on MCAST_SRC_IP
+145: shift/reduce conflict (shift 152(0), red'n 54(0)) on UNICAST_SRC_IP
+145: shift/reduce conflict (shift 153(0), red'n 54(0)) on UNICAST_PEER
+145: shift/reduce conflict (shift 154(0), red'n 54(0)) on LVS_SYNC_DAEMON_INTERFACE
+145: shift/reduce conflict (shift 155(0), red'n 54(0)) on VIRTUAL_ROUTER_ID
+145: shift/reduce conflict (shift 156(0), red'n 54(0)) on NOPREEMPT
+145: shift/reduce conflict (shift 157(0), red'n 54(0)) on PREEMPT_DELAY
+145: shift/reduce conflict (shift 158(0), red'n 54(0)) on PRIORITY
+145: shift/reduce conflict (shift 159(0), red'n 54(0)) on ADVERT_INT
+145: shift/reduce conflict (shift 160(0), red'n 54(0)) on VIRTUAL_IPADDRESS
+145: shift/reduce conflict (shift 161(0), red'n 54(0)) on VIRTUAL_IPADDRESS_EXCLUDED
+145: shift/reduce conflict (shift 162(0), red'n 54(0)) on VIRTUAL_ROUTES
+145: shift/reduce conflict (shift 163(0), red'n 54(0)) on STATE
+145: shift/reduce conflict (shift 164(0), red'n 54(0)) on GARP_MASTER_DELAY
+145: shift/reduce conflict (shift 165(0), red'n 54(0)) on SMTP_ALERT
+145: shift/reduce conflict (shift 166(0), red'n 54(0)) on AUTHENTICATION
+145: shift/reduce conflict (shift 167(0), red'n 54(0)) on TRACK_INTERFACE
+145: shift/reduce conflict (shift 168(0), red'n 54(0)) on TRACK_SCRIPT
+145: shift/reduce conflict (shift 169(0), red'n 54(0)) on DONT_TRACK_PRIMARY
+145: shift/reduce conflict (shift 170(0), red'n 54(0)) on NOTIFY_MASTER
+145: shift/reduce conflict (shift 171(0), red'n 54(0)) on NOTIFY_BACKUP
+145: shift/reduce conflict (shift 172(0), red'n 54(0)) on NOTIFY_FAULT
+145: shift/reduce conflict (shift 173(0), red'n 54(0)) on NOTIFY_STOP
+145: shift/reduce conflict (shift 174(0), red'n 54(0)) on NOTIFY
+state 145
+	vrrp_instance_statements:  vrrp_instance_statement.vrrp_instance_statements 
+	vrrp_instance_statements:  vrrp_instance_statement.    (53)
+	vrrp_instance_statement: .    (54)
+
+	USE_VMAC  shift 146
+	VERSION  shift 147
+	VMAC_XMIT_BASE  shift 148
+	NATIVE_IPV6  shift 149
+	INTERFACE  shift 150
+	MCAST_SRC_IP  shift 151
+	UNICAST_SRC_IP  shift 152
+	UNICAST_PEER  shift 153
+	LVS_SYNC_DAEMON_INTERFACE  shift 154
+	VIRTUAL_ROUTER_ID  shift 155
+	NOPREEMPT  shift 156
+	PREEMPT_DELAY  shift 157
+	PRIORITY  shift 158
+	ADVERT_INT  shift 159
+	VIRTUAL_IPADDRESS  shift 160
+	VIRTUAL_IPADDRESS_EXCLUDED  shift 161
+	VIRTUAL_ROUTES  shift 162
+	STATE  shift 163
+	GARP_MASTER_DELAY  shift 164
+	SMTP_ALERT  shift 165
+	AUTHENTICATION  shift 166
+	TRACK_INTERFACE  shift 167
+	TRACK_SCRIPT  shift 168
+	DONT_TRACK_PRIMARY  shift 169
+	NOTIFY_MASTER  shift 170
+	NOTIFY_BACKUP  shift 171
+	NOTIFY_FAULT  shift 172
+	NOTIFY_STOP  shift 173
+	NOTIFY  shift 174
+	.  reduce 53 (src line 90)
+
+	vrrp_instance_statements  goto 228
+	vrrp_instance_statement  goto 145
+
+state 146
+	vrrp_instance_statement:  USE_VMAC.    (55)
+
+	.  reduce 55 (src line 93)
+
+
+state 147
+	vrrp_instance_statement:  VERSION.NUMBER 
+
+	NUMBER  shift 229
+	.  error
+
+
+state 148
+	vrrp_instance_statement:  VMAC_XMIT_BASE.    (57)
+
+	.  reduce 57 (src line 95)
+
+
+state 149
+	vrrp_instance_statement:  NATIVE_IPV6.    (58)
+
+	.  reduce 58 (src line 96)
+
+
+state 150
+	vrrp_instance_statement:  INTERFACE.STRING 
+
+	STRING  shift 230
+	.  error
+
+
+state 151
+	vrrp_instance_statement:  MCAST_SRC_IP.ip46 
+	ip46: .    (298)
+
+	IPV4  shift 34
+	IPV6  shift 35
+	.  reduce 298 (src line 366)
+
+	ip46  goto 231
+
+state 152
+	vrrp_instance_statement:  UNICAST_SRC_IP.ip46 
+	ip46: .    (298)
+
+	IPV4  shift 34
+	IPV6  shift 35
+	.  reduce 298 (src line 366)
+
+	ip46  goto 232
+
+state 153
+	vrrp_instance_statement:  UNICAST_PEER.LB ipaddr_list RB 
+
+	LB  shift 233
+	.  error
+
+
+state 154
+	vrrp_instance_statement:  LVS_SYNC_DAEMON_INTERFACE.STRING 
+
+	STRING  shift 234
+	.  error
+
+
+state 155
+	vrrp_instance_statement:  VIRTUAL_ROUTER_ID.STRING 
+	vrrp_instance_statement:  VIRTUAL_ROUTER_ID.NUMBER 
+
+	NUMBER  shift 236
+	STRING  shift 235
+	.  error
+
+
+state 156
+	vrrp_instance_statement:  NOPREEMPT.    (66)
+
+	.  reduce 66 (src line 104)
+
+
+state 157
+	vrrp_instance_statement:  PREEMPT_DELAY.NUMBER 
+
+	NUMBER  shift 237
+	.  error
+
+
+state 158
+	vrrp_instance_statement:  PRIORITY.NUMBER 
+
+	NUMBER  shift 238
+	.  error
+
+
+state 159
+	vrrp_instance_statement:  ADVERT_INT.NUMBER 
+
+	NUMBER  shift 239
+	.  error
+
+
+state 160
+	vrrp_instance_statement:  VIRTUAL_IPADDRESS.LB vips RB 
+
+	LB  shift 240
+	.  error
+
+
+state 161
+	vrrp_instance_statement:  VIRTUAL_IPADDRESS_EXCLUDED.LB vips_ex RB 
+
+	LB  shift 241
+	.  error
+
+
+state 162
+	vrrp_instance_statement:  VIRTUAL_ROUTES.LB virtual_routes_statements RB 
+
+	LB  shift 242
+	.  error
+
+
+state 163
+	vrrp_instance_statement:  STATE.MASTER 
+	vrrp_instance_statement:  STATE.BACKUP 
+
+	MASTER  shift 243
+	BACKUP  shift 244
+	.  error
+
+
+state 164
+	vrrp_instance_statement:  GARP_MASTER_DELAY.NUMBER 
+
+	NUMBER  shift 245
+	.  error
+
+
+state 165
+	vrrp_instance_statement:  SMTP_ALERT.    (76)
+
+	.  reduce 76 (src line 114)
+
+
+state 166
+	vrrp_instance_statement:  AUTHENTICATION.LB authentication_statements RB 
+
+	LB  shift 246
+	.  error
+
+
+state 167
+	vrrp_instance_statement:  TRACK_INTERFACE.STRING 
+	vrrp_instance_statement:  TRACK_INTERFACE.LB interfaces RB 
+
+	STRING  shift 247
+	LB  shift 248
+	.  error
+
+
+state 168
+	vrrp_instance_statement:  TRACK_SCRIPT.LB track_script_statements RB 
+
+	LB  shift 249
+	.  error
+
+
+state 169
+	vrrp_instance_statement:  DONT_TRACK_PRIMARY.    (81)
+
+	.  reduce 81 (src line 119)
+
+
+state 170
+	vrrp_instance_statement:  NOTIFY_MASTER.STRING 
+
+	STRING  shift 250
+	.  error
+
+
+state 171
+	vrrp_instance_statement:  NOTIFY_BACKUP.STRING 
+
+	STRING  shift 251
+	.  error
+
+
+state 172
+	vrrp_instance_statement:  NOTIFY_FAULT.STRING 
+
+	STRING  shift 252
+	.  error
+
+
+state 173
+	vrrp_instance_statement:  NOTIFY_STOP.STRING 
+
+	STRING  shift 253
+	.  error
+
+
+state 174
+	vrrp_instance_statement:  NOTIFY.STRING 
+
+	STRING  shift 254
+	.  error
+
+
+state 175
+	vrrp_script_block:  VRRP_SCRIPT STRING LB vrrp_script_statements.RB 
+
+	RB  shift 255
+	.  error
+
+
+ 176: reduce/reduce conflict  (red'ns 106 and 107) on RB
+176: shift/reduce conflict (shift 177(0), red'n 107(0)) on SCRIPT
+176: shift/reduce conflict (shift 178(0), red'n 107(0)) on INTERVAL
+176: shift/reduce conflict (shift 179(0), red'n 107(0)) on TIMEOUT
+176: shift/reduce conflict (shift 180(0), red'n 107(0)) on WEIGHT
+176: shift/reduce conflict (shift 181(0), red'n 107(0)) on FALL
+176: shift/reduce conflict (shift 182(0), red'n 107(0)) on RISE
+state 176
+	vrrp_script_statements:  vrrp_script_statement.vrrp_script_statements 
+	vrrp_script_statements:  vrrp_script_statement.    (106)
+	vrrp_script_statement: .    (107)
+
+	SCRIPT  shift 177
+	INTERVAL  shift 178
+	TIMEOUT  shift 179
+	WEIGHT  shift 180
+	FALL  shift 181
+	RISE  shift 182
+	.  reduce 106 (src line 148)
+
+	vrrp_script_statements  goto 256
+	vrrp_script_statement  goto 176
+
+state 177
+	vrrp_script_statement:  SCRIPT.STRING 
+
+	STRING  shift 257
+	.  error
+
+
+state 178
+	vrrp_script_statement:  INTERVAL.NUMBER 
+
+	NUMBER  shift 258
+	.  error
+
+
+state 179
+	vrrp_script_statement:  TIMEOUT.NUMBER 
+
+	NUMBER  shift 259
+	.  error
+
+
+state 180
+	vrrp_script_statement:  WEIGHT.NUMBER 
+
+	NUMBER  shift 260
+	.  error
+
+
+state 181
+	vrrp_script_statement:  FALL.NUMBER 
+
+	NUMBER  shift 261
+	.  error
+
+
+state 182
+	vrrp_script_statement:  RISE.NUMBER 
+
+	NUMBER  shift 262
+	.  error
+
+
+state 183
+	virtual_server_block:  VIRTUAL_SERVER virtual_server_arg LB virtual_server_statements.RB 
+
+	RB  shift 263
+	.  error
+
+
+184: shift/reduce conflict (shift 34(0), red'n 132(0)) on IPV4
+184: shift/reduce conflict (shift 35(0), red'n 132(0)) on IPV6
+184: shift/reduce conflict (shift 65(0), red'n 132(0)) on IP_CIDR
+ 184: reduce/reduce conflict  (red'ns 127 and 132) on RB
+184: shift/reduce conflict (shift 70(0), red'n 132(0)) on LABEL
+184: shift/reduce conflict (shift 69(0), red'n 132(0)) on DEV
+184: shift/reduce conflict (shift 73(0), red'n 132(0)) on SCOPE
+184: shift/reduce conflict (shift 62(0), red'n 132(0)) on SRC
+184: shift/reduce conflict (shift 63(0), red'n 132(0)) on TO
+184: shift/reduce conflict (shift 66(0), red'n 132(0)) on VIA
+184: shift/reduce conflict (shift 67(0), red'n 132(0)) on GW
+184: shift/reduce conflict (shift 68(0), red'n 132(0)) on OR
+184: shift/reduce conflict (shift 71(0), red'n 132(0)) on TABLE
+184: shift/reduce conflict (shift 72(0), red'n 132(0)) on METRIC
+184: shift/reduce conflict (shift 74(0), red'n 132(0)) on BLACKHOLE
+184: shift/reduce conflict (shift 186(0), red'n 132(0)) on DELAY_LOOP
+184: shift/reduce conflict (shift 187(0), red'n 132(0)) on LB_ALGO
+184: shift/reduce conflict (shift 188(0), red'n 132(0)) on LB_KIND
+184: shift/reduce conflict (shift 189(0), red'n 132(0)) on LVS_SCHED
+184: shift/reduce conflict (shift 190(0), red'n 132(0)) on LVS_METHOD
+184: shift/reduce conflict (shift 191(0), red'n 132(0)) on PERSISTENCE_TIMEOUT
+184: shift/reduce conflict (shift 192(0), red'n 132(0)) on PROTOCOL
+184: shift/reduce conflict (shift 193(0), red'n 132(0)) on SORRY_SERVER
+184: shift/reduce conflict (shift 194(0), red'n 132(0)) on REAL_SERVER
+184: shift/reduce conflict (shift 195(0), red'n 132(0)) on VIRTUALHOST
+184: shift/reduce conflict (shift 196(0), red'n 132(0)) on ALPHA
+184: shift/reduce conflict (shift 197(0), red'n 132(0)) on OMEGA
+184: shift/reduce conflict (shift 198(0), red'n 132(0)) on QUORUM
+184: shift/reduce conflict (shift 199(0), red'n 132(0)) on HYSTERESIS
+184: shift/reduce conflict (shift 200(0), red'n 132(0)) on QUORUM_UP
+184: shift/reduce conflict (shift 201(0), red'n 132(0)) on QUORUM_DOWN
+184: shift/reduce conflict (shift 34(0), red'n 267(0)) on IPV4
+184: shift/reduce conflict (shift 35(0), red'n 267(0)) on IPV6
+184: shift/reduce conflict (shift 65(0), red'n 267(0)) on IP_CIDR
+ 184: reduce/reduce conflict  (red'ns 127 and 267) on RB
+184: shift/reduce conflict (shift 70(0), red'n 267(0)) on LABEL
+184: shift/reduce conflict (shift 69(0), red'n 267(0)) on DEV
+184: shift/reduce conflict (shift 73(0), red'n 267(0)) on SCOPE
+184: shift/reduce conflict (shift 62(0), red'n 267(0)) on SRC
+184: shift/reduce conflict (shift 63(0), red'n 267(0)) on TO
+184: shift/reduce conflict (shift 66(0), red'n 267(0)) on VIA
+184: shift/reduce conflict (shift 67(0), red'n 267(0)) on GW
+184: shift/reduce conflict (shift 68(0), red'n 267(0)) on OR
+184: shift/reduce conflict (shift 71(0), red'n 267(0)) on TABLE
+184: shift/reduce conflict (shift 72(0), red'n 267(0)) on METRIC
+184: shift/reduce conflict (shift 74(0), red'n 267(0)) on BLACKHOLE
+184: shift/reduce conflict (shift 186(0), red'n 267(0)) on DELAY_LOOP
+184: shift/reduce conflict (shift 187(0), red'n 267(0)) on LB_ALGO
+184: shift/reduce conflict (shift 188(0), red'n 267(0)) on LB_KIND
+184: shift/reduce conflict (shift 189(0), red'n 267(0)) on LVS_SCHED
+184: shift/reduce conflict (shift 190(0), red'n 267(0)) on LVS_METHOD
+184: shift/reduce conflict (shift 191(0), red'n 267(0)) on PERSISTENCE_TIMEOUT
+184: shift/reduce conflict (shift 192(0), red'n 267(0)) on PROTOCOL
+184: shift/reduce conflict (shift 193(0), red'n 267(0)) on SORRY_SERVER
+184: shift/reduce conflict (shift 194(0), red'n 267(0)) on REAL_SERVER
+184: shift/reduce conflict (shift 195(0), red'n 267(0)) on VIRTUALHOST
+184: shift/reduce conflict (shift 196(0), red'n 267(0)) on ALPHA
+184: shift/reduce conflict (shift 197(0), red'n 267(0)) on OMEGA
+184: shift/reduce conflict (shift 198(0), red'n 267(0)) on QUORUM
+184: shift/reduce conflict (shift 199(0), red'n 267(0)) on HYSTERESIS
+184: shift/reduce conflict (shift 200(0), red'n 267(0)) on QUORUM_UP
+184: shift/reduce conflict (shift 201(0), red'n 267(0)) on QUORUM_DOWN
+184: shift/reduce conflict (shift 34(0), red'n 298(0)) on IPV4
+184: shift/reduce conflict (shift 35(0), red'n 298(0)) on IPV6
+184: shift/reduce conflict (shift 65(0), red'n 298(0)) on IP_CIDR
+ 184: reduce/reduce conflict  (red'ns 127 and 298) on RB
+184: shift/reduce conflict (shift 70(0), red'n 298(0)) on LABEL
+184: shift/reduce conflict (shift 69(0), red'n 298(0)) on DEV
+184: shift/reduce conflict (shift 73(0), red'n 298(0)) on SCOPE
+184: shift/reduce conflict (shift 62(0), red'n 298(0)) on SRC
+184: shift/reduce conflict (shift 63(0), red'n 298(0)) on TO
+184: shift/reduce conflict (shift 66(0), red'n 298(0)) on VIA
+184: shift/reduce conflict (shift 67(0), red'n 298(0)) on GW
+184: shift/reduce conflict (shift 68(0), red'n 298(0)) on OR
+184: shift/reduce conflict (shift 71(0), red'n 298(0)) on TABLE
+184: shift/reduce conflict (shift 72(0), red'n 298(0)) on METRIC
+184: shift/reduce conflict (shift 74(0), red'n 298(0)) on BLACKHOLE
+184: shift/reduce conflict (shift 186(0), red'n 298(0)) on DELAY_LOOP
+184: shift/reduce conflict (shift 187(0), red'n 298(0)) on LB_ALGO
+184: shift/reduce conflict (shift 188(0), red'n 298(0)) on LB_KIND
+184: shift/reduce conflict (shift 189(0), red'n 298(0)) on LVS_SCHED
+184: shift/reduce conflict (shift 190(0), red'n 298(0)) on LVS_METHOD
+184: shift/reduce conflict (shift 191(0), red'n 298(0)) on PERSISTENCE_TIMEOUT
+184: shift/reduce conflict (shift 192(0), red'n 298(0)) on PROTOCOL
+184: shift/reduce conflict (shift 193(0), red'n 298(0)) on SORRY_SERVER
+184: shift/reduce conflict (shift 194(0), red'n 298(0)) on REAL_SERVER
+184: shift/reduce conflict (shift 195(0), red'n 298(0)) on VIRTUALHOST
+184: shift/reduce conflict (shift 196(0), red'n 298(0)) on ALPHA
+184: shift/reduce conflict (shift 197(0), red'n 298(0)) on OMEGA
+184: shift/reduce conflict (shift 198(0), red'n 298(0)) on QUORUM
+184: shift/reduce conflict (shift 199(0), red'n 298(0)) on HYSTERESIS
+184: shift/reduce conflict (shift 200(0), red'n 298(0)) on QUORUM_UP
+184: shift/reduce conflict (shift 201(0), red'n 298(0)) on QUORUM_DOWN
+state 184
+	virtual_server_statements:  virtual_server_statement.virtual_server_statements 
+	virtual_server_statements:  virtual_server_statement.    (127)
+	virtual_server_statement: .    (132)
+	route_option: .    (267)
+	ip46: .    (298)
+
+	IPV4  shift 34
+	IPV6  shift 35
+	IP_CIDR  shift 65
+	LABEL  shift 70
+	DEV  shift 69
+	SCOPE  shift 73
+	SRC  shift 62
+	TO  shift 63
+	VIA  shift 66
+	GW  shift 67
+	OR  shift 68
+	TABLE  shift 71
+	METRIC  shift 72
+	BLACKHOLE  shift 74
+	DELAY_LOOP  shift 186
+	LB_ALGO  shift 187
+	LB_KIND  shift 188
+	LVS_SCHED  shift 189
+	LVS_METHOD  shift 190
+	PERSISTENCE_TIMEOUT  shift 191
+	PROTOCOL  shift 192
+	SORRY_SERVER  shift 193
+	REAL_SERVER  shift 194
+	VIRTUALHOST  shift 195
+	ALPHA  shift 196
+	OMEGA  shift 197
+	QUORUM  shift 198
+	HYSTERESIS  shift 199
+	QUORUM_UP  shift 200
+	QUORUM_DOWN  shift 201
+	.  reduce 127 (src line 173)
+
+	ip46  goto 64
+	virtual_server_statement  goto 184
+	virtual_server_statements  goto 264
+	route_option  goto 185
+
+185: shift/reduce conflict (shift 34(0), red'n 117(0)) on IPV4
+185: shift/reduce conflict (shift 35(0), red'n 117(0)) on IPV6
+185: shift/reduce conflict (shift 65(0), red'n 117(0)) on IP_CIDR
+185: shift/reduce conflict (shift 70(0), red'n 117(0)) on LABEL
+185: shift/reduce conflict (shift 69(0), red'n 117(0)) on DEV
+185: shift/reduce conflict (shift 73(0), red'n 117(0)) on SCOPE
+185: shift/reduce conflict (shift 62(0), red'n 117(0)) on SRC
+185: shift/reduce conflict (shift 63(0), red'n 117(0)) on TO
+185: shift/reduce conflict (shift 66(0), red'n 117(0)) on VIA
+185: shift/reduce conflict (shift 67(0), red'n 117(0)) on GW
+185: shift/reduce conflict (shift 68(0), red'n 117(0)) on OR
+185: shift/reduce conflict (shift 71(0), red'n 117(0)) on TABLE
+185: shift/reduce conflict (shift 72(0), red'n 117(0)) on METRIC
+185: shift/reduce conflict (shift 74(0), red'n 117(0)) on BLACKHOLE
+185: shift/reduce conflict (shift 34(0), red'n 267(0)) on IPV4
+185: shift/reduce conflict (shift 35(0), red'n 267(0)) on IPV6
+185: shift/reduce conflict (shift 65(0), red'n 267(0)) on IP_CIDR
+ 185: reduce/reduce conflict  (red'ns 117 and 267) on RB
+185: shift/reduce conflict (shift 70(0), red'n 267(0)) on LABEL
+185: shift/reduce conflict (shift 69(0), red'n 267(0)) on DEV
+185: shift/reduce conflict (shift 73(0), red'n 267(0)) on SCOPE
+185: shift/reduce conflict (shift 62(0), red'n 267(0)) on SRC
+185: shift/reduce conflict (shift 63(0), red'n 267(0)) on TO
+185: shift/reduce conflict (shift 66(0), red'n 267(0)) on VIA
+185: shift/reduce conflict (shift 67(0), red'n 267(0)) on GW
+185: shift/reduce conflict (shift 68(0), red'n 267(0)) on OR
+185: shift/reduce conflict (shift 71(0), red'n 267(0)) on TABLE
+185: shift/reduce conflict (shift 72(0), red'n 267(0)) on METRIC
+185: shift/reduce conflict (shift 74(0), red'n 267(0)) on BLACKHOLE
+ 185: reduce/reduce conflict  (red'ns 117 and 267) on DELAY_LOOP
+ 185: reduce/reduce conflict  (red'ns 117 and 267) on LB_ALGO
+ 185: reduce/reduce conflict  (red'ns 117 and 267) on LB_KIND
+ 185: reduce/reduce conflict  (red'ns 117 and 267) on LVS_SCHED
+ 185: reduce/reduce conflict  (red'ns 117 and 267) on LVS_METHOD
+ 185: reduce/reduce conflict  (red'ns 117 and 267) on PERSISTENCE_TIMEOUT
+ 185: reduce/reduce conflict  (red'ns 117 and 267) on PROTOCOL
+ 185: reduce/reduce conflict  (red'ns 117 and 267) on SORRY_SERVER
+ 185: reduce/reduce conflict  (red'ns 117 and 267) on REAL_SERVER
+ 185: reduce/reduce conflict  (red'ns 117 and 267) on VIRTUALHOST
+ 185: reduce/reduce conflict  (red'ns 117 and 267) on ALPHA
+ 185: reduce/reduce conflict  (red'ns 117 and 267) on OMEGA
+ 185: reduce/reduce conflict  (red'ns 117 and 267) on QUORUM
+ 185: reduce/reduce conflict  (red'ns 117 and 267) on HYSTERESIS
+ 185: reduce/reduce conflict  (red'ns 117 and 267) on QUORUM_UP
+ 185: reduce/reduce conflict  (red'ns 117 and 267) on QUORUM_DOWN
+185: shift/reduce conflict (shift 34(0), red'n 298(0)) on IPV4
+185: shift/reduce conflict (shift 35(0), red'n 298(0)) on IPV6
+185: shift/reduce conflict (shift 65(0), red'n 298(0)) on IP_CIDR
+ 185: reduce/reduce conflict  (red'ns 117 and 298) on RB
+185: shift/reduce conflict (shift 70(0), red'n 298(0)) on LABEL
+185: shift/reduce conflict (shift 69(0), red'n 298(0)) on DEV
+185: shift/reduce conflict (shift 73(0), red'n 298(0)) on SCOPE
+185: shift/reduce conflict (shift 62(0), red'n 298(0)) on SRC
+185: shift/reduce conflict (shift 63(0), red'n 298(0)) on TO
+185: shift/reduce conflict (shift 66(0), red'n 298(0)) on VIA
+185: shift/reduce conflict (shift 67(0), red'n 298(0)) on GW
+185: shift/reduce conflict (shift 68(0), red'n 298(0)) on OR
+185: shift/reduce conflict (shift 71(0), red'n 298(0)) on TABLE
+185: shift/reduce conflict (shift 72(0), red'n 298(0)) on METRIC
+185: shift/reduce conflict (shift 74(0), red'n 298(0)) on BLACKHOLE
+ 185: reduce/reduce conflict  (red'ns 117 and 298) on DELAY_LOOP
+ 185: reduce/reduce conflict  (red'ns 117 and 298) on LB_ALGO
+ 185: reduce/reduce conflict  (red'ns 117 and 298) on LB_KIND
+ 185: reduce/reduce conflict  (red'ns 117 and 298) on LVS_SCHED
+ 185: reduce/reduce conflict  (red'ns 117 and 298) on LVS_METHOD
+ 185: reduce/reduce conflict  (red'ns 117 and 298) on PERSISTENCE_TIMEOUT
+ 185: reduce/reduce conflict  (red'ns 117 and 298) on PROTOCOL
+ 185: reduce/reduce conflict  (red'ns 117 and 298) on SORRY_SERVER
+ 185: reduce/reduce conflict  (red'ns 117 and 298) on REAL_SERVER
+ 185: reduce/reduce conflict  (red'ns 117 and 298) on VIRTUALHOST
+ 185: reduce/reduce conflict  (red'ns 117 and 298) on ALPHA
+ 185: reduce/reduce conflict  (red'ns 117 and 298) on OMEGA
+ 185: reduce/reduce conflict  (red'ns 117 and 298) on QUORUM
+ 185: reduce/reduce conflict  (red'ns 117 and 298) on HYSTERESIS
+ 185: reduce/reduce conflict  (red'ns 117 and 298) on QUORUM_UP
+ 185: reduce/reduce conflict  (red'ns 117 and 298) on QUORUM_DOWN
+state 185
+	virtual_server_statement:  route_option.route_options 
+	virtual_server_statement:  route_option.    (117)
+	route_option: .    (267)
+	ip46: .    (298)
+
+	IPV4  shift 34
+	IPV6  shift 35
+	IP_CIDR  shift 65
+	LABEL  shift 70
+	DEV  shift 69
+	SCOPE  shift 73
+	SRC  shift 62
+	TO  shift 63
+	VIA  shift 66
+	GW  shift 67
+	OR  shift 68
+	TABLE  shift 71
+	METRIC  shift 72
+	BLACKHOLE  shift 74
+	.  reduce 117 (src line 160)
+
+	ip46  goto 64
+	route_options  goto 265
+	route_option  goto 61
+
+state 186
+	virtual_server_statement:  DELAY_LOOP.NUMBER 
+
+	NUMBER  shift 266
+	.  error
+
+
+state 187
+	virtual_server_statement:  LB_ALGO.lb_algo 
+	lb_algo: .    (223)
+
+	RR  shift 268
+	WRR  shift 269
+	LC  shift 270
+	WLC  shift 271
+	FO  shift 272
+	OVF  shift 273
+	LBLC  shift 274
+	LBLCR  shift 275
+	SH  shift 276
+	DH  shift 277
+	SED  shift 278
+	NQ  shift 279
+	.  reduce 223 (src line 280)
+
+	lb_algo  goto 267
+
+state 188
+	virtual_server_statement:  LB_KIND.lb_kind 
+	lb_kind: .    (236)
+
+	NAT  shift 281
+	DR  shift 282
+	TUN  shift 283
+	.  reduce 236 (src line 294)
+
+	lb_kind  goto 280
+
+state 189
+	virtual_server_statement:  LVS_SCHED.lb_algo 
+	lb_algo: .    (223)
+
+	RR  shift 268
+	WRR  shift 269
+	LC  shift 270
+	WLC  shift 271
+	FO  shift 272
+	OVF  shift 273
+	LBLC  shift 274
+	LBLCR  shift 275
+	SH  shift 276
+	DH  shift 277
+	SED  shift 278
+	NQ  shift 279
+	.  reduce 223 (src line 280)
+
+	lb_algo  goto 284
+
+state 190
+	virtual_server_statement:  LVS_METHOD.lb_kind 
+	lb_kind: .    (236)
+
+	NAT  shift 281
+	DR  shift 282
+	TUN  shift 283
+	.  reduce 236 (src line 294)
+
+	lb_kind  goto 285
+
+state 191
+	virtual_server_statement:  PERSISTENCE_TIMEOUT.NUMBER 
+
+	NUMBER  shift 286
+	.  error
+
+
+state 192
+	virtual_server_statement:  PROTOCOL.protocol 
+	protocol: .    (240)
+
+	TCP  shift 288
+	UDP  shift 289
+	.  reduce 240 (src line 299)
+
+	protocol  goto 287
+
+state 193
+	virtual_server_statement:  SORRY_SERVER.ip46 NUMBER 
+	ip46: .    (298)
+
+	IPV4  shift 34
+	IPV6  shift 35
+	.  reduce 298 (src line 366)
+
+	ip46  goto 290
+
+194: shift/reduce conflict (shift 34(0), red'n 298(0)) on IPV4
+194: shift/reduce conflict (shift 35(0), red'n 298(0)) on IPV6
+state 194
+	virtual_server_statement:  REAL_SERVER.ip46 ipport LB real_server_statements RB 
+	virtual_server_statement:  REAL_SERVER.ip46 NUMBER LB real_server_statements RB 
+	ip46: .    (298)
+
+	IPV4  shift 34
+	IPV6  shift 35
+	.  reduce 298 (src line 366)
+
+	ip46  goto 291
+
+state 195
+	virtual_server_statement:  VIRTUALHOST.STRING 
+
+	STRING  shift 292
+	.  error
+
+
+state 196
+	virtual_server_statement:  ALPHA.    (144)
+
+	.  reduce 144 (src line 192)
+
+
+state 197
+	virtual_server_statement:  OMEGA.    (145)
+
+	.  reduce 145 (src line 193)
+
+
+state 198
+	virtual_server_statement:  QUORUM.NUMBER 
+
+	NUMBER  shift 293
+	.  error
+
+
+state 199
+	virtual_server_statement:  HYSTERESIS.NUMBER 
+
+	NUMBER  shift 294
+	.  error
+
+
+state 200
+	virtual_server_statement:  QUORUM_UP.STRING 
+
+	STRING  shift 295
+	.  error
+
+
+state 201
+	virtual_server_statement:  QUORUM_DOWN.STRING 
+
+	STRING  shift 296
+	.  error
+
+
+state 202
+	virtual_server_group_block:  VIRTUAL_SERVER_GROUP STRING LB virtual_server_group_statements.RB 
+
+	RB  shift 297
+	.  error
+
+
+203: shift/reduce conflict (shift 34(0), red'n 121(0)) on IPV4
+203: shift/reduce conflict (shift 35(0), red'n 121(0)) on IPV6
+203: shift/reduce conflict (shift 205(0), red'n 121(0)) on IPADDR_RANGE
+ 203: reduce/reduce conflict  (red'ns 120 and 121) on RB
+203: shift/reduce conflict (shift 206(0), red'n 121(0)) on FWMARK
+ 203: reduce/reduce conflict  (red'ns 121 and 298) on NUMBER
+state 203
+	virtual_server_group_statements:  virtual_server_group_statement.virtual_server_group_statements 
+	virtual_server_group_statements:  virtual_server_group_statement.    (120)
+	virtual_server_group_statement: .    (121)
+	ip46: .    (298)
+
+	IPV4  shift 34
+	IPV6  shift 35
+	IPADDR_RANGE  shift 205
+	RB  reduce 120 (src line 164)
+	FWMARK  shift 206
+	.  reduce 121 (src line 166)
+
+	ip46  goto 204
+	virtual_server_group_statements  goto 298
+	virtual_server_group_statement  goto 203
+
+state 204
+	virtual_server_group_statement:  ip46.NUMBER 
+
+	NUMBER  shift 299
+	.  error
+
+
+state 205
+	virtual_server_group_statement:  IPADDR_RANGE.NUMBER 
+
+	NUMBER  shift 300
+	.  error
+
+
+state 206
+	virtual_server_group_statement:  FWMARK.NUMBER 
+
+	NUMBER  shift 301
+	.  error
+
+
+state 207
+	global_statement:  NOTIFICATION_EMAIL LB mail_statements.RB 
+
+	RB  shift 302
+	.  error
+
+
+208: shift/reduce conflict (shift 210(0), red'n 304(0)) on NUMBER
+208: shift/reduce conflict (shift 211(0), red'n 304(0)) on STRING
+208: shift/reduce conflict (shift 212(0), red'n 304(0)) on EMAIL
+208: shift/reduce conflict (shift 34(0), red'n 304(0)) on IPV4
+208: shift/reduce conflict (shift 35(0), red'n 304(0)) on IPV6
+208: shift/reduce conflict (shift 215(0), red'n 304(0)) on IP_CIDR
+208: shift/reduce conflict (shift 213(0), red'n 304(0)) on HEX32
+ 208: reduce/reduce conflict  (red'ns 255 and 304) on RB
+208: shift/reduce conflict (shift 210(0), red'n 298(0)) on NUMBER
+208: shift/reduce conflict (shift 211(0), red'n 298(0)) on STRING
+208: shift/reduce conflict (shift 212(0), red'n 298(0)) on EMAIL
+208: shift/reduce conflict (shift 34(0), red'n 298(0)) on IPV4
+208: shift/reduce conflict (shift 35(0), red'n 298(0)) on IPV6
+208: shift/reduce conflict (shift 215(0), red'n 298(0)) on IP_CIDR
+208: shift/reduce conflict (shift 213(0), red'n 298(0)) on HEX32
+ 208: reduce/reduce conflict  (red'ns 255 and 298) on RB
+state 208
+	mail_statements:  mail_statement.mail_statements 
+	mail_statements:  mail_statement.    (255)
+	any_literal: .    (304)
+	ip46: .    (298)
+
+	NUMBER  shift 210
+	STRING  shift 211
+	EMAIL  shift 212
+	IPV4  shift 34
+	IPV6  shift 35
+	IP_CIDR  shift 215
+	HEX32  shift 213
+	.  reduce 255 (src line 316)
+
+	mail_statements  goto 303
+	ip46  goto 214
+	any_literal  goto 209
+	mail_statement  goto 208
+
+state 209
+	mail_statement:  any_literal.    (256)
+
+	.  reduce 256 (src line 318)
+
+
+state 210
+	any_literal:  NUMBER.    (305)
+
+	.  reduce 305 (src line 375)
+
+
+state 211
+	any_literal:  STRING.    (306)
+
+	.  reduce 306 (src line 376)
+
+
+state 212
+	any_literal:  EMAIL.    (307)
+
+	.  reduce 307 (src line 377)
+
+
+state 213
+	any_literal:  HEX32.    (308)
+
+	.  reduce 308 (src line 378)
+
+
+state 214
+	any_literal:  ip46.    (309)
+
+	.  reduce 309 (src line 379)
+
+
+state 215
+	any_literal:  IP_CIDR.    (310)
+
+	.  reduce 310 (src line 380)
+
+
+state 216
+	rule_option:  FROM ip46 TABLE.NUMBER 
+
+	NUMBER  shift 304
+	.  error
+
+
+state 217
+	rule_option:  FROM IP_CIDR TABLE.NUMBER 
+
+	NUMBER  shift 305
+	.  error
+
+
+state 218
+	rule_option:  TO ip46 TABLE.NUMBER 
+
+	NUMBER  shift 306
+	.  error
+
+
+state 219
+	rule_option:  TO IP_CIDR TABLE.NUMBER 
+
+	NUMBER  shift 307
+	.  error
+
+
+state 220
+	vrrp_sync_group_block:  VRRP_SYNC_GROUP STRING LB vrrp_sync_group_statements RB.    (38)
+
+	.  reduce 38 (src line 72)
+
+
+state 221
+	vrrp_sync_group_statements:  vrrp_sync_group_statement vrrp_sync_group_statements.    (39)
+
+	.  reduce 39 (src line 74)
+
+
+state 222
+	vrrp_sync_group_statement:  GROUP LB.vrrp_group_ids RB 
+
+	STRING  shift 310
+	.  error
+
+	vrrp_group_ids  goto 308
+	vrrp_group_id  goto 309
+
+state 223
+	vrrp_sync_group_statement:  NOTIFY_MASTER STRING.    (44)
+
+	.  reduce 44 (src line 79)
+
+
+state 224
+	vrrp_sync_group_statement:  NOTIFY_BACKUP STRING.    (45)
+
+	.  reduce 45 (src line 80)
+
+
+state 225
+	vrrp_sync_group_statement:  NOTIFY_FAULT STRING.    (46)
+
+	.  reduce 46 (src line 81)
+
+
+state 226
+	vrrp_sync_group_statement:  NOTIFY STRING.    (47)
+
+	.  reduce 47 (src line 82)
+
+
+state 227
+	vrrp_instance_block:  VRRP_INSTANCE STRING LB vrrp_instance_statements RB.    (51)
+
+	.  reduce 51 (src line 88)
+
+
+state 228
+	vrrp_instance_statements:  vrrp_instance_statement vrrp_instance_statements.    (52)
+
+	.  reduce 52 (src line 90)
+
+
+state 229
+	vrrp_instance_statement:  VERSION NUMBER.    (56)
+
+	.  reduce 56 (src line 94)
+
+
+state 230
+	vrrp_instance_statement:  INTERFACE STRING.    (59)
+
+	.  reduce 59 (src line 97)
+
+
+state 231
+	vrrp_instance_statement:  MCAST_SRC_IP ip46.    (60)
+
+	.  reduce 60 (src line 98)
+
+
+state 232
+	vrrp_instance_statement:  UNICAST_SRC_IP ip46.    (61)
+
+	.  reduce 61 (src line 99)
+
+
+233: shift/reduce conflict (shift 34(0), red'n 298(0)) on IPV4
+233: shift/reduce conflict (shift 35(0), red'n 298(0)) on IPV6
+state 233
+	vrrp_instance_statement:  UNICAST_PEER LB.ipaddr_list RB 
+	ip46: .    (298)
+
+	IPV4  shift 34
+	IPV6  shift 35
+	.  reduce 298 (src line 366)
+
+	ip46  goto 312
+	ipaddr_list  goto 311
+
+state 234
+	vrrp_instance_statement:  LVS_SYNC_DAEMON_INTERFACE STRING.    (63)
+
+	.  reduce 63 (src line 101)
+
+
+state 235
+	vrrp_instance_statement:  VIRTUAL_ROUTER_ID STRING.    (64)
+
+	.  reduce 64 (src line 102)
+
+
+state 236
+	vrrp_instance_statement:  VIRTUAL_ROUTER_ID NUMBER.    (65)
+
+	.  reduce 65 (src line 103)
+
+
+state 237
+	vrrp_instance_statement:  PREEMPT_DELAY NUMBER.    (67)
+
+	.  reduce 67 (src line 105)
+
+
+state 238
+	vrrp_instance_statement:  PRIORITY NUMBER.    (68)
+
+	.  reduce 68 (src line 106)
+
+
+state 239
+	vrrp_instance_statement:  ADVERT_INT NUMBER.    (69)
+
+	.  reduce 69 (src line 107)
+
+
+240: shift/reduce conflict (shift 34(0), red'n 295(0)) on IPV4
+240: shift/reduce conflict (shift 35(0), red'n 295(0)) on IPV6
+240: shift/reduce conflict (shift 320(0), red'n 295(0)) on IP_CIDR
+240: shift/reduce conflict (shift 316(0), red'n 295(0)) on LABEL
+240: shift/reduce conflict (shift 317(0), red'n 295(0)) on DEV
+240: shift/reduce conflict (shift 318(0), red'n 295(0)) on BRD
+240: shift/reduce conflict (shift 34(0), red'n 298(0)) on IPV4
+240: shift/reduce conflict (shift 35(0), red'n 298(0)) on IPV6
+240: shift/reduce conflict (shift 320(0), red'n 298(0)) on IP_CIDR
+ 240: reduce/reduce conflict  (red'ns 295 and 298) on RB
+240: shift/reduce conflict (shift 316(0), red'n 298(0)) on LABEL
+240: shift/reduce conflict (shift 317(0), red'n 298(0)) on DEV
+240: shift/reduce conflict (shift 318(0), red'n 298(0)) on BRD
+state 240
+	vrrp_instance_statement:  VIRTUAL_IPADDRESS LB.vips RB 
+	ipaddr_literal: .    (295)
+	ip46: .    (298)
+
+	IPV4  shift 34
+	IPV6  shift 35
+	IP_CIDR  shift 320
+	LABEL  shift 316
+	DEV  shift 317
+	BRD  shift 318
+	.  reduce 295 (src line 362)
+
+	ip46  goto 319
+	vips  goto 313
+	vip  goto 314
+	ipaddr_literal  goto 315
+
+241: shift/reduce conflict (shift 34(0), red'n 295(0)) on IPV4
+241: shift/reduce conflict (shift 35(0), red'n 295(0)) on IPV6
+241: shift/reduce conflict (shift 320(0), red'n 295(0)) on IP_CIDR
+241: shift/reduce conflict (shift 324(0), red'n 295(0)) on DEV
+241: shift/reduce conflict (shift 325(0), red'n 295(0)) on BRD
+241: shift/reduce conflict (shift 34(0), red'n 298(0)) on IPV4
+241: shift/reduce conflict (shift 35(0), red'n 298(0)) on IPV6
+241: shift/reduce conflict (shift 320(0), red'n 298(0)) on IP_CIDR
+ 241: reduce/reduce conflict  (red'ns 295 and 298) on RB
+241: shift/reduce conflict (shift 324(0), red'n 298(0)) on DEV
+241: shift/reduce conflict (shift 325(0), red'n 298(0)) on BRD
+state 241
+	vrrp_instance_statement:  VIRTUAL_IPADDRESS_EXCLUDED LB.vips_ex RB 
+	ipaddr_literal: .    (295)
+	ip46: .    (298)
+
+	IPV4  shift 34
+	IPV6  shift 35
+	IP_CIDR  shift 320
+	DEV  shift 324
+	BRD  shift 325
+	.  reduce 295 (src line 362)
+
+	ip46  goto 319
+	vips_ex  goto 321
+	vip_ex  goto 322
+	ipaddr_literal  goto 323
+
+242: shift/reduce conflict (shift 34(0), red'n 132(0)) on IPV4
+242: shift/reduce conflict (shift 35(0), red'n 132(0)) on IPV6
+242: shift/reduce conflict (shift 65(0), red'n 132(0)) on IP_CIDR
+242: shift/reduce conflict (shift 70(0), red'n 132(0)) on LABEL
+242: shift/reduce conflict (shift 69(0), red'n 132(0)) on DEV
+242: shift/reduce conflict (shift 73(0), red'n 132(0)) on SCOPE
+242: shift/reduce conflict (shift 62(0), red'n 132(0)) on SRC
+242: shift/reduce conflict (shift 63(0), red'n 132(0)) on TO
+242: shift/reduce conflict (shift 66(0), red'n 132(0)) on VIA
+242: shift/reduce conflict (shift 67(0), red'n 132(0)) on GW
+242: shift/reduce conflict (shift 68(0), red'n 132(0)) on OR
+242: shift/reduce conflict (shift 71(0), red'n 132(0)) on TABLE
+242: shift/reduce conflict (shift 72(0), red'n 132(0)) on METRIC
+242: shift/reduce conflict (shift 74(0), red'n 132(0)) on BLACKHOLE
+242: shift/reduce conflict (shift 186(0), red'n 132(0)) on DELAY_LOOP
+242: shift/reduce conflict (shift 187(0), red'n 132(0)) on LB_ALGO
+242: shift/reduce conflict (shift 188(0), red'n 132(0)) on LB_KIND
+242: shift/reduce conflict (shift 189(0), red'n 132(0)) on LVS_SCHED
+242: shift/reduce conflict (shift 190(0), red'n 132(0)) on LVS_METHOD
+242: shift/reduce conflict (shift 191(0), red'n 132(0)) on PERSISTENCE_TIMEOUT
+242: shift/reduce conflict (shift 192(0), red'n 132(0)) on PROTOCOL
+242: shift/reduce conflict (shift 193(0), red'n 132(0)) on SORRY_SERVER
+242: shift/reduce conflict (shift 194(0), red'n 132(0)) on REAL_SERVER
+242: shift/reduce conflict (shift 195(0), red'n 132(0)) on VIRTUALHOST
+242: shift/reduce conflict (shift 196(0), red'n 132(0)) on ALPHA
+242: shift/reduce conflict (shift 197(0), red'n 132(0)) on OMEGA
+242: shift/reduce conflict (shift 198(0), red'n 132(0)) on QUORUM
+242: shift/reduce conflict (shift 199(0), red'n 132(0)) on HYSTERESIS
+242: shift/reduce conflict (shift 200(0), red'n 132(0)) on QUORUM_UP
+242: shift/reduce conflict (shift 201(0), red'n 132(0)) on QUORUM_DOWN
+242: shift/reduce conflict (shift 34(0), red'n 267(0)) on IPV4
+242: shift/reduce conflict (shift 35(0), red'n 267(0)) on IPV6
+242: shift/reduce conflict (shift 65(0), red'n 267(0)) on IP_CIDR
+ 242: reduce/reduce conflict  (red'ns 132 and 267) on RB
+242: shift/reduce conflict (shift 70(0), red'n 267(0)) on LABEL
+242: shift/reduce conflict (shift 69(0), red'n 267(0)) on DEV
+242: shift/reduce conflict (shift 73(0), red'n 267(0)) on SCOPE
+242: shift/reduce conflict (shift 62(0), red'n 267(0)) on SRC
+242: shift/reduce conflict (shift 63(0), red'n 267(0)) on TO
+242: shift/reduce conflict (shift 66(0), red'n 267(0)) on VIA
+242: shift/reduce conflict (shift 67(0), red'n 267(0)) on GW
+242: shift/reduce conflict (shift 68(0), red'n 267(0)) on OR
+242: shift/reduce conflict (shift 71(0), red'n 267(0)) on TABLE
+242: shift/reduce conflict (shift 72(0), red'n 267(0)) on METRIC
+242: shift/reduce conflict (shift 74(0), red'n 267(0)) on BLACKHOLE
+242: shift/reduce conflict (shift 186(0), red'n 267(0)) on DELAY_LOOP
+242: shift/reduce conflict (shift 187(0), red'n 267(0)) on LB_ALGO
+242: shift/reduce conflict (shift 188(0), red'n 267(0)) on LB_KIND
+242: shift/reduce conflict (shift 189(0), red'n 267(0)) on LVS_SCHED
+242: shift/reduce conflict (shift 190(0), red'n 267(0)) on LVS_METHOD
+242: shift/reduce conflict (shift 191(0), red'n 267(0)) on PERSISTENCE_TIMEOUT
+242: shift/reduce conflict (shift 192(0), red'n 267(0)) on PROTOCOL
+242: shift/reduce conflict (shift 193(0), red'n 267(0)) on SORRY_SERVER
+242: shift/reduce conflict (shift 194(0), red'n 267(0)) on REAL_SERVER
+242: shift/reduce conflict (shift 195(0), red'n 267(0)) on VIRTUALHOST
+242: shift/reduce conflict (shift 196(0), red'n 267(0)) on ALPHA
+242: shift/reduce conflict (shift 197(0), red'n 267(0)) on OMEGA
+242: shift/reduce conflict (shift 198(0), red'n 267(0)) on QUORUM
+242: shift/reduce conflict (shift 199(0), red'n 267(0)) on HYSTERESIS
+242: shift/reduce conflict (shift 200(0), red'n 267(0)) on QUORUM_UP
+242: shift/reduce conflict (shift 201(0), red'n 267(0)) on QUORUM_DOWN
+242: shift/reduce conflict (shift 34(0), red'n 298(0)) on IPV4
+242: shift/reduce conflict (shift 35(0), red'n 298(0)) on IPV6
+242: shift/reduce conflict (shift 65(0), red'n 298(0)) on IP_CIDR
+ 242: reduce/reduce conflict  (red'ns 132 and 298) on RB
+242: shift/reduce conflict (shift 70(0), red'n 298(0)) on LABEL
+242: shift/reduce conflict (shift 69(0), red'n 298(0)) on DEV
+242: shift/reduce conflict (shift 73(0), red'n 298(0)) on SCOPE
+242: shift/reduce conflict (shift 62(0), red'n 298(0)) on SRC
+242: shift/reduce conflict (shift 63(0), red'n 298(0)) on TO
+242: shift/reduce conflict (shift 66(0), red'n 298(0)) on VIA
+242: shift/reduce conflict (shift 67(0), red'n 298(0)) on GW
+242: shift/reduce conflict (shift 68(0), red'n 298(0)) on OR
+242: shift/reduce conflict (shift 71(0), red'n 298(0)) on TABLE
+242: shift/reduce conflict (shift 72(0), red'n 298(0)) on METRIC
+242: shift/reduce conflict (shift 74(0), red'n 298(0)) on BLACKHOLE
+242: shift/reduce conflict (shift 186(0), red'n 298(0)) on DELAY_LOOP
+242: shift/reduce conflict (shift 187(0), red'n 298(0)) on LB_ALGO
+242: shift/reduce conflict (shift 188(0), red'n 298(0)) on LB_KIND
+242: shift/reduce conflict (shift 189(0), red'n 298(0)) on LVS_SCHED
+242: shift/reduce conflict (shift 190(0), red'n 298(0)) on LVS_METHOD
+242: shift/reduce conflict (shift 191(0), red'n 298(0)) on PERSISTENCE_TIMEOUT
+242: shift/reduce conflict (shift 192(0), red'n 298(0)) on PROTOCOL
+242: shift/reduce conflict (shift 193(0), red'n 298(0)) on SORRY_SERVER
+242: shift/reduce conflict (shift 194(0), red'n 298(0)) on REAL_SERVER
+242: shift/reduce conflict (shift 195(0), red'n 298(0)) on VIRTUALHOST
+242: shift/reduce conflict (shift 196(0), red'n 298(0)) on ALPHA
+242: shift/reduce conflict (shift 197(0), red'n 298(0)) on OMEGA
+242: shift/reduce conflict (shift 198(0), red'n 298(0)) on QUORUM
+242: shift/reduce conflict (shift 199(0), red'n 298(0)) on HYSTERESIS
+242: shift/reduce conflict (shift 200(0), red'n 298(0)) on QUORUM_UP
+242: shift/reduce conflict (shift 201(0), red'n 298(0)) on QUORUM_DOWN
+state 242
+	vrrp_instance_statement:  VIRTUAL_ROUTES LB.virtual_routes_statements RB 
+	virtual_server_statement: .    (132)
+	route_option: .    (267)
+	ip46: .    (298)
+
+	IPV4  shift 34
+	IPV6  shift 35
+	IP_CIDR  shift 65
+	LABEL  shift 70
+	DEV  shift 69
+	SCOPE  shift 73
+	SRC  shift 62
+	TO  shift 63
+	VIA  shift 66
+	GW  shift 67
+	OR  shift 68
+	TABLE  shift 71
+	METRIC  shift 72
+	BLACKHOLE  shift 74
+	DELAY_LOOP  shift 186
+	LB_ALGO  shift 187
+	LB_KIND  shift 188
+	LVS_SCHED  shift 189
+	LVS_METHOD  shift 190
+	PERSISTENCE_TIMEOUT  shift 191
+	PROTOCOL  shift 192
+	SORRY_SERVER  shift 193
+	REAL_SERVER  shift 194
+	VIRTUALHOST  shift 195
+	ALPHA  shift 196
+	OMEGA  shift 197
+	QUORUM  shift 198
+	HYSTERESIS  shift 199
+	QUORUM_UP  shift 200
+	QUORUM_DOWN  shift 201
+	.  reduce 132 (src line 180)
+
+	ip46  goto 64
+	virtual_routes_statements  goto 326
+	virtual_server_statement  goto 327
+	route_option  goto 185
+
+state 243
+	vrrp_instance_statement:  STATE MASTER.    (73)
+
+	.  reduce 73 (src line 111)
+
+
+state 244
+	vrrp_instance_statement:  STATE BACKUP.    (74)
+
+	.  reduce 74 (src line 112)
+
+
+state 245
+	vrrp_instance_statement:  GARP_MASTER_DELAY NUMBER.    (75)
+
+	.  reduce 75 (src line 113)
+
+
+246: shift/reduce conflict (shift 330(0), red'n 89(0)) on AUTH_TYPE
+246: shift/reduce conflict (shift 331(0), red'n 89(0)) on AUTH_PASS
+state 246
+	vrrp_instance_statement:  AUTHENTICATION LB.authentication_statements RB 
+	authentication_statement: .    (89)
+
+	AUTH_TYPE  shift 330
+	AUTH_PASS  shift 331
+	.  reduce 89 (src line 128)
+
+	authentication_statements  goto 328
+	authentication_statement  goto 329
+
+state 247
+	vrrp_instance_statement:  TRACK_INTERFACE STRING.    (78)
+
+	.  reduce 78 (src line 116)
+
+
+state 248
+	vrrp_instance_statement:  TRACK_INTERFACE LB.interfaces RB 
+
+	STRING  shift 334
+	WEIGHT  shift 335
+	.  error
+
+	interfaces  goto 332
+	interface  goto 333
+
+249: shift/reduce conflict (shift 338(0), red'n 101(0)) on STRING
+state 249
+	vrrp_instance_statement:  TRACK_SCRIPT LB.track_script_statements RB 
+	track_script_statement: .    (101)
+
+	STRING  shift 338
+	.  reduce 101 (src line 142)
+
+	track_script_statements  goto 336
+	track_script_statement  goto 337
+
+state 250
+	vrrp_instance_statement:  NOTIFY_MASTER STRING.    (82)
+
+	.  reduce 82 (src line 120)
+
+
+state 251
+	vrrp_instance_statement:  NOTIFY_BACKUP STRING.    (83)
+
+	.  reduce 83 (src line 121)
+
+
+state 252
+	vrrp_instance_statement:  NOTIFY_FAULT STRING.    (84)
+
+	.  reduce 84 (src line 122)
+
+
+state 253
+	vrrp_instance_statement:  NOTIFY_STOP STRING.    (85)
+
+	.  reduce 85 (src line 123)
+
+
+state 254
+	vrrp_instance_statement:  NOTIFY STRING.    (86)
+
+	.  reduce 86 (src line 124)
+
+
+state 255
+	vrrp_script_block:  VRRP_SCRIPT STRING LB vrrp_script_statements RB.    (104)
+
+	.  reduce 104 (src line 146)
+
+
+state 256
+	vrrp_script_statements:  vrrp_script_statement vrrp_script_statements.    (105)
+
+	.  reduce 105 (src line 148)
+
+
+state 257
+	vrrp_script_statement:  SCRIPT STRING.    (108)
+
+	.  reduce 108 (src line 151)
+
+
+state 258
+	vrrp_script_statement:  INTERVAL NUMBER.    (109)
+
+	.  reduce 109 (src line 152)
+
+
+state 259
+	vrrp_script_statement:  TIMEOUT NUMBER.    (110)
+
+	.  reduce 110 (src line 153)
+
+
+state 260
+	vrrp_script_statement:  WEIGHT NUMBER.    (111)
+
+	.  reduce 111 (src line 154)
+
+
+state 261
+	vrrp_script_statement:  FALL NUMBER.    (112)
+
+	.  reduce 112 (src line 155)
+
+
+state 262
+	vrrp_script_statement:  RISE NUMBER.    (113)
+
+	.  reduce 113 (src line 156)
+
+
+state 263
+	virtual_server_block:  VIRTUAL_SERVER virtual_server_arg LB virtual_server_statements RB.    (125)
+
+	.  reduce 125 (src line 171)
+
+
+state 264
+	virtual_server_statements:  virtual_server_statement virtual_server_statements.    (126)
+
+	.  reduce 126 (src line 173)
+
+
+state 265
+	virtual_server_statement:  route_option route_options.    (116)
+
+	.  reduce 116 (src line 160)
+
+
+state 266
+	virtual_server_statement:  DELAY_LOOP NUMBER.    (133)
+
+	.  reduce 133 (src line 181)
+
+
+state 267
+	virtual_server_statement:  LB_ALGO lb_algo.    (134)
+
+	.  reduce 134 (src line 182)
+
+
+state 268
+	lb_algo:  RR.    (224)
+
+	.  reduce 224 (src line 281)
+
+
+state 269
+	lb_algo:  WRR.    (225)
+
+	.  reduce 225 (src line 282)
+
+
+state 270
+	lb_algo:  LC.    (226)
+
+	.  reduce 226 (src line 283)
+
+
+state 271
+	lb_algo:  WLC.    (227)
+
+	.  reduce 227 (src line 284)
+
+
+state 272
+	lb_algo:  FO.    (228)
+
+	.  reduce 228 (src line 285)
+
+
+state 273
+	lb_algo:  OVF.    (229)
+
+	.  reduce 229 (src line 286)
+
+
+state 274
+	lb_algo:  LBLC.    (230)
+
+	.  reduce 230 (src line 287)
+
+
+state 275
+	lb_algo:  LBLCR.    (231)
+
+	.  reduce 231 (src line 288)
+
+
+state 276
+	lb_algo:  SH.    (232)
+
+	.  reduce 232 (src line 289)
+
+
+state 277
+	lb_algo:  DH.    (233)
+
+	.  reduce 233 (src line 290)
+
+
+state 278
+	lb_algo:  SED.    (234)
+
+	.  reduce 234 (src line 291)
+
+
+state 279
+	lb_algo:  NQ.    (235)
+
+	.  reduce 235 (src line 292)
+
+
+state 280
+	virtual_server_statement:  LB_KIND lb_kind.    (135)
+
+	.  reduce 135 (src line 183)
+
+
+state 281
+	lb_kind:  NAT.    (237)
+
+	.  reduce 237 (src line 295)
+
+
+state 282
+	lb_kind:  DR.    (238)
+
+	.  reduce 238 (src line 296)
+
+
+state 283
+	lb_kind:  TUN.    (239)
+
+	.  reduce 239 (src line 297)
+
+
+state 284
+	virtual_server_statement:  LVS_SCHED lb_algo.    (136)
+
+	.  reduce 136 (src line 184)
+
+
+state 285
+	virtual_server_statement:  LVS_METHOD lb_kind.    (137)
+
+	.  reduce 137 (src line 185)
+
+
+state 286
+	virtual_server_statement:  PERSISTENCE_TIMEOUT NUMBER.    (138)
+
+	.  reduce 138 (src line 186)
+
+
+state 287
+	virtual_server_statement:  PROTOCOL protocol.    (139)
+
+	.  reduce 139 (src line 187)
+
+
+state 288
+	protocol:  TCP.    (241)
+
+	.  reduce 241 (src line 300)
+
+
+state 289
+	protocol:  UDP.    (242)
+
+	.  reduce 242 (src line 301)
+
+
+state 290
+	virtual_server_statement:  SORRY_SERVER ip46.NUMBER 
+
+	NUMBER  shift 339
+	.  error
+
+
+291: shift/reduce conflict (shift 341(0), red'n 298(0)) on NUMBER
+ 291: reduce/reduce conflict  (red'ns 301 and 298) on LB
+state 291
+	virtual_server_statement:  REAL_SERVER ip46.ipport LB real_server_statements RB 
+	virtual_server_statement:  REAL_SERVER ip46.NUMBER LB real_server_statements RB 
+	ipport: .    (301)
+	ip46: .    (298)
+
+	NUMBER  shift 341
+	IPV4  shift 34
+	IPV6  shift 35
+	.  reduce 298 (src line 366)
+
+	ip46  goto 33
+	ipport  goto 340
+
+state 292
+	virtual_server_statement:  VIRTUALHOST STRING.    (143)
+
+	.  reduce 143 (src line 191)
+
+
+state 293
+	virtual_server_statement:  QUORUM NUMBER.    (146)
+
+	.  reduce 146 (src line 194)
+
+
+state 294
+	virtual_server_statement:  HYSTERESIS NUMBER.    (147)
+
+	.  reduce 147 (src line 195)
+
+
+state 295
+	virtual_server_statement:  QUORUM_UP STRING.    (148)
+
+	.  reduce 148 (src line 196)
+
+
+state 296
+	virtual_server_statement:  QUORUM_DOWN STRING.    (149)
+
+	.  reduce 149 (src line 197)
+
+
+state 297
+	virtual_server_group_block:  VIRTUAL_SERVER_GROUP STRING LB virtual_server_group_statements RB.    (118)
+
+	.  reduce 118 (src line 162)
+
+
+state 298
+	virtual_server_group_statements:  virtual_server_group_statement virtual_server_group_statements.    (119)
+
+	.  reduce 119 (src line 164)
+
+
+state 299
+	virtual_server_group_statement:  ip46 NUMBER.    (122)
+
+	.  reduce 122 (src line 167)
+
+
+state 300
+	virtual_server_group_statement:  IPADDR_RANGE NUMBER.    (123)
+
+	.  reduce 123 (src line 168)
+
+
+state 301
+	virtual_server_group_statement:  FWMARK NUMBER.    (124)
+
+	.  reduce 124 (src line 169)
+
+
+state 302
+	global_statement:  NOTIFICATION_EMAIL LB mail_statements RB.    (17)
+
+	.  reduce 17 (src line 47)
+
+
+state 303
+	mail_statements:  mail_statement mail_statements.    (254)
+
+	.  reduce 254 (src line 316)
+
+
+state 304
+	rule_option:  FROM ip46 TABLE NUMBER.    (285)
+
+	.  reduce 285 (src line 350)
+
+
+state 305
+	rule_option:  FROM IP_CIDR TABLE NUMBER.    (287)
+
+	.  reduce 287 (src line 352)
+
+
+state 306
+	rule_option:  TO ip46 TABLE NUMBER.    (286)
+
+	.  reduce 286 (src line 351)
+
+
+state 307
+	rule_option:  TO IP_CIDR TABLE NUMBER.    (288)
+
+	.  reduce 288 (src line 353)
+
+
+state 308
+	vrrp_sync_group_statement:  GROUP LB vrrp_group_ids.RB 
+
+	RB  shift 342
+	.  error
+
+
+state 309
+	vrrp_group_ids:  vrrp_group_id.vrrp_group_ids 
+	vrrp_group_ids:  vrrp_group_id.    (49)
+
+	STRING  shift 310
+	.  reduce 49 (src line 84)
+
+	vrrp_group_ids  goto 343
+	vrrp_group_id  goto 309
+
+state 310
+	vrrp_group_id:  STRING.    (50)
+
+	.  reduce 50 (src line 86)
+
+
+state 311
+	vrrp_instance_statement:  UNICAST_PEER LB ipaddr_list.RB 
+
+	RB  shift 344
+	.  error
+
+
+312: shift/reduce conflict (shift 34(0), red'n 298(0)) on IPV4
+312: shift/reduce conflict (shift 35(0), red'n 298(0)) on IPV6
+ 312: reduce/reduce conflict  (red'ns 98 and 298) on RB
+state 312
+	ipaddr_list:  ip46.ipaddr_list 
+	ipaddr_list:  ip46.    (98)
+	ip46: .    (298)
+
+	IPV4  shift 34
+	IPV6  shift 35
+	.  reduce 98 (src line 138)
+
+	ip46  goto 312
+	ipaddr_list  goto 345
+
+state 313
+	vrrp_instance_statement:  VIRTUAL_IPADDRESS LB vips.RB 
+
+	RB  shift 346
+	.  error
+
+
+314: shift/reduce conflict (shift 34(0), red'n 295(0)) on IPV4
+314: shift/reduce conflict (shift 35(0), red'n 295(0)) on IPV6
+314: shift/reduce conflict (shift 320(0), red'n 295(0)) on IP_CIDR
+ 314: reduce/reduce conflict  (red'ns 244 and 295) on RB
+314: shift/reduce conflict (shift 316(0), red'n 295(0)) on LABEL
+314: shift/reduce conflict (shift 317(0), red'n 295(0)) on DEV
+314: shift/reduce conflict (shift 318(0), red'n 295(0)) on BRD
+314: shift/reduce conflict (shift 34(0), red'n 298(0)) on IPV4
+314: shift/reduce conflict (shift 35(0), red'n 298(0)) on IPV6
+314: shift/reduce conflict (shift 320(0), red'n 298(0)) on IP_CIDR
+ 314: reduce/reduce conflict  (red'ns 244 and 298) on RB
+314: shift/reduce conflict (shift 316(0), red'n 298(0)) on LABEL
+314: shift/reduce conflict (shift 317(0), red'n 298(0)) on DEV
+314: shift/reduce conflict (shift 318(0), red'n 298(0)) on BRD
+state 314
+	vips:  vip.vips 
+	vips:  vip.    (244)
+	ipaddr_literal: .    (295)
+	ip46: .    (298)
+
+	IPV4  shift 34
+	IPV6  shift 35
+	IP_CIDR  shift 320
+	LABEL  shift 316
+	DEV  shift 317
+	BRD  shift 318
+	.  reduce 244 (src line 303)
+
+	ip46  goto 319
+	vips  goto 347
+	vip  goto 314
+	ipaddr_literal  goto 315
+
+state 315
+	vip:  ipaddr_literal.    (247)
+
+	.  reduce 247 (src line 307)
+
+
+state 316
+	vip:  LABEL.STRING 
+
+	STRING  shift 348
+	.  error
+
+
+state 317
+	vip:  DEV.STRING 
+
+	STRING  shift 349
+	.  error
+
+
+318: shift/reduce conflict (shift 34(0), red'n 298(0)) on IPV4
+318: shift/reduce conflict (shift 35(0), red'n 298(0)) on IPV6
+state 318
+	vip:  BRD.ip46 
+	ip46: .    (298)
+
+	IPV4  shift 34
+	IPV6  shift 35
+	.  reduce 298 (src line 366)
+
+	ip46  goto 350
+
+state 319
+	ipaddr_literal:  ip46.    (296)
+
+	.  reduce 296 (src line 363)
+
+
+state 320
+	ipaddr_literal:  IP_CIDR.    (297)
+
+	.  reduce 297 (src line 364)
+
+
+state 321
+	vrrp_instance_statement:  VIRTUAL_IPADDRESS_EXCLUDED LB vips_ex.RB 
+
+	RB  shift 351
+	.  error
+
+
+322: shift/reduce conflict (shift 34(0), red'n 295(0)) on IPV4
+322: shift/reduce conflict (shift 35(0), red'n 295(0)) on IPV6
+322: shift/reduce conflict (shift 320(0), red'n 295(0)) on IP_CIDR
+ 322: reduce/reduce conflict  (red'ns 246 and 295) on RB
+322: shift/reduce conflict (shift 324(0), red'n 295(0)) on DEV
+322: shift/reduce conflict (shift 325(0), red'n 295(0)) on BRD
+322: shift/reduce conflict (shift 34(0), red'n 298(0)) on IPV4
+322: shift/reduce conflict (shift 35(0), red'n 298(0)) on IPV6
+322: shift/reduce conflict (shift 320(0), red'n 298(0)) on IP_CIDR
+ 322: reduce/reduce conflict  (red'ns 246 and 298) on RB
+322: shift/reduce conflict (shift 324(0), red'n 298(0)) on DEV
+322: shift/reduce conflict (shift 325(0), red'n 298(0)) on BRD
+state 322
+	vips_ex:  vip_ex.vips_ex 
+	vips_ex:  vip_ex.    (246)
+	ipaddr_literal: .    (295)
+	ip46: .    (298)
+
+	IPV4  shift 34
+	IPV6  shift 35
+	IP_CIDR  shift 320
+	DEV  shift 324
+	BRD  shift 325
+	.  reduce 246 (src line 305)
+
+	ip46  goto 319
+	vips_ex  goto 352
+	vip_ex  goto 322
+	ipaddr_literal  goto 323
+
+state 323
+	vip_ex:  ipaddr_literal.    (251)
+
+	.  reduce 251 (src line 312)
+
+
+state 324
+	vip_ex:  DEV.STRING 
+
+	STRING  shift 353
+	.  error
+
+
+325: shift/reduce conflict (shift 34(0), red'n 298(0)) on IPV4
+325: shift/reduce conflict (shift 35(0), red'n 298(0)) on IPV6
+state 325
+	vip_ex:  BRD.ip46 
+	ip46: .    (298)
+
+	IPV4  shift 34
+	IPV6  shift 35
+	.  reduce 298 (src line 366)
+
+	ip46  goto 354
+
+state 326
+	vrrp_instance_statement:  VIRTUAL_ROUTES LB virtual_routes_statements.RB 
+
+	RB  shift 355
+	.  error
+
+
+327: shift/reduce conflict (shift 34(0), red'n 132(0)) on IPV4
+327: shift/reduce conflict (shift 35(0), red'n 132(0)) on IPV6
+327: shift/reduce conflict (shift 65(0), red'n 132(0)) on IP_CIDR
+ 327: reduce/reduce conflict  (red'ns 115 and 132) on RB
+327: shift/reduce conflict (shift 70(0), red'n 132(0)) on LABEL
+327: shift/reduce conflict (shift 69(0), red'n 132(0)) on DEV
+327: shift/reduce conflict (shift 73(0), red'n 132(0)) on SCOPE
+327: shift/reduce conflict (shift 62(0), red'n 132(0)) on SRC
+327: shift/reduce conflict (shift 63(0), red'n 132(0)) on TO
+327: shift/reduce conflict (shift 66(0), red'n 132(0)) on VIA
+327: shift/reduce conflict (shift 67(0), red'n 132(0)) on GW
+327: shift/reduce conflict (shift 68(0), red'n 132(0)) on OR
+327: shift/reduce conflict (shift 71(0), red'n 132(0)) on TABLE
+327: shift/reduce conflict (shift 72(0), red'n 132(0)) on METRIC
+327: shift/reduce conflict (shift 74(0), red'n 132(0)) on BLACKHOLE
+327: shift/reduce conflict (shift 186(0), red'n 132(0)) on DELAY_LOOP
+327: shift/reduce conflict (shift 187(0), red'n 132(0)) on LB_ALGO
+327: shift/reduce conflict (shift 188(0), red'n 132(0)) on LB_KIND
+327: shift/reduce conflict (shift 189(0), red'n 132(0)) on LVS_SCHED
+327: shift/reduce conflict (shift 190(0), red'n 132(0)) on LVS_METHOD
+327: shift/reduce conflict (shift 191(0), red'n 132(0)) on PERSISTENCE_TIMEOUT
+327: shift/reduce conflict (shift 192(0), red'n 132(0)) on PROTOCOL
+327: shift/reduce conflict (shift 193(0), red'n 132(0)) on SORRY_SERVER
+327: shift/reduce conflict (shift 194(0), red'n 132(0)) on REAL_SERVER
+327: shift/reduce conflict (shift 195(0), red'n 132(0)) on VIRTUALHOST
+327: shift/reduce conflict (shift 196(0), red'n 132(0)) on ALPHA
+327: shift/reduce conflict (shift 197(0), red'n 132(0)) on OMEGA
+327: shift/reduce conflict (shift 198(0), red'n 132(0)) on QUORUM
+327: shift/reduce conflict (shift 199(0), red'n 132(0)) on HYSTERESIS
+327: shift/reduce conflict (shift 200(0), red'n 132(0)) on QUORUM_UP
+327: shift/reduce conflict (shift 201(0), red'n 132(0)) on QUORUM_DOWN
+327: shift/reduce conflict (shift 34(0), red'n 267(0)) on IPV4
+327: shift/reduce conflict (shift 35(0), red'n 267(0)) on IPV6
+327: shift/reduce conflict (shift 65(0), red'n 267(0)) on IP_CIDR
+ 327: reduce/reduce conflict  (red'ns 115 and 267) on RB
+327: shift/reduce conflict (shift 70(0), red'n 267(0)) on LABEL
+327: shift/reduce conflict (shift 69(0), red'n 267(0)) on DEV
+327: shift/reduce conflict (shift 73(0), red'n 267(0)) on SCOPE
+327: shift/reduce conflict (shift 62(0), red'n 267(0)) on SRC
+327: shift/reduce conflict (shift 63(0), red'n 267(0)) on TO
+327: shift/reduce conflict (shift 66(0), red'n 267(0)) on VIA
+327: shift/reduce conflict (shift 67(0), red'n 267(0)) on GW
+327: shift/reduce conflict (shift 68(0), red'n 267(0)) on OR
+327: shift/reduce conflict (shift 71(0), red'n 267(0)) on TABLE
+327: shift/reduce conflict (shift 72(0), red'n 267(0)) on METRIC
+327: shift/reduce conflict (shift 74(0), red'n 267(0)) on BLACKHOLE
+327: shift/reduce conflict (shift 186(0), red'n 267(0)) on DELAY_LOOP
+327: shift/reduce conflict (shift 187(0), red'n 267(0)) on LB_ALGO
+327: shift/reduce conflict (shift 188(0), red'n 267(0)) on LB_KIND
+327: shift/reduce conflict (shift 189(0), red'n 267(0)) on LVS_SCHED
+327: shift/reduce conflict (shift 190(0), red'n 267(0)) on LVS_METHOD
+327: shift/reduce conflict (shift 191(0), red'n 267(0)) on PERSISTENCE_TIMEOUT
+327: shift/reduce conflict (shift 192(0), red'n 267(0)) on PROTOCOL
+327: shift/reduce conflict (shift 193(0), red'n 267(0)) on SORRY_SERVER
+327: shift/reduce conflict (shift 194(0), red'n 267(0)) on REAL_SERVER
+327: shift/reduce conflict (shift 195(0), red'n 267(0)) on VIRTUALHOST
+327: shift/reduce conflict (shift 196(0), red'n 267(0)) on ALPHA
+327: shift/reduce conflict (shift 197(0), red'n 267(0)) on OMEGA
+327: shift/reduce conflict (shift 198(0), red'n 267(0)) on QUORUM
+327: shift/reduce conflict (shift 199(0), red'n 267(0)) on HYSTERESIS
+327: shift/reduce conflict (shift 200(0), red'n 267(0)) on QUORUM_UP
+327: shift/reduce conflict (shift 201(0), red'n 267(0)) on QUORUM_DOWN
+327: shift/reduce conflict (shift 34(0), red'n 298(0)) on IPV4
+327: shift/reduce conflict (shift 35(0), red'n 298(0)) on IPV6
+327: shift/reduce conflict (shift 65(0), red'n 298(0)) on IP_CIDR
+ 327: reduce/reduce conflict  (red'ns 115 and 298) on RB
+327: shift/reduce conflict (shift 70(0), red'n 298(0)) on LABEL
+327: shift/reduce conflict (shift 69(0), red'n 298(0)) on DEV
+327: shift/reduce conflict (shift 73(0), red'n 298(0)) on SCOPE
+327: shift/reduce conflict (shift 62(0), red'n 298(0)) on SRC
+327: shift/reduce conflict (shift 63(0), red'n 298(0)) on TO
+327: shift/reduce conflict (shift 66(0), red'n 298(0)) on VIA
+327: shift/reduce conflict (shift 67(0), red'n 298(0)) on GW
+327: shift/reduce conflict (shift 68(0), red'n 298(0)) on OR
+327: shift/reduce conflict (shift 71(0), red'n 298(0)) on TABLE
+327: shift/reduce conflict (shift 72(0), red'n 298(0)) on METRIC
+327: shift/reduce conflict (shift 74(0), red'n 298(0)) on BLACKHOLE
+327: shift/reduce conflict (shift 186(0), red'n 298(0)) on DELAY_LOOP
+327: shift/reduce conflict (shift 187(0), red'n 298(0)) on LB_ALGO
+327: shift/reduce conflict (shift 188(0), red'n 298(0)) on LB_KIND
+327: shift/reduce conflict (shift 189(0), red'n 298(0)) on LVS_SCHED
+327: shift/reduce conflict (shift 190(0), red'n 298(0)) on LVS_METHOD
+327: shift/reduce conflict (shift 191(0), red'n 298(0)) on PERSISTENCE_TIMEOUT
+327: shift/reduce conflict (shift 192(0), red'n 298(0)) on PROTOCOL
+327: shift/reduce conflict (shift 193(0), red'n 298(0)) on SORRY_SERVER
+327: shift/reduce conflict (shift 194(0), red'n 298(0)) on REAL_SERVER
+327: shift/reduce conflict (shift 195(0), red'n 298(0)) on VIRTUALHOST
+327: shift/reduce conflict (shift 196(0), red'n 298(0)) on ALPHA
+327: shift/reduce conflict (shift 197(0), red'n 298(0)) on OMEGA
+327: shift/reduce conflict (shift 198(0), red'n 298(0)) on QUORUM
+327: shift/reduce conflict (shift 199(0), red'n 298(0)) on HYSTERESIS
+327: shift/reduce conflict (shift 200(0), red'n 298(0)) on QUORUM_UP
+327: shift/reduce conflict (shift 201(0), red'n 298(0)) on QUORUM_DOWN
+state 327
+	virtual_routes_statements:  virtual_server_statement.virtual_server_statements 
+	virtual_routes_statements:  virtual_server_statement.    (115)
+	virtual_server_statement: .    (132)
+	route_option: .    (267)
+	ip46: .    (298)
+
+	IPV4  shift 34
+	IPV6  shift 35
+	IP_CIDR  shift 65
+	LABEL  shift 70
+	DEV  shift 69
+	SCOPE  shift 73
+	SRC  shift 62
+	TO  shift 63
+	VIA  shift 66
+	GW  shift 67
+	OR  shift 68
+	TABLE  shift 71
+	METRIC  shift 72
+	BLACKHOLE  shift 74
+	DELAY_LOOP  shift 186
+	LB_ALGO  shift 187
+	LB_KIND  shift 188
+	LVS_SCHED  shift 189
+	LVS_METHOD  shift 190
+	PERSISTENCE_TIMEOUT  shift 191
+	PROTOCOL  shift 192
+	SORRY_SERVER  shift 193
+	REAL_SERVER  shift 194
+	VIRTUALHOST  shift 195
+	ALPHA  shift 196
+	OMEGA  shift 197
+	QUORUM  shift 198
+	HYSTERESIS  shift 199
+	QUORUM_UP  shift 200
+	QUORUM_DOWN  shift 201
+	.  reduce 115 (src line 158)
+
+	ip46  goto 64
+	virtual_server_statement  goto 184
+	virtual_server_statements  goto 356
+	route_option  goto 185
+
+state 328
+	vrrp_instance_statement:  AUTHENTICATION LB authentication_statements.RB 
+
+	RB  shift 357
+	.  error
+
+
+ 329: reduce/reduce conflict  (red'ns 88 and 89) on RB
+329: shift/reduce conflict (shift 330(0), red'n 89(0)) on AUTH_TYPE
+329: shift/reduce conflict (shift 331(0), red'n 89(0)) on AUTH_PASS
+state 329
+	authentication_statements:  authentication_statement.authentication_statements 
+	authentication_statements:  authentication_statement.    (88)
+	authentication_statement: .    (89)
+
+	AUTH_TYPE  shift 330
+	AUTH_PASS  shift 331
+	.  reduce 88 (src line 126)
+
+	authentication_statements  goto 358
+	authentication_statement  goto 329
+
+state 330
+	authentication_statement:  AUTH_TYPE.PASS 
+	authentication_statement:  AUTH_TYPE.AH 
+
+	PASS  shift 359
+	AH  shift 360
+	.  error
+
+
+ 331: reduce/reduce conflict  (red'ns 304 and 298) on RB
+ 331: reduce/reduce conflict  (red'ns 304 and 298) on AUTH_TYPE
+ 331: reduce/reduce conflict  (red'ns 304 and 298) on AUTH_PASS
+state 331
+	authentication_statement:  AUTH_PASS.any_literal 
+	any_literal: .    (304)
+	ip46: .    (298)
+
+	NUMBER  shift 210
+	STRING  shift 211
+	EMAIL  shift 212
+	IPV4  shift 34
+	IPV6  shift 35
+	IP_CIDR  shift 215
+	HEX32  shift 213
+	.  reduce 298 (src line 366)
+
+	ip46  goto 214
+	any_literal  goto 361
+
+state 332
+	vrrp_instance_statement:  TRACK_INTERFACE LB interfaces.RB 
+
+	RB  shift 362
+	.  error
+
+
+state 333
+	interfaces:  interface.interfaces 
+	interfaces:  interface.    (94)
+
+	STRING  shift 334
+	WEIGHT  shift 335
+	.  reduce 94 (src line 133)
+
+	interfaces  goto 363
+	interface  goto 333
+
+state 334
+	interface:  STRING.    (95)
+
+	.  reduce 95 (src line 135)
+
+
+state 335
+	interface:  WEIGHT.NUMBER 
+
+	NUMBER  shift 364
+	.  error
+
+
+state 336
+	vrrp_instance_statement:  TRACK_SCRIPT LB track_script_statements.RB 
+
+	RB  shift 365
+	.  error
+
+
+337: shift/reduce conflict (shift 338(0), red'n 101(0)) on STRING
+ 337: reduce/reduce conflict  (red'ns 100 and 101) on RB
+state 337
+	track_script_statements:  track_script_statement.track_script_statements 
+	track_script_statements:  track_script_statement.    (100)
+	track_script_statement: .    (101)
+
+	STRING  shift 338
+	.  reduce 100 (src line 140)
+
+	track_script_statements  goto 366
+	track_script_statement  goto 337
+
+state 338
+	track_script_statement:  STRING.    (102)
+	track_script_statement:  STRING.WEIGHT NUMBER 
+
+	WEIGHT  shift 367
+	.  reduce 102 (src line 143)
+
+
+state 339
+	virtual_server_statement:  SORRY_SERVER ip46 NUMBER.    (140)
+
+	.  reduce 140 (src line 188)
+
+
+state 340
+	virtual_server_statement:  REAL_SERVER ip46 ipport.LB real_server_statements RB 
+
+	LB  shift 368
+	.  error
+
+
+state 341
+	virtual_server_statement:  REAL_SERVER ip46 NUMBER.LB real_server_statements RB 
+
+	LB  shift 369
+	.  error
+
+
+state 342
+	vrrp_sync_group_statement:  GROUP LB vrrp_group_ids RB.    (43)
+
+	.  reduce 43 (src line 78)
+
+
+state 343
+	vrrp_group_ids:  vrrp_group_id vrrp_group_ids.    (48)
+
+	.  reduce 48 (src line 84)
+
+
+state 344
+	vrrp_instance_statement:  UNICAST_PEER LB ipaddr_list RB.    (62)
+
+	.  reduce 62 (src line 100)
+
+
+state 345
+	ipaddr_list:  ip46 ipaddr_list.    (97)
+
+	.  reduce 97 (src line 138)
+
+
+state 346
+	vrrp_instance_statement:  VIRTUAL_IPADDRESS LB vips RB.    (70)
+
+	.  reduce 70 (src line 108)
+
+
+state 347
+	vips:  vip vips.    (243)
+
+	.  reduce 243 (src line 303)
+
+
+state 348
+	vip:  LABEL STRING.    (248)
+
+	.  reduce 248 (src line 308)
+
+
+state 349
+	vip:  DEV STRING.    (249)
+
+	.  reduce 249 (src line 309)
+
+
+state 350
+	vip:  BRD ip46.    (250)
+
+	.  reduce 250 (src line 310)
+
+
+state 351
+	vrrp_instance_statement:  VIRTUAL_IPADDRESS_EXCLUDED LB vips_ex RB.    (71)
+
+	.  reduce 71 (src line 109)
+
+
+state 352
+	vips_ex:  vip_ex vips_ex.    (245)
+
+	.  reduce 245 (src line 305)
+
+
+state 353
+	vip_ex:  DEV STRING.    (252)
+
+	.  reduce 252 (src line 313)
+
+
+state 354
+	vip_ex:  BRD ip46.    (253)
+
+	.  reduce 253 (src line 314)
+
+
+state 355
+	vrrp_instance_statement:  VIRTUAL_ROUTES LB virtual_routes_statements RB.    (72)
+
+	.  reduce 72 (src line 110)
+
+
+state 356
+	virtual_routes_statements:  virtual_server_statement virtual_server_statements.    (114)
+
+	.  reduce 114 (src line 158)
+
+
+state 357
+	vrrp_instance_statement:  AUTHENTICATION LB authentication_statements RB.    (77)
+
+	.  reduce 77 (src line 115)
+
+
+state 358
+	authentication_statements:  authentication_statement authentication_statements.    (87)
+
+	.  reduce 87 (src line 126)
+
+
+state 359
+	authentication_statement:  AUTH_TYPE PASS.    (90)
+
+	.  reduce 90 (src line 129)
+
+
+state 360
+	authentication_statement:  AUTH_TYPE AH.    (91)
+
+	.  reduce 91 (src line 130)
+
+
+state 361
+	authentication_statement:  AUTH_PASS any_literal.    (92)
+
+	.  reduce 92 (src line 131)
+
+
+state 362
+	vrrp_instance_statement:  TRACK_INTERFACE LB interfaces RB.    (79)
+
+	.  reduce 79 (src line 117)
+
+
+state 363
+	interfaces:  interface interfaces.    (93)
+
+	.  reduce 93 (src line 133)
+
+
+state 364
+	interface:  WEIGHT NUMBER.    (96)
+
+	.  reduce 96 (src line 136)
+
+
+state 365
+	vrrp_instance_statement:  TRACK_SCRIPT LB track_script_statements RB.    (80)
+
+	.  reduce 80 (src line 118)
+
+
+state 366
+	track_script_statements:  track_script_statement track_script_statements.    (99)
+
+	.  reduce 99 (src line 140)
+
+
+state 367
+	track_script_statement:  STRING WEIGHT.NUMBER 
+
+	NUMBER  shift 370
+	.  error
+
+
+368: shift/reduce conflict (shift 373(0), red'n 152(0)) on WEIGHT
+368: shift/reduce conflict (shift 374(0), red'n 152(0)) on INHIBIT_ON_FAILURE
+368: shift/reduce conflict (shift 375(0), red'n 152(0)) on TCP_CHECK
+368: shift/reduce conflict (shift 376(0), red'n 152(0)) on HTTP_GET
+368: shift/reduce conflict (shift 377(0), red'n 152(0)) on SSL_GET
+368: shift/reduce conflict (shift 378(0), red'n 152(0)) on SMTP_CHECK
+368: shift/reduce conflict (shift 379(0), red'n 152(0)) on DNS_CHECK
+368: shift/reduce conflict (shift 380(0), red'n 152(0)) on MISC_CHECK
+state 368
+	virtual_server_statement:  REAL_SERVER ip46 ipport LB.real_server_statements RB 
+	real_server_statement: .    (152)
+
+	WEIGHT  shift 373
+	INHIBIT_ON_FAILURE  shift 374
+	TCP_CHECK  shift 375
+	HTTP_GET  shift 376
+	SSL_GET  shift 377
+	SMTP_CHECK  shift 378
+	DNS_CHECK  shift 379
+	MISC_CHECK  shift 380
+	.  reduce 152 (src line 201)
+
+	real_server_statements  goto 371
+	real_server_statement  goto 372
+
+369: shift/reduce conflict (shift 373(0), red'n 152(0)) on WEIGHT
+369: shift/reduce conflict (shift 374(0), red'n 152(0)) on INHIBIT_ON_FAILURE
+369: shift/reduce conflict (shift 375(0), red'n 152(0)) on TCP_CHECK
+369: shift/reduce conflict (shift 376(0), red'n 152(0)) on HTTP_GET
+369: shift/reduce conflict (shift 377(0), red'n 152(0)) on SSL_GET
+369: shift/reduce conflict (shift 378(0), red'n 152(0)) on SMTP_CHECK
+369: shift/reduce conflict (shift 379(0), red'n 152(0)) on DNS_CHECK
+369: shift/reduce conflict (shift 380(0), red'n 152(0)) on MISC_CHECK
+state 369
+	virtual_server_statement:  REAL_SERVER ip46 NUMBER LB.real_server_statements RB 
+	real_server_statement: .    (152)
+
+	WEIGHT  shift 373
+	INHIBIT_ON_FAILURE  shift 374
+	TCP_CHECK  shift 375
+	HTTP_GET  shift 376
+	SSL_GET  shift 377
+	SMTP_CHECK  shift 378
+	DNS_CHECK  shift 379
+	MISC_CHECK  shift 380
+	.  reduce 152 (src line 201)
+
+	real_server_statements  goto 381
+	real_server_statement  goto 372
+
+state 370
+	track_script_statement:  STRING WEIGHT NUMBER.    (103)
+
+	.  reduce 103 (src line 144)
+
+
+state 371
+	virtual_server_statement:  REAL_SERVER ip46 ipport LB real_server_statements.RB 
+
+	RB  shift 382
+	.  error
+
+
+ 372: reduce/reduce conflict  (red'ns 151 and 152) on RB
+372: shift/reduce conflict (shift 373(0), red'n 152(0)) on WEIGHT
+372: shift/reduce conflict (shift 374(0), red'n 152(0)) on INHIBIT_ON_FAILURE
+372: shift/reduce conflict (shift 375(0), red'n 152(0)) on TCP_CHECK
+372: shift/reduce conflict (shift 376(0), red'n 152(0)) on HTTP_GET
+372: shift/reduce conflict (shift 377(0), red'n 152(0)) on SSL_GET
+372: shift/reduce conflict (shift 378(0), red'n 152(0)) on SMTP_CHECK
+372: shift/reduce conflict (shift 379(0), red'n 152(0)) on DNS_CHECK
+372: shift/reduce conflict (shift 380(0), red'n 152(0)) on MISC_CHECK
+state 372
+	real_server_statements:  real_server_statement.real_server_statements 
+	real_server_statements:  real_server_statement.    (151)
+	real_server_statement: .    (152)
+
+	WEIGHT  shift 373
+	INHIBIT_ON_FAILURE  shift 374
+	TCP_CHECK  shift 375
+	HTTP_GET  shift 376
+	SSL_GET  shift 377
+	SMTP_CHECK  shift 378
+	DNS_CHECK  shift 379
+	MISC_CHECK  shift 380
+	.  reduce 151 (src line 199)
+
+	real_server_statements  goto 383
+	real_server_statement  goto 372
+
+state 373
+	real_server_statement:  WEIGHT.NUMBER 
+
+	NUMBER  shift 384
+	.  error
+
+
+state 374
+	real_server_statement:  INHIBIT_ON_FAILURE.    (154)
+
+	.  reduce 154 (src line 203)
+
+
+state 375
+	real_server_statement:  TCP_CHECK.LB tcp_check_statements RB 
+
+	LB  shift 385
+	.  error
+
+
+state 376
+	real_server_statement:  HTTP_GET.LB http_get_statements RB 
+
+	LB  shift 386
+	.  error
+
+
+state 377
+	real_server_statement:  SSL_GET.LB http_get_statements RB 
+
+	LB  shift 387
+	.  error
+
+
+state 378
+	real_server_statement:  SMTP_CHECK.LB smtp_check_statements RB 
+
+	LB  shift 388
+	.  error
+
+
+state 379
+	real_server_statement:  DNS_CHECK.LB dns_check_statements RB 
+
+	LB  shift 389
+	.  error
+
+
+state 380
+	real_server_statement:  MISC_CHECK.LB misc_check_statements RB 
+
+	LB  shift 390
+	.  error
+
+
+state 381
+	virtual_server_statement:  REAL_SERVER ip46 NUMBER LB real_server_statements.RB 
+
+	RB  shift 391
+	.  error
+
+
+state 382
+	virtual_server_statement:  REAL_SERVER ip46 ipport LB real_server_statements RB.    (141)
+
+	.  reduce 141 (src line 189)
+
+
+state 383
+	real_server_statements:  real_server_statement real_server_statements.    (150)
+
+	.  reduce 150 (src line 199)
+
+
+state 384
+	real_server_statement:  WEIGHT NUMBER.    (153)
+
+	.  reduce 153 (src line 202)
+
+
+385: shift/reduce conflict (shift 395(0), red'n 163(0)) on CONNECT_TIMEOUT
+385: shift/reduce conflict (shift 394(0), red'n 163(0)) on CONNECT_PORT
+385: shift/reduce conflict (shift 396(0), red'n 163(0)) on RETRY
+385: shift/reduce conflict (shift 397(0), red'n 163(0)) on WARMUP
+385: shift/reduce conflict (shift 398(0), red'n 163(0)) on DELAY_BEFORE_RETRY
+state 385
+	real_server_statement:  TCP_CHECK LB.tcp_check_statements RB 
+	tcp_check_statement: .    (163)
+
+	CONNECT_TIMEOUT  shift 395
+	CONNECT_PORT  shift 394
+	RETRY  shift 396
+	WARMUP  shift 397
+	DELAY_BEFORE_RETRY  shift 398
+	.  reduce 163 (src line 213)
+
+	tcp_check_statements  goto 392
+	tcp_check_statement  goto 393
+
+386: shift/reduce conflict (shift 401(0), red'n 171(0)) on URL
+386: shift/reduce conflict (shift 402(0), red'n 171(0)) on CONNECT_TIMEOUT
+386: shift/reduce conflict (shift 403(0), red'n 171(0)) on CONNECT_PORT
+386: shift/reduce conflict (shift 406(0), red'n 171(0)) on WARMUP
+386: shift/reduce conflict (shift 404(0), red'n 171(0)) on NB_GET_RETRY
+386: shift/reduce conflict (shift 405(0), red'n 171(0)) on DELAY_BEFORE_RETRY
+state 386
+	real_server_statement:  HTTP_GET LB.http_get_statements RB 
+	http_get_statement: .    (171)
+
+	URL  shift 401
+	CONNECT_TIMEOUT  shift 402
+	CONNECT_PORT  shift 403
+	WARMUP  shift 406
+	NB_GET_RETRY  shift 404
+	DELAY_BEFORE_RETRY  shift 405
+	.  reduce 171 (src line 222)
+
+	http_get_statements  goto 399
+	http_get_statement  goto 400
+
+387: shift/reduce conflict (shift 401(0), red'n 171(0)) on URL
+387: shift/reduce conflict (shift 402(0), red'n 171(0)) on CONNECT_TIMEOUT
+387: shift/reduce conflict (shift 403(0), red'n 171(0)) on CONNECT_PORT
+387: shift/reduce conflict (shift 406(0), red'n 171(0)) on WARMUP
+387: shift/reduce conflict (shift 404(0), red'n 171(0)) on NB_GET_RETRY
+387: shift/reduce conflict (shift 405(0), red'n 171(0)) on DELAY_BEFORE_RETRY
+state 387
+	real_server_statement:  SSL_GET LB.http_get_statements RB 
+	http_get_statement: .    (171)
+
+	URL  shift 401
+	CONNECT_TIMEOUT  shift 402
+	CONNECT_PORT  shift 403
+	WARMUP  shift 406
+	NB_GET_RETRY  shift 404
+	DELAY_BEFORE_RETRY  shift 405
+	.  reduce 171 (src line 222)
+
+	http_get_statements  goto 407
+	http_get_statement  goto 400
+
+388: shift/reduce conflict (shift 411(0), red'n 187(0)) on HOST
+388: shift/reduce conflict (shift 421(0), red'n 187(0)) on FWMARK
+388: shift/reduce conflict (shift 420(0), red'n 187(0)) on CONNECT_TIMEOUT
+388: shift/reduce conflict (shift 417(0), red'n 187(0)) on CONNECT_PORT
+388: shift/reduce conflict (shift 416(0), red'n 187(0)) on CONNECT_IP
+388: shift/reduce conflict (shift 418(0), red'n 187(0)) on BINDTO
+388: shift/reduce conflict (shift 419(0), red'n 187(0)) on BIND_PORT
+388: shift/reduce conflict (shift 413(0), red'n 187(0)) on RETRY
+388: shift/reduce conflict (shift 415(0), red'n 187(0)) on HELO_NAME
+388: shift/reduce conflict (shift 412(0), red'n 187(0)) on WARMUP
+388: shift/reduce conflict (shift 414(0), red'n 187(0)) on DELAY_BEFORE_RETRY
+ 388: reduce/reduce conflict  (red'ns 187 and 196) on RB
+388: shift/reduce conflict (shift 411(0), red'n 196(0)) on HOST
+388: shift/reduce conflict (shift 421(0), red'n 196(0)) on FWMARK
+388: shift/reduce conflict (shift 420(0), red'n 196(0)) on CONNECT_TIMEOUT
+388: shift/reduce conflict (shift 417(0), red'n 196(0)) on CONNECT_PORT
+388: shift/reduce conflict (shift 416(0), red'n 196(0)) on CONNECT_IP
+388: shift/reduce conflict (shift 418(0), red'n 196(0)) on BINDTO
+388: shift/reduce conflict (shift 419(0), red'n 196(0)) on BIND_PORT
+388: shift/reduce conflict (shift 413(0), red'n 196(0)) on RETRY
+388: shift/reduce conflict (shift 415(0), red'n 196(0)) on HELO_NAME
+388: shift/reduce conflict (shift 412(0), red'n 196(0)) on WARMUP
+388: shift/reduce conflict (shift 414(0), red'n 196(0)) on DELAY_BEFORE_RETRY
+state 388
+	real_server_statement:  SMTP_CHECK LB.smtp_check_statements RB 
+	smtp_check_statement: .    (187)
+	host_statement: .    (196)
+
+	HOST  shift 411
+	FWMARK  shift 421
+	CONNECT_TIMEOUT  shift 420
+	CONNECT_PORT  shift 417
+	CONNECT_IP  shift 416
+	BINDTO  shift 418
+	BIND_PORT  shift 419
+	RETRY  shift 413
+	HELO_NAME  shift 415
+	WARMUP  shift 412
+	DELAY_BEFORE_RETRY  shift 414
+	.  reduce 187 (src line 240)
+
+	smtp_check_statements  goto 408
+	smtp_check_statement  goto 409
+	host_statement  goto 410
+
+389: shift/reduce conflict (shift 429(0), red'n 205(0)) on FWMARK
+389: shift/reduce conflict (shift 428(0), red'n 205(0)) on CONNECT_TIMEOUT
+389: shift/reduce conflict (shift 425(0), red'n 205(0)) on CONNECT_PORT
+389: shift/reduce conflict (shift 424(0), red'n 205(0)) on CONNECT_IP
+389: shift/reduce conflict (shift 426(0), red'n 205(0)) on BINDTO
+389: shift/reduce conflict (shift 427(0), red'n 205(0)) on BIND_PORT
+389: shift/reduce conflict (shift 430(0), red'n 205(0)) on RETRY
+389: shift/reduce conflict (shift 431(0), red'n 205(0)) on TYPE
+389: shift/reduce conflict (shift 432(0), red'n 205(0)) on NAME
+state 389
+	real_server_statement:  DNS_CHECK LB.dns_check_statements RB 
+	dns_check_statement: .    (205)
+
+	FWMARK  shift 429
+	CONNECT_TIMEOUT  shift 428
+	CONNECT_PORT  shift 425
+	CONNECT_IP  shift 424
+	BINDTO  shift 426
+	BIND_PORT  shift 427
+	RETRY  shift 430
+	TYPE  shift 431
+	NAME  shift 432
+	.  reduce 205 (src line 260)
+
+	dns_check_statements  goto 422
+	dns_check_statement  goto 423
+
+390: shift/reduce conflict (shift 435(0), red'n 217(0)) on MISC_PATH
+390: shift/reduce conflict (shift 436(0), red'n 217(0)) on MISC_TIMEOUT
+390: shift/reduce conflict (shift 437(0), red'n 217(0)) on WARMUP
+390: shift/reduce conflict (shift 438(0), red'n 217(0)) on MISC_DYNAMIC
+state 390
+	real_server_statement:  MISC_CHECK LB.misc_check_statements RB 
+	misc_check_statement: .    (217)
+
+	MISC_PATH  shift 435
+	MISC_TIMEOUT  shift 436
+	WARMUP  shift 437
+	MISC_DYNAMIC  shift 438
+	.  reduce 217 (src line 273)
+
+	misc_check_statements  goto 433
+	misc_check_statement  goto 434
+
+state 391
+	virtual_server_statement:  REAL_SERVER ip46 NUMBER LB real_server_statements RB.    (142)
+
+	.  reduce 142 (src line 190)
+
+
+state 392
+	real_server_statement:  TCP_CHECK LB tcp_check_statements.RB 
+
+	RB  shift 439
+	.  error
+
+
+ 393: reduce/reduce conflict  (red'ns 162 and 163) on RB
+393: shift/reduce conflict (shift 395(0), red'n 163(0)) on CONNECT_TIMEOUT
+393: shift/reduce conflict (shift 394(0), red'n 163(0)) on CONNECT_PORT
+393: shift/reduce conflict (shift 396(0), red'n 163(0)) on RETRY
+393: shift/reduce conflict (shift 397(0), red'n 163(0)) on WARMUP
+393: shift/reduce conflict (shift 398(0), red'n 163(0)) on DELAY_BEFORE_RETRY
+state 393
+	tcp_check_statements:  tcp_check_statement.tcp_check_statements 
+	tcp_check_statements:  tcp_check_statement.    (162)
+	tcp_check_statement: .    (163)
+
+	CONNECT_TIMEOUT  shift 395
+	CONNECT_PORT  shift 394
+	RETRY  shift 396
+	WARMUP  shift 397
+	DELAY_BEFORE_RETRY  shift 398
+	.  reduce 162 (src line 211)
+
+	tcp_check_statements  goto 440
+	tcp_check_statement  goto 393
+
+state 394
+	tcp_check_statement:  CONNECT_PORT.NUMBER 
+
+	NUMBER  shift 441
+	.  error
+
+
+state 395
+	tcp_check_statement:  CONNECT_TIMEOUT.NUMBER 
+
+	NUMBER  shift 442
+	.  error
+
+
+state 396
+	tcp_check_statement:  RETRY.NUMBER 
+
+	NUMBER  shift 443
+	.  error
+
+
+state 397
+	tcp_check_statement:  WARMUP.NUMBER 
+
+	NUMBER  shift 444
+	.  error
+
+
+state 398
+	tcp_check_statement:  DELAY_BEFORE_RETRY.NUMBER 
+
+	NUMBER  shift 445
+	.  error
+
+
+state 399
+	real_server_statement:  HTTP_GET LB http_get_statements.RB 
+
+	RB  shift 446
+	.  error
+
+
+ 400: reduce/reduce conflict  (red'ns 170 and 171) on RB
+400: shift/reduce conflict (shift 401(0), red'n 171(0)) on URL
+400: shift/reduce conflict (shift 402(0), red'n 171(0)) on CONNECT_TIMEOUT
+400: shift/reduce conflict (shift 403(0), red'n 171(0)) on CONNECT_PORT
+400: shift/reduce conflict (shift 406(0), red'n 171(0)) on WARMUP
+400: shift/reduce conflict (shift 404(0), red'n 171(0)) on NB_GET_RETRY
+400: shift/reduce conflict (shift 405(0), red'n 171(0)) on DELAY_BEFORE_RETRY
+state 400
+	http_get_statements:  http_get_statement.http_get_statements 
+	http_get_statements:  http_get_statement.    (170)
+	http_get_statement: .    (171)
+
+	URL  shift 401
+	CONNECT_TIMEOUT  shift 402
+	CONNECT_PORT  shift 403
+	WARMUP  shift 406
+	NB_GET_RETRY  shift 404
+	DELAY_BEFORE_RETRY  shift 405
+	.  reduce 170 (src line 220)
+
+	http_get_statements  goto 447
+	http_get_statement  goto 400
+
+state 401
+	http_get_statement:  URL.LB url_statements RB 
+
+	LB  shift 448
+	.  error
+
+
+state 402
+	http_get_statement:  CONNECT_TIMEOUT.NUMBER 
+
+	NUMBER  shift 449
+	.  error
+
+
+state 403
+	http_get_statement:  CONNECT_PORT.NUMBER 
+
+	NUMBER  shift 450
+	.  error
+
+
+state 404
+	http_get_statement:  NB_GET_RETRY.NUMBER 
+
+	NUMBER  shift 451
+	.  error
+
+
+state 405
+	http_get_statement:  DELAY_BEFORE_RETRY.NUMBER 
+
+	NUMBER  shift 452
+	.  error
+
+
+state 406
+	http_get_statement:  WARMUP.NUMBER 
+
+	NUMBER  shift 453
+	.  error
+
+
+state 407
+	real_server_statement:  SSL_GET LB http_get_statements.RB 
+
+	RB  shift 454
+	.  error
+
+
+state 408
+	real_server_statement:  SMTP_CHECK LB smtp_check_statements.RB 
+
+	RB  shift 455
+	.  error
+
+
+ 409: reduce/reduce conflict  (red'ns 186 and 187) on RB
+409: shift/reduce conflict (shift 411(0), red'n 187(0)) on HOST
+409: shift/reduce conflict (shift 421(0), red'n 187(0)) on FWMARK
+409: shift/reduce conflict (shift 420(0), red'n 187(0)) on CONNECT_TIMEOUT
+409: shift/reduce conflict (shift 417(0), red'n 187(0)) on CONNECT_PORT
+409: shift/reduce conflict (shift 416(0), red'n 187(0)) on CONNECT_IP
+409: shift/reduce conflict (shift 418(0), red'n 187(0)) on BINDTO
+409: shift/reduce conflict (shift 419(0), red'n 187(0)) on BIND_PORT
+409: shift/reduce conflict (shift 413(0), red'n 187(0)) on RETRY
+409: shift/reduce conflict (shift 415(0), red'n 187(0)) on HELO_NAME
+409: shift/reduce conflict (shift 412(0), red'n 187(0)) on WARMUP
+409: shift/reduce conflict (shift 414(0), red'n 187(0)) on DELAY_BEFORE_RETRY
+ 409: reduce/reduce conflict  (red'ns 186 and 196) on RB
+409: shift/reduce conflict (shift 411(0), red'n 196(0)) on HOST
+409: shift/reduce conflict (shift 421(0), red'n 196(0)) on FWMARK
+409: shift/reduce conflict (shift 420(0), red'n 196(0)) on CONNECT_TIMEOUT
+409: shift/reduce conflict (shift 417(0), red'n 196(0)) on CONNECT_PORT
+409: shift/reduce conflict (shift 416(0), red'n 196(0)) on CONNECT_IP
+409: shift/reduce conflict (shift 418(0), red'n 196(0)) on BINDTO
+409: shift/reduce conflict (shift 419(0), red'n 196(0)) on BIND_PORT
+409: shift/reduce conflict (shift 413(0), red'n 196(0)) on RETRY
+409: shift/reduce conflict (shift 415(0), red'n 196(0)) on HELO_NAME
+409: shift/reduce conflict (shift 412(0), red'n 196(0)) on WARMUP
+409: shift/reduce conflict (shift 414(0), red'n 196(0)) on DELAY_BEFORE_RETRY
+state 409
+	smtp_check_statements:  smtp_check_statement.smtp_check_statements 
+	smtp_check_statements:  smtp_check_statement.    (186)
+	smtp_check_statement: .    (187)
+	host_statement: .    (196)
+
+	HOST  shift 411
+	FWMARK  shift 421
+	CONNECT_TIMEOUT  shift 420
+	CONNECT_PORT  shift 417
+	CONNECT_IP  shift 416
+	BINDTO  shift 418
+	BIND_PORT  shift 419
+	RETRY  shift 413
+	HELO_NAME  shift 415
+	WARMUP  shift 412
+	DELAY_BEFORE_RETRY  shift 414
+	.  reduce 186 (src line 238)
+
+	smtp_check_statements  goto 456
+	smtp_check_statement  goto 409
+	host_statement  goto 410
+
+state 410
+	smtp_check_statement:  host_statement.    (188)
+
+	.  reduce 188 (src line 241)
+
+
+state 411
+	smtp_check_statement:  HOST.LB host_statements RB 
+
+	LB  shift 457
+	.  error
+
+
+state 412
+	smtp_check_statement:  WARMUP.NUMBER 
+
+	NUMBER  shift 458
+	.  error
+
+
+state 413
+	smtp_check_statement:  RETRY.NUMBER 
+
+	NUMBER  shift 459
+	.  error
+
+
+state 414
+	smtp_check_statement:  DELAY_BEFORE_RETRY.NUMBER 
+
+	NUMBER  shift 460
+	.  error
+
+
+state 415
+	smtp_check_statement:  HELO_NAME.STRING 
+
+	STRING  shift 461
+	.  error
+
+
+state 416
+	host_statement:  CONNECT_IP.ip46 
+	ip46: .    (298)
+
+	IPV4  shift 34
+	IPV6  shift 35
+	.  reduce 298 (src line 366)
+
+	ip46  goto 462
+
+state 417
+	host_statement:  CONNECT_PORT.NUMBER 
+
+	NUMBER  shift 463
+	.  error
+
+
+state 418
+	host_statement:  BINDTO.ip46 
+	ip46: .    (298)
+
+	IPV4  shift 34
+	IPV6  shift 35
+	.  reduce 298 (src line 366)
+
+	ip46  goto 464
+
+state 419
+	host_statement:  BIND_PORT.NUMBER 
+
+	NUMBER  shift 465
+	.  error
+
+
+state 420
+	host_statement:  CONNECT_TIMEOUT.NUMBER 
+
+	NUMBER  shift 466
+	.  error
+
+
+state 421
+	host_statement:  FWMARK.NUMBER 
+
+	NUMBER  shift 467
+	.  error
+
+
+state 422
+	real_server_statement:  DNS_CHECK LB dns_check_statements.RB 
+
+	RB  shift 468
+	.  error
+
+
+ 423: reduce/reduce conflict  (red'ns 204 and 205) on RB
+423: shift/reduce conflict (shift 429(0), red'n 205(0)) on FWMARK
+423: shift/reduce conflict (shift 428(0), red'n 205(0)) on CONNECT_TIMEOUT
+423: shift/reduce conflict (shift 425(0), red'n 205(0)) on CONNECT_PORT
+423: shift/reduce conflict (shift 424(0), red'n 205(0)) on CONNECT_IP
+423: shift/reduce conflict (shift 426(0), red'n 205(0)) on BINDTO
+423: shift/reduce conflict (shift 427(0), red'n 205(0)) on BIND_PORT
+423: shift/reduce conflict (shift 430(0), red'n 205(0)) on RETRY
+423: shift/reduce conflict (shift 431(0), red'n 205(0)) on TYPE
+423: shift/reduce conflict (shift 432(0), red'n 205(0)) on NAME
+state 423
+	dns_check_statements:  dns_check_statement.dns_check_statements 
+	dns_check_statements:  dns_check_statement.    (204)
+	dns_check_statement: .    (205)
+
+	FWMARK  shift 429
+	CONNECT_TIMEOUT  shift 428
+	CONNECT_PORT  shift 425
+	CONNECT_IP  shift 424
+	BINDTO  shift 426
+	BIND_PORT  shift 427
+	RETRY  shift 430
+	TYPE  shift 431
+	NAME  shift 432
+	.  reduce 204 (src line 258)
+
+	dns_check_statements  goto 469
+	dns_check_statement  goto 423
+
+state 424
+	dns_check_statement:  CONNECT_IP.ip46 
+	ip46: .    (298)
+
+	IPV4  shift 34
+	IPV6  shift 35
+	.  reduce 298 (src line 366)
+
+	ip46  goto 470
+
+state 425
+	dns_check_statement:  CONNECT_PORT.NUMBER 
+
+	NUMBER  shift 471
+	.  error
+
+
+state 426
+	dns_check_statement:  BINDTO.ip46 
+	ip46: .    (298)
+
+	IPV4  shift 34
+	IPV6  shift 35
+	.  reduce 298 (src line 366)
+
+	ip46  goto 472
+
+state 427
+	dns_check_statement:  BIND_PORT.NUMBER 
+
+	NUMBER  shift 473
+	.  error
+
+
+state 428
+	dns_check_statement:  CONNECT_TIMEOUT.NUMBER 
+
+	NUMBER  shift 474
+	.  error
+
+
+state 429
+	dns_check_statement:  FWMARK.NUMBER 
+
+	NUMBER  shift 475
+	.  error
+
+
+state 430
+	dns_check_statement:  RETRY.NUMBER 
+
+	NUMBER  shift 476
+	.  error
+
+
+state 431
+	dns_check_statement:  TYPE.STRING 
+
+	STRING  shift 477
+	.  error
+
+
+state 432
+	dns_check_statement:  NAME.STRING 
+
+	STRING  shift 478
+	.  error
+
+
+state 433
+	real_server_statement:  MISC_CHECK LB misc_check_statements.RB 
+
+	RB  shift 479
+	.  error
+
+
+ 434: reduce/reduce conflict  (red'ns 216 and 217) on RB
+434: shift/reduce conflict (shift 435(0), red'n 217(0)) on MISC_PATH
+434: shift/reduce conflict (shift 436(0), red'n 217(0)) on MISC_TIMEOUT
+434: shift/reduce conflict (shift 437(0), red'n 217(0)) on WARMUP
+434: shift/reduce conflict (shift 438(0), red'n 217(0)) on MISC_DYNAMIC
+state 434
+	misc_check_statements:  misc_check_statement.misc_check_statements 
+	misc_check_statements:  misc_check_statement.    (216)
+	misc_check_statement: .    (217)
+
+	MISC_PATH  shift 435
+	MISC_TIMEOUT  shift 436
+	WARMUP  shift 437
+	MISC_DYNAMIC  shift 438
+	.  reduce 216 (src line 271)
+
+	misc_check_statements  goto 480
+	misc_check_statement  goto 434
+
+state 435
+	misc_check_statement:  MISC_PATH.STRING 
+	misc_check_statement:  MISC_PATH.PATHSTR 
+
+	STRING  shift 481
+	PATHSTR  shift 482
+	.  error
+
+
+state 436
+	misc_check_statement:  MISC_TIMEOUT.NUMBER 
+
+	NUMBER  shift 483
+	.  error
+
+
+state 437
+	misc_check_statement:  WARMUP.NUMBER 
+
+	NUMBER  shift 484
+	.  error
+
+
+state 438
+	misc_check_statement:  MISC_DYNAMIC.    (222)
+
+	.  reduce 222 (src line 278)
+
+
+state 439
+	real_server_statement:  TCP_CHECK LB tcp_check_statements RB.    (155)
+
+	.  reduce 155 (src line 204)
+
+
+state 440
+	tcp_check_statements:  tcp_check_statement tcp_check_statements.    (161)
+
+	.  reduce 161 (src line 211)
+
+
+state 441
+	tcp_check_statement:  CONNECT_PORT NUMBER.    (164)
+
+	.  reduce 164 (src line 214)
+
+
+state 442
+	tcp_check_statement:  CONNECT_TIMEOUT NUMBER.    (165)
+
+	.  reduce 165 (src line 215)
+
+
+state 443
+	tcp_check_statement:  RETRY NUMBER.    (166)
+
+	.  reduce 166 (src line 216)
+
+
+state 444
+	tcp_check_statement:  WARMUP NUMBER.    (167)
+
+	.  reduce 167 (src line 217)
+
+
+state 445
+	tcp_check_statement:  DELAY_BEFORE_RETRY NUMBER.    (168)
+
+	.  reduce 168 (src line 218)
+
+
+state 446
+	real_server_statement:  HTTP_GET LB http_get_statements RB.    (156)
+
+	.  reduce 156 (src line 205)
+
+
+state 447
+	http_get_statements:  http_get_statement http_get_statements.    (169)
+
+	.  reduce 169 (src line 220)
+
+
+448: shift/reduce conflict (shift 487(0), red'n 180(0)) on PATH
+448: shift/reduce conflict (shift 488(0), red'n 180(0)) on DIGEST
+448: shift/reduce conflict (shift 489(0), red'n 180(0)) on STATUS_CODE
+state 448
+	http_get_statement:  URL LB.url_statements RB 
+	url_statement: .    (180)
+
+	PATH  shift 487
+	DIGEST  shift 488
+	STATUS_CODE  shift 489
+	.  reduce 180 (src line 232)
+
+	url_statements  goto 485
+	url_statement  goto 486
+
+state 449
+	http_get_statement:  CONNECT_TIMEOUT NUMBER.    (173)
+
+	.  reduce 173 (src line 224)
+
+
+state 450
+	http_get_statement:  CONNECT_PORT NUMBER.    (174)
+
+	.  reduce 174 (src line 225)
+
+
+state 451
+	http_get_statement:  NB_GET_RETRY NUMBER.    (175)
+
+	.  reduce 175 (src line 226)
+
+
+state 452
+	http_get_statement:  DELAY_BEFORE_RETRY NUMBER.    (176)
+
+	.  reduce 176 (src line 227)
+
+
+state 453
+	http_get_statement:  WARMUP NUMBER.    (177)
+
+	.  reduce 177 (src line 228)
+
+
+state 454
+	real_server_statement:  SSL_GET LB http_get_statements RB.    (157)
+
+	.  reduce 157 (src line 206)
+
+
+state 455
+	real_server_statement:  SMTP_CHECK LB smtp_check_statements RB.    (158)
+
+	.  reduce 158 (src line 207)
+
+
+state 456
+	smtp_check_statements:  smtp_check_statement smtp_check_statements.    (185)
+
+	.  reduce 185 (src line 238)
+
+
+457: shift/reduce conflict (shift 421(0), red'n 196(0)) on FWMARK
+457: shift/reduce conflict (shift 420(0), red'n 196(0)) on CONNECT_TIMEOUT
+457: shift/reduce conflict (shift 417(0), red'n 196(0)) on CONNECT_PORT
+457: shift/reduce conflict (shift 416(0), red'n 196(0)) on CONNECT_IP
+457: shift/reduce conflict (shift 418(0), red'n 196(0)) on BINDTO
+457: shift/reduce conflict (shift 419(0), red'n 196(0)) on BIND_PORT
+state 457
+	smtp_check_statement:  HOST LB.host_statements RB 
+	host_statement: .    (196)
+
+	FWMARK  shift 421
+	CONNECT_TIMEOUT  shift 420
+	CONNECT_PORT  shift 417
+	CONNECT_IP  shift 416
+	BINDTO  shift 418
+	BIND_PORT  shift 419
+	.  reduce 196 (src line 250)
+
+	host_statement  goto 491
+	host_statements  goto 490
+
+state 458
+	smtp_check_statement:  WARMUP NUMBER.    (190)
+
+	.  reduce 190 (src line 243)
+
+
+state 459
+	smtp_check_statement:  RETRY NUMBER.    (191)
+
+	.  reduce 191 (src line 244)
+
+
+state 460
+	smtp_check_statement:  DELAY_BEFORE_RETRY NUMBER.    (192)
+
+	.  reduce 192 (src line 245)
+
+
+state 461
+	smtp_check_statement:  HELO_NAME STRING.    (193)
+
+	.  reduce 193 (src line 246)
+
+
+state 462
+	host_statement:  CONNECT_IP ip46.    (197)
+
+	.  reduce 197 (src line 251)
+
+
+state 463
+	host_statement:  CONNECT_PORT NUMBER.    (198)
+
+	.  reduce 198 (src line 252)
+
+
+state 464
+	host_statement:  BINDTO ip46.    (199)
+
+	.  reduce 199 (src line 253)
+
+
+state 465
+	host_statement:  BIND_PORT NUMBER.    (200)
+
+	.  reduce 200 (src line 254)
+
+
+state 466
+	host_statement:  CONNECT_TIMEOUT NUMBER.    (201)
+
+	.  reduce 201 (src line 255)
+
+
+state 467
+	host_statement:  FWMARK NUMBER.    (202)
+
+	.  reduce 202 (src line 256)
+
+
+state 468
+	real_server_statement:  DNS_CHECK LB dns_check_statements RB.    (159)
+
+	.  reduce 159 (src line 208)
+
+
+state 469
+	dns_check_statements:  dns_check_statement dns_check_statements.    (203)
+
+	.  reduce 203 (src line 258)
+
+
+state 470
+	dns_check_statement:  CONNECT_IP ip46.    (206)
+
+	.  reduce 206 (src line 261)
+
+
+state 471
+	dns_check_statement:  CONNECT_PORT NUMBER.    (207)
+
+	.  reduce 207 (src line 262)
+
+
+state 472
+	dns_check_statement:  BINDTO ip46.    (208)
+
+	.  reduce 208 (src line 263)
+
+
+state 473
+	dns_check_statement:  BIND_PORT NUMBER.    (209)
+
+	.  reduce 209 (src line 264)
+
+
+state 474
+	dns_check_statement:  CONNECT_TIMEOUT NUMBER.    (210)
+
+	.  reduce 210 (src line 265)
+
+
+state 475
+	dns_check_statement:  FWMARK NUMBER.    (211)
+
+	.  reduce 211 (src line 266)
+
+
+state 476
+	dns_check_statement:  RETRY NUMBER.    (212)
+
+	.  reduce 212 (src line 267)
+
+
+state 477
+	dns_check_statement:  TYPE STRING.    (213)
+
+	.  reduce 213 (src line 268)
+
+
+state 478
+	dns_check_statement:  NAME STRING.    (214)
+
+	.  reduce 214 (src line 269)
+
+
+state 479
+	real_server_statement:  MISC_CHECK LB misc_check_statements RB.    (160)
+
+	.  reduce 160 (src line 209)
+
+
+state 480
+	misc_check_statements:  misc_check_statement misc_check_statements.    (215)
+
+	.  reduce 215 (src line 271)
+
+
+state 481
+	misc_check_statement:  MISC_PATH STRING.    (218)
+
+	.  reduce 218 (src line 274)
+
+
+state 482
+	misc_check_statement:  MISC_PATH PATHSTR.    (219)
+
+	.  reduce 219 (src line 275)
+
+
+state 483
+	misc_check_statement:  MISC_TIMEOUT NUMBER.    (220)
+
+	.  reduce 220 (src line 276)
+
+
+state 484
+	misc_check_statement:  WARMUP NUMBER.    (221)
+
+	.  reduce 221 (src line 277)
+
+
+state 485
+	http_get_statement:  URL LB url_statements.RB 
+
+	RB  shift 492
+	.  error
+
+
+ 486: reduce/reduce conflict  (red'ns 179 and 180) on RB
+486: shift/reduce conflict (shift 487(0), red'n 180(0)) on PATH
+486: shift/reduce conflict (shift 488(0), red'n 180(0)) on DIGEST
+486: shift/reduce conflict (shift 489(0), red'n 180(0)) on STATUS_CODE
+state 486
+	url_statements:  url_statement.url_statements 
+	url_statements:  url_statement.    (179)
+	url_statement: .    (180)
+
+	PATH  shift 487
+	DIGEST  shift 488
+	STATUS_CODE  shift 489
+	.  reduce 179 (src line 230)
+
+	url_statements  goto 493
+	url_statement  goto 486
+
+state 487
+	url_statement:  PATH.STRING 
+	url_statement:  PATH.PATHSTR 
+
+	STRING  shift 494
+	PATHSTR  shift 495
+	.  error
+
+
+state 488
+	url_statement:  DIGEST.HEX32 
+
+	HEX32  shift 496
+	.  error
+
+
+state 489
+	url_statement:  STATUS_CODE.NUMBER 
+
+	NUMBER  shift 497
+	.  error
+
+
+state 490
+	smtp_check_statement:  HOST LB host_statements.RB 
+
+	RB  shift 498
+	.  error
+
+
+ 491: reduce/reduce conflict  (red'ns 195 and 196) on RB
+491: shift/reduce conflict (shift 421(0), red'n 196(0)) on FWMARK
+491: shift/reduce conflict (shift 420(0), red'n 196(0)) on CONNECT_TIMEOUT
+491: shift/reduce conflict (shift 417(0), red'n 196(0)) on CONNECT_PORT
+491: shift/reduce conflict (shift 416(0), red'n 196(0)) on CONNECT_IP
+491: shift/reduce conflict (shift 418(0), red'n 196(0)) on BINDTO
+491: shift/reduce conflict (shift 419(0), red'n 196(0)) on BIND_PORT
+state 491
+	host_statements:  host_statement.host_statements 
+	host_statements:  host_statement.    (195)
+	host_statement: .    (196)
+
+	FWMARK  shift 421
+	CONNECT_TIMEOUT  shift 420
+	CONNECT_PORT  shift 417
+	CONNECT_IP  shift 416
+	BINDTO  shift 418
+	BIND_PORT  shift 419
+	.  reduce 195 (src line 248)
+
+	host_statement  goto 491
+	host_statements  goto 499
+
+state 492
+	http_get_statement:  URL LB url_statements RB.    (172)
+
+	.  reduce 172 (src line 223)
+
+
+state 493
+	url_statements:  url_statement url_statements.    (178)
+
+	.  reduce 178 (src line 230)
+
+
+state 494
+	url_statement:  PATH STRING.    (181)
+
+	.  reduce 181 (src line 233)
+
+
+state 495
+	url_statement:  PATH PATHSTR.    (182)
+
+	.  reduce 182 (src line 234)
+
+
+state 496
+	url_statement:  DIGEST HEX32.    (183)
+
+	.  reduce 183 (src line 235)
+
+
+state 497
+	url_statement:  STATUS_CODE NUMBER.    (184)
+
+	.  reduce 184 (src line 236)
+
+
+state 498
+	smtp_check_statement:  HOST LB host_statements RB.    (189)
+
+	.  reduce 189 (src line 242)
+
+
+state 499
+	host_statements:  host_statement host_statements.    (194)
+
+	.  reduce 194 (src line 248)
+
+Rule not reduced: ipport:  
+Rule not reduced: any_literal:  
+
+158 terminals, 71 nonterminals
+311 grammar rules, 500/8000 states
+881 shift/reduce, 119 reduce/reduce conflicts reported
+120 working sets used
+memory: parser 197/120000
+42 extra closures
+754 shift entries, 3 exceptions
+148 goto entries
+47 entries saved by goto default
+Optimizer space used: output 559/120000
+559 table entries, 0 zero
+maximum spread: 158, maximum offset: 491
